@@ -1,0 +1,1124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>네이버 :: 세상의 모든 지식, 네이버</title>
+<link rel="stylesheet" type="text/css" href="/css/naver_20100323.css?0330"/>
+<link rel="stylesheet" type="text/css" href="/css/naver2_20100225.css?0308"/>
+<!--[if IE]><style type="text/css">.cast_list li{white-space:normal;}</style><![endif]-->
+<script type="text/javascript" src="/js/compact/jindo2_full.js"></script>
+<script type="text/javascript" src="/js/errorstack.js?1211"></script>
+<script type="text/javascript">
+//<![CDATA[
+var nsc = "navertop.v3";
+
+var isLogin = "being20c";
+var strHost = "www.naver.com";
+var isMobile =  false; 
+var isMyCast = false;
+document.domain = "naver.com";
+//]]>
+</script>
+</head>
+<body>
+<div id="wrap">
+	<div id="da_top"></div>
+	<div id="da_brand"></div>
+	<div id="da_hook_t"></div>
+	<div id="da_hook_b"></div>
+	<div id="da_stake"></div>
+	<div id="da_casthelp"></div>
+	<hr />
+	<div id="header">
+		
+		<h1>
+<img src='http://wstatic.naver.com/w9/lg_naver_v3.gif' alt='네이버' width='210' height='78' usemap='#logo_ss' />
+<map id='logo_ss' name='logo_ss'>
+<area shape='rect' coords='0,0,58,78' alt='네이버' href="http://www.naver.com/" onclick="clickcr(this, 'top.logo','78000C01_000000009A78', '', event)"  />
+<area shape='rect' coords='58,0,210,78' alt='네이버' href="http://www.naver.com/" onclick="clickcr(this, 'top.logo','78000C01_000000009A78', '', event)"  />
+</map>
+</h1>
+
+		
+		<div class="blind">
+			<dl>
+			<dt>콘텐츠 바로가기</dt>
+			
+			<dd><a href="#account_h">내 정보</a></dd>
+			
+			<dd><a href="#news_h">뉴스캐스트</a></dd>
+			<dd><a href="#open_h">오픈캐스트</a></dd>
+			<dd><a href="#naver_h">네이버캐스트</a></dd>
+			<dd><a href="#time_h">타임스퀘어</a></dd>
+			<dd><a href="#shopping_h">쇼핑</a></dd>
+			<dd><a href="#marketing_h">마케팅 센터</a></dd>
+			</dl>
+		</div>
+		<hr />
+		<div id="search">
+			<form id="sform" name="sform" accept-charset="ks_c_5601-1987" action="http://search.naver.com/search.naver" method="get">
+			<fieldset>
+				<legend>검색</legend>
+				<select id="where" name="where" title="검색 범위 선택" class="blind">
+				<option value="nexearch" selected="selected">통합검색</option>
+				<option value="post">블로그</option>
+				<option value="cafeblog">카페</option>
+					<option value="cafe">- 카페명</option>
+					<option value="article">- 카페글</option>
+				<option value="kin">지식iN</option>
+				<option value="news">뉴스</option>
+				<option value="web">사이트</option>
+					<option value="category">- 카테고리</option>
+					<option value="site">- 사이트</option>
+				<option value="movie">영화</option>
+				<option value="webkr">웹문서</option>
+				<option value="dic">사전</option>
+					<option value="100">- 백과사전</option>
+					<option value="endic">- 영어사전</option>
+					<option value="eedic">- 영영사전</option>
+					<option value="krdic">- 국어사전</option>
+					<option value="jpdic">- 일본어사전</option>
+					<option value="hanja">- 한자사전</option>
+					<option value="terms">- 용어사전</option>
+				<option value="book">책</option>
+				<option value="music">음악</option>
+				<option value="doc">전문자료</option>
+				<option value="shop">쇼핑</option>
+				<option value="local">지역</option>
+				<option value="video">동영상</option>
+				<option value="image">이미지</option>
+				<option value="mypc">내PC</option>
+				<optgroup label="스마트 파인더">
+					<option value="movie">영화</option>
+					<option value="auto">자동차</option>
+					<option value="game">게임</option>
+					<option value="health">건강</option>
+					<option value="people">인물</option>
+				</optgroup>
+				<optgroup label="네이버 랩">
+					<option>긍정부정검색</option>
+				</optgroup>
+				</select>
+				<span class="green_window"><input id="query" name="query" type="text" title="검색어 입력" class="input_text" tabindex="1" accesskey="s" onclick="document.getElementById('fbm').value=1;" /></span>
+				<input type="image" alt="검색" src="http://wstatic.naver.com/w9/btn_sch.gif" class="btn" onmouseover="this.src='http://wstatic.naver.com/w9/btn_sch_over.gif'" onmousedown="this.src='http://wstatic.naver.com/w9/btn_sch_down.gif'" onmouseout="this.src='http://wstatic.naver.com/w9/btn_sch.gif'" onclick="clickcr(this,'sch.action','','',event);" tabindex="2" />
+				<input type="hidden" id="sm" name="sm" value="top_hty" />
+				<input type="hidden" id="fbm" name="fbm" value="0" />
+			</fieldset>
+			</form>
+
+			<div id="nautocomplete" class="autocomplete">
+	     	 	  <span class="btn_arw top"><a href="#" onclick="return false;"><img class="triangleImg" src="http://static.naver.com/w9/btn_atcmp_down_on.gif" title="자동완성 펼치기" alt="자동완성 펼치기" width="13" height="11" /></a></span>
+	        	</div>
+
+			<div class="reatcmp">
+	        	    <iframe id="autoFrame" title="자동완성" src="/js/reatcmp.html?0608" frameborder="0" width="360" height="0" marginwidth="0" marginheight="0" scrolling="no" style="display:none"></iframe>
+			</div>
+
+			<div id="search_link" class="search_link">
+				<h4 class="blind">검색링크</h4>
+				<dl>
+				<dt><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%BD%BA%B8%B6%C6%AE+%C6%C4%C0%CE%B4%F5&amp;sm=top_smf" id="smf.logo"><img src="http://wstatic.naver.com/w9/h_finder_v3.gif" alt="Smart Finder" width="67" height="13" /></a></dt>
+				<dd class="f"><a href="http://search.naver.com/search.naver?sm=top_smf&amp;where=nexearch&amp;query=%C8%DE%B4%EB%C6%F9%BD%BA%B8%B6%C6%AE%C6%C4%C0%CE%B4%F5" id="smf.phone">휴대폰</a></dd>
+				<dd><a href="http://search.naver.com/search.naver?sm=top_smf&amp;where=movie&amp;query=%BF%B5%C8%AD%BD%BA%B8%B6%C6%AE%C6%C4%C0%CE%B4%F5" id="smf.movie">영화</a></dd>
+				<dd><a href="http://search.naver.com/search.naver?sm=top_smf&amp;where=auto&amp;query=%C0%DA%B5%BF%C2%F7%BD%BA%B8%B6%C6%AE%C6%C4%C0%CE%B4%F5" id="smf.auto">자동차</a></dd>
+				<dd><a href="http://game.search.naver.com/search.naver?sm=tab_smf&amp;where=game&amp;query=%B0%D4%C0%D3%BD%BA%B8%B6%C6%AE%C6%C4%C0%CE%B4%F5" id="smf.game">게임</a></dd>
+				</dl>
+				
+<p><a href="http://search.naver.com/search.naver?sm=top_txt&amp;where=nexearch&amp;query=%C7%C1%B7%CE%BE%DF%B1%B8%B0%E6%B1%E2%C1%A4%BA%B8" onclick="clickcr(this, 'txt.search','78002101_00000000A49F', '', event, 1);"  title="프로야구 경기정보 확인하세요">프로야구 경기정보 확인하세요</a></p>
+
+			</div>
+		</div>
+
+		<hr />
+
+		<div id="s_menu" class="s_menu">
+			<dl id="naver_menu" class="nmenu">
+			<dt class="blind">네이버 메뉴</dt>
+			<dd class="f"><a href="http://mail.naver.com/" id="svc.mail"><img src="http://wstatic.naver.com/w9/mn_mail.gif" alt="메일" width="25" height="16" /></a></dd>
+			<dd><a href="http://cafe.naver.com/" id="svc.cafe"><img src="http://wstatic.naver.com/w9/mn_cafe.gif" alt="카페" width="25" height="16" /></a></dd>
+			<dd><a href="http://section.blog.naver.com/" id="svc.blog"><img src="http://wstatic.naver.com/w9/mn_blog.gif" alt="블로그" width="36" height="16" /></a></dd>
+			<dd><a href="http://kin.naver.com/" id="svc.kin"><img src="http://wstatic.naver.com/w9/mn_kin_v2.gif" alt="지식iN" width="35" height="16" /></a></dd>
+			<dd><a href="http://shopping.naver.com/" id="svc.shopping"><img src="http://wstatic.naver.com/w9/mn_shopping_v2.gif" alt="쇼핑" width="25" height="16" /></a></dd>
+			</dl>
+			<dl class="fmenu" id="fmenu">
+			<dt class="blind">자주 쓰는 메뉴</dt>
+			<dd class="f"><a href="http://dic.naver.com" onclick="clickcr(this,'svc.defaultservice','dic','',event);" title="사전" class="mn_dic"><span></span>사전</a></dd>
+<dd><a href="http://news.naver.com" onclick="clickcr(this,'svc.defaultservice','news','',event);" title="뉴스" class="mn_news"><span></span>뉴스</a></dd>
+<dd><a href="http://stock.naver.com" onclick="clickcr(this,'svc.defaultservice','stock','',event);" title="증권" class="mn_stock"><span></span>증권</a></dd>
+<dd><a href="http://land.naver.com" onclick="clickcr(this,'svc.defaultservice','land','',event);" title="부동산" class="mn_land"><span></span>부동산</a></dd>
+<dd><a href="http://map.naver.com" onclick="clickcr(this,'svc.defaultservice','map','',event);" title="지도" class="mn_map"><span></span>지도</a></dd>
+<dd><a href="http://movie.naver.com" onclick="clickcr(this,'svc.defaultservice','movie','',event);" title="영화" class="mn_movie"><span></span>영화</a></dd>
+
+			</dl>
+
+                        <div id="hmenu" class="hmenu">
+                                 <img src="http://static.naver.com/w9/blank.gif" alt="신규 서비스" width="17" height="15" class="title" />
+                                 <div id="new_service" class="hmenu_w">
+                                         <dl style="margin-top:0px">
+                                         <dt class="blind">신규 서비스</dt>
+                                         <dd><a href="http://contact.naver.com" class="mn_contact" title="주소록"><span></span>주소록</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://opencalendar.naver.com/" class="mn_opencalendar" title="오픈캘린더"><span></span>오픈캘린더</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://game.search.naver.com/" class="mn_game" title="게임검색"><span></span>게임검색</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://health.search.naver.com/" class="mn_health" title="건강검색"><span></span>건강검색</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://calendar.naver.com" class="mn_calendar" title="캘린더"><span></span>캘린더</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://dna.naver.com" class="mn_dna" title="옛날신문"><span></span>옛날신문</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+<dd><a href="http://contact.naver.com" class="mn_contact" title="주소록"><span></span>주소록</a> <a href="#svcmore_h" title="더보기"><img src="http://wstatic.naver.com/www/btn_svcmore_v2.gif" alt="더보기" width="33" height="16" /></a></dd>
+
+                                         </dl>
+                                 </div>
+                         </div>
+		</div>
+
+                <div class="rankup">
+                        <dl id="ranklist" class="ranklist">
+                        <dt><a id="rankTitle" href="http://searchc.naver.com/ntk/">실시간 급상승 검색어</a></dt>
+                        <dd>
+                                <ol style="margin-top:0px;">
+                                        <li value="1" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%BC%DB%C7%D8&amp;sm=top_lve" title="송해">송해<span class="tx">상승</span><span class="ic"></span><span class="rk">387</span></a></li>
+<li value="2" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B8%C7%C0%AF+%C3%BF%BD%C3&amp;sm=top_lve" title="맨유 첼시">맨유 첼시<span class="tx">상승</span><span class="ic"></span><span class="rk">108</span></a></li>
+<li value="3" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B0%ED%B3%AA%C0%BA&amp;sm=top_lve" title="고나은">고나은<span class="tx">상승</span><span class="ic"></span><span class="rk">240</span></a></li>
+<li value="4" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B3%B2%B1%D4%B8%AE&amp;sm=top_lve" title="남규리">남규리<span class="tx">상승</span><span class="ic"></span><span class="rk">111</span></a></li>
+<li value="5" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B7%CE%B6%C7%B9%F8%C8%A3&amp;sm=top_lve" title="로또번호">로또번호<span class="tx">상승</span><span class="ic"></span><span class="rk">99</span></a></li>
+<li value="6" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B9%DA%C1%E3&amp;sm=top_lve" title="박쥐">박쥐<span class="tx">상승</span><span class="ic"></span><span class="rk">201</span></a></li>
+<li value="7" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B3%B2%B1%E2%C8%C6&amp;sm=top_lve" title="남기훈">남기훈<span class="tx">상승</span><span class="ic"></span><span class="rk">993</span></a></li>
+<li value="8" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B7%CE%B6%C7383&amp;sm=top_lve" title="로또383">로또383<span class="tx">상승</span><span class="ic"></span><span class="rk">459</span></a></li>
+<li value="9" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B4%D9%C5%A9%B3%AA%C0%CC%C6%AE&amp;sm=top_lve" title="다크나이트">다크나이트<span class="tx">상승</span><span class="ic"></span><span class="rk">192</span></a></li>
+<li value="10" class="new"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%B8%C7%C0%AF+%C3%BF%BD%C3+%C1%DF%B0%E8&amp;sm=top_lve" title="맨유 첼시 중계">맨유 첼시 중..<span class="tx">New</span><span class="ic"></span></a></li>
+<li id="lastrank" value="1" class="up"><a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%BC%DB%C7%D8&amp;sm=top_lve" title="">송해<span class="tx">상승</span><span class="ic"></span><span class="rk"></span></a></li>
+
+                                </ol>
+                                <noscript>
+<form action="http://search.naver.com/search.naver">
+<input type="hidden" name="where" value="nexearch" />
+<select name="query">
+<option value="송해">1위: 송해</option>
+<option value="맨유 첼시">2위: 맨유 첼시</option>
+<option value="고나은">3위: 고나은</option>
+<option value="남규리">4위: 남규리</option>
+<option value="로또번호">5위: 로또번호</option>
+<option value="박쥐">6위: 박쥐</option>
+<option value="남기훈">7위: 남기훈</option>
+<option value="로또383">8위: 로또383</option>
+<option value="다크나이트">9위: 다크나이트</option>
+<option value="맨유 첼시 중계">10위: 맨유 첼시 중계</option>
+</select>
+<input type="hidden" name="ie" value="utf8" />
+<input type="submit" value="검색" />
+</form>
+</noscript>
+
+                                <p class="more"><a id="rankMore" href="http://searchc.naver.com/ntk/">더보기</a></p>
+                        </dd>
+                        </dl>
+                </div>
+
+		<dl id="fms" class="fms">
+		<dt class="blind">패밀리 사이트</dt>
+		<dd class="f"><a href="http://happybean.naver.com/main/SectionMain.nhn" id="top.happybean"><img src="http://wstatic.naver.com/w9/lg_bean.gif" alt="해피빈" width="35" height="21" /></a></dd>
+		<dd><a href="http://me2day.net/" id="top.me2day"><img src="http://wstatic.naver.com/www/lg_me2day3.gif" alt="me2day" width="48" height="21" /></a></dd>
+		<dd><a href="http://jr.naver.com/" id="top.jrnaver"><img src="http://wstatic.naver.com/w9/lg_jr.gif" alt="쥬니버" width="56" height="21" /></a></dd>
+		<dd><a href="http://www.hangame.com/" id="top.hangame"><img src="http://wstatic.naver.com/w9/lg_han_v2.gif" alt="한게임" width="71" height="21" /></a></dd>
+		</dl>
+		<dl class="naver_set">
+		<dt class="blind">네이버로 설정</dt>
+<!--[if IE]>
+		<dd><a href="#mkhome" id="mkhome" onclick="clickcr(this,'top.mkhome','','',event);return false;"><img src="http://wstatic.naver.com/w9/h_home_v2.gif" alt="네이버를 시작페이지로" width="100" height="13" onclick="this.style.behavior='url(#default#homepage)';this.setHomePage('http://www.naver.com');toolbar_popup(true);return false;"/></a></dd>
+		<dd><a href="#toolbar" onclick="toolbar_popup(false);clickcr(this,'top.toolbar','','',event);return false;"><img src="http://wstatic.naver.com/w9/h_toolbar_v2.gif" alt="툴바 설치" width="45" height="13" /></a></dd>
+<![endif]-->
+		<dd id="toolbar" style="display:none"><a href="#toolbar" onclick="toolbar_popup(false);clickcr(this,'top.toolbar4FF','','',event);return false;"><img src="http://wstatic.naver.com/w9/h_toolbar_v2.gif" alt="툴바 설치" width="45" height="13" /></a></dd>
+    
+		</dl>
+	</div>
+
+	<hr />
+
+	<div id="container">
+		<div id="column_left">
+			<div id="ad_top">
+				<iframe id="f595100" name="f595100" src="http://nv1.ad.naver.com/adshow?unit=002P" title="광고" width="595" height="100" marginheight="0" marginwidth="0" scrolling="no" frameborder="0">광고 : <a href="http://nv1.ad.naver.com/adshow?unit=002P">http://nv1.ad.naver.com/adshow?unit=002P</a></iframe>
+			</div>
+			<div id="news_cast" class="cast">
+				<div class="cast_title">
+					<h2><a href="http://news.naver.com/main/presscenter/subject.nhn" id="news_h" name="news_h" onclick="clickcr(this,'ncl.title','','',event);"><img src="http://wstatic.naver.com/w9/h_news_cast_v4.gif" alt="뉴스캐스트" width="56" height="14" /></a></h2>
+					<p class="help"><a href="#news_help_h" id="news_help_a" name="news_help_a" onclick="clickcr(this,'ncl.help','','',event);"><img src="http://wstatic.naver.com/w9/btn_help_v2.gif" alt="뉴스캐스트 도움말" width="14" height="14" /></a></p>
+				</div>
+				<div class="cast_cont">
+					<div class="cast_flash">
+						<h3><a href="http://news.naver.com/main/list.nhn?mode=LPOD&amp;mid=sec&amp;sid1=001&amp;sid2=140&amp;oid=001&amp;isYeonhapFlash=Y" onclick="clickcr(this,'nws.newsflash','','',event);">연합뉴스</a></h3>
+						<div id="quick_news" class="atc4">
+							<ul>
+							<li><a href="http://news.naver.com/main/list.nhn?mode=LPOD&amp;mid=sec&amp;sid1=001&amp;sid2=140&amp;oid=001&amp;isYeonhapFlash=Y&amp;aid=0003205205">실종자 첫 발견..남기훈 상사 시신 수습</a></li>
+
+							</ul>
+						</div>
+					</div>
+					<ul id="newscast_link" class="cast_link">
+<li class="f"><strong><a onclick="clickcr(this, 'nws.newshome','', '', event)" href="http://news.naver.com/" >뉴스홈</a></strong></li>
+<li ><a onclick="clickcr(this, 'nws.economy','', '', event)" href="http://economy.naver.com/" >경제</a></li>
+<li ><a onclick="clickcr(this, 'nws.sports','', '', event)" href="http://news.naver.com/sports/index.nhn" >스포츠</a></li>
+<li ><a onclick="clickcr(this, 'nws.entertainment','', '', event)" href="http://news.naver.com/main/main.nhn?mode=LSD&amp;mid=sec&amp;sid1=106" >연예</a></li>
+</ul>
+
+					<div class="cast_article">
+						<div id="news_article" class="news_article news_article2">
+						
+<div class="go_cast">
+<h3 class="subj"><a href="http://news.naver.com/main/presscenter/subject.nhn?subject=A1"><em>톱 뉴스 전체 보기</em></a></h3>
+<p class="blind"><a href="#news_cate_h">다른 카테고리 선택하기</a></p>
+</div>
+<ul id="topnews" class="atc1 atc1_n atc1_t 3">
+<li><em class="ctg"><a href="http://www.pressian.com/" target="_blank">[프레시안]</a></em> <a href="http://www.pressian.com/" target="_blank">[속보] 천안함 실종자 첫 발견…남기훈 상사 싸늘한 시신으로</a></li>
+<li><em class="ctg"><a href="http://www.joins.com/ " target="_blank">[중앙일보]</a></em> <a href="http://www.joins.com/" target="_blank">[속보] 실종자 가족들 &quot;수색작업 중단해달라&quot;</a></li>
+<li><em class="ctg"><a href="http://www.etnews.co.kr/" target="_blank">[전자신문]</a></em> <a href="http://www.etnews.co.kr" target="_blank">'종합편성채널' 사업자 선정 미룬다</a></li>
+<li><em class="ctg"><a href="http://www.naeil.com/" target="_blank">[내일신문]</a></em> <a href="http://www.naeil.com/" target="_blank">해군, 침몰 ’금양호’ 위치확인 부표 설치</a></li>
+<li><em class="ctg"><a href="http://www.hani.co.kr/ " target="_blank">[한겨레]</a></em> <a href="http://www.hani.co.kr" target="_blank">실종자 가족들 “인명구조· 수색작업 포기”</a></li>
+<li><em class="ctg"><a href="http://www.ytn.co.kr/" target="_blank">[YTN TV]</a></em> <a href="http://www.ytn.co.kr/" target="_blank">천안함 실종자 가족, &quot;수중수색 중단해달라&quot;</a><img src="http://wstatic.naver.com/w9/ic_plays.gif" alt="TV 뉴스" title="TV 뉴스" width="11" height="12" class="ic" /></li>
+</ul>
+<script type="text/javascript">var newscast_top_json = [[{"is_tv":"0","name":"오마이뉴스","title":"[천안함] 또 바뀐 사고시간... &quot;21시 15분 모종의 상황 발생&quot;","url":"http://www.ohmynews.com"},{"is_tv":"0","name":"미디어오늘","title":"[속보] 천안함 함미 첫 사망자 발견","url":"http://www.mediatoday.co.kr/"},{"is_tv":"0","name":"아이뉴스24","title":"삼성-LG-소니, 3D TV 끝장승부","url":"http://itnews.inews24.com"},{"is_tv":"0","name":"로이터","title":"[In Depth] China driving toward yuan plan","url":"http://www.reuters.com/"},{"is_tv":"0","name":"MBC TV","title":"천안함 실종자 남기훈 상사 시신 발견‥추가 발굴 가능성 커","url":"http://imnews.imbc.com/index.html"},{"is_tv":"0","name":"문화일보","title":"‘천안함’ 침몰 9일만에 남기훈 상사 시신 발견","url":"http://www.munhwa.com"}],[{"is_tv":"0","name":"조선일보","title":"[속보] 실종자 가족들 &quot;구조요원 안전 위해 수색 중단&quot; 군에 요청 ","url":"http://www.chosun.com/index.html"},{"is_tv":"0","name":"KBS TV","title":"[속보] 천안함 함미 부분에서 남기훈 상사 시신 발견","url":"http://news.kbs.co.kr/"},{"is_tv":"0","name":"SBS TV","title":"남 상사 시신 발견, 나머지 실종자 어디에…추가발견 유력한 곳은?","url":"http://news.sbs.co.kr/indexes/news_index.html"},{"is_tv":"0","name":"한국경제TV","title":"천안함 실종자 남기훈 상사 시신 인양","url":"http://www.wownet.co.kr"},{"is_tv":"0","name":"서울경제","title":"천안함 실종 남기훈 상사 시신 발견","url":"http://economy.hankooki.com"},{"is_tv":"0","name":"매일경제","title":"시신 에워싸고 목멘 `UDT사나이' 합창…&quot;피터져라 외쳐라 악악악!&quot;","url":"http://www.mk.co.kr"}],[{"is_tv":"0","name":"세계일보","title":"[긴급] 실종 가족 &quot;더 이상의 인명구조 중단해달라&quot;","url":"http://www.segye.com"},{"is_tv":"0","name":"코리아헤럴드","title":"Search continues - 실종자 수색작업 다시 재개","url":"http://news.naver.com/main/read.nhn?mode=LSD&amp;mid=sec&amp;sid1=001&amp;oid=044&amp;aid=0000090293"},{"is_tv":"0","name":"블로터닷넷","title":"아이패드에 대한 관심, 안드로이드 앞지르다","url":"http://www.bloter.net/"},{"is_tv":"0","name":"뉴시스","title":"실종 남기훈상사, 숨진 채 발견│가족들, 인명구조 중단 요청","url":"http://www.newsis.com/"},{"is_tv":"0","name":"국민일보","title":"천안함 함미 식당서 남기훈 상사 시신 발견","url":"http://www.kukinews.com/"},{"is_tv":"0","name":"서울신문","title":"[긴급] 실종가족 &quot;인명구조 이제 그만하십시오&quot; 첫시신 인양후 회견","url":"http://www.seoul.co.kr"}],[{"is_tv":"0","name":"스포탈코리아","title":"'박지성 71분 출전‘ 맨유, 첼시에 1-2 패배 ","url":"http://www.sportalkorea.com/"},{"is_tv":"0","name":"스포츠조선","title":"김태균, 이틀 연속 홈런포 폭발...4타수 4안타 맹활약","url":"http://sports.chosun.com"},{"is_tv":"0","name":"일간스포츠","title":"‘무한도전’ 폐지설에 시청자 “방송장악” 시끌시끌","url":"http://isplus.joins.com/?cloc=naverhome"},{"is_tv":"0","name":"OSEN","title":"‘2게임 연속홈런포’ 폭발 김태균, 일본 진출 첫 ‘4안타’","url":"http://osen.mt.co.kr/"},{"is_tv":"0","name":"스포츠서울","title":"&quot;돈 벌면 반지하는 좀&quot;…화려하게만 보이는 걸그룹의 실체(?) ","url":"http://www.sportsseoul.com/"},{"is_tv":"0","name":"마이데일리","title":"'컴백 섹시남녀' 비·이효리, 장르 맞대결 피했다…윈윈 전략?","url":"http://www.mydaily.co.kr"}]]</script>
+
+						</div>
+						<div id="msg_nonews" class="alert alert1 hide">
+							<h3>설정된 MY 뉴스가 없습니다</h3>
+							<p>아래 쪽의 [MY 뉴스 설정]을 클릭하면 주요 뉴스를 보고 싶은 주제와 언론사를 선택할 수 있습니다.</p>
+						</div>
+						<div id="msg_nosubject" class="alert alert2 hide">
+							<h3>언론사가 편집한 <em></em> 주제의 기사가 6개(한판) 미만입니다.</h3>
+						</div>
+						<div id="news_atc_page" class="page">
+						<span class="num"><em>1</em> / <span>5</span></span>
+						<a href="#" class="pre"><img src="http://wstatic.naver.com/w9/btn_pre.gif" title="이전" alt="이전 뉴스캐스트 페이지" width="13" height="14" /></a> 
+						<a href="#" class="next"><img src="http://wstatic.naver.com/w9/btn_next.gif" title="다음" alt="다음 뉴스캐스트 페이지" width="13" height="14" /></a>
+						</div>
+						<script type="text/javascript">
+						//<![CDATA[
+						var elTopnewsMaxPage = $$.getSingle(".num span",$("news_atc_page"));
+						elTopnewsMaxPage.innerHTML = newscast_top_json.length + 1;
+						//]]>
+						</script>
+					</div>
+					<div class="cast_action">
+						<p class="get_cast">
+							<a id="readcom" href="http://cafe.naver.com/navernewscast" target="_blank"><img src="http://wstatic.naver.com/w9/btn_readcom_v2.gif" alt="독자 의견" width="64" height="20" /></a>
+							<a href="#mynews_a" id="mynews_a" name="mynews_a" onclick="clickcr(this,'nws.mynews','','',event);return false;"><img src="http://wstatic.naver.com/w9/btn_mynews_set_v2.gif" alt="MY 뉴스 설정" width="77" height="20" /></a>
+							<a id="btnNewsSub" href="#btnNewsSub" onclick="return false;"><span class="blind">SA1|톱 뉴스</span><img src="http://wstatic.naver.com/w9/btn_get_v2.gif" alt="구독" width="44" height="20" /></a>
+						</p>
+						<div id="help_readcom" class="cc_help hide">
+							<dl>
+							<dt class="blind">독자의견</dt>
+							<dd>
+							<p>위 <span id="pressName"></span> 편집판에 대해 의견주시면<br />옴부즈맨의 자료로 활용됩니다.</p>
+							</dd>
+							</dl>
+							<div class="shadow2"></div><div class="arrow"></div>
+						</div>
+						<div id="msg_unsubscribe" class="msg_bln hide">
+							<div class="lt"><div class="rt"><div class="lb"><div class="rb">
+								구독이 해지되었습니다.
+							</div></div></div></div>
+							<div class="arw"></div>
+						</div>
+						<div id="msg_subscribe" class="msg_bln hide">
+							<div class="lt"><div class="rt"><div class="lb"><div class="rb">
+								<em><strong>구독</strong>되었습니다.</em><br />
+								MY 뉴스에서 볼 수 있습니다.
+							</div></div></div></div>
+							<div class="arw"></div>
+						</div>
+					</div>
+                   <div class="cast_select">
+
+                        <ul id="news_tab" class="cast_cate2">
+				<li class="lin1"><a href="#news_cate_h2" class="on"><strong>주제</strong></a></li> 
+				<li class="lin2"><a href="#news_cate_h2">언론사</a></li> 
+				<li class="lin3"><a href="#news_cate_h2">MY</a></li> 
+                        </ul>
+
+                        <h3 class="blind"><a href="#news_cate_h" id="news_cate_h" class="news_cate_h">주제 카테고리</a></h3>
+
+                        <ul id="news_dropdown" class="cast_cate" style="display:none;">
+                        <li class="top"><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.all','','',event);"><em>전체 보기</em></a></li>
+			<li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.sum','','',event);">종합</a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.sportsentertain','','',event);">스포츠/연예</a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.expeng','','',event);">외신/영자지</a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.localpaper','','',event);">지역지</a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*p.magazine','','',event);">매거진/전문지</a></li>
+                        </ul>
+                        <h4 id="news_cate_h4" style="display:none;"><a href="#news_cate_h" id="news_cate_h2" name="news_cate_h2">전체 보기</a></h4>
+
+			<ul id="mynews_dropdown" class="cast_cate" style="display:none;">
+                        <li class="top"><a href="#news_cate_h2" onclick="clickcr(this,'ncl*m.all','','',event);"><em>전체 보기</em></a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*m.dsection','','',event);">주제별</a></li>
+                        <li><a href="#news_cate_h2" onclick="clickcr(this,'ncl*m.dpress','','',event);">언론사별</a></li>
+                        </ul>
+                        <h4 id="mynews_cate_h4" style="display:none"><a href="#news_cate_h" id="mynews_cate_h2" name="news_cate_h2">전체 보기</a></h4>
+
+			<ul id="news_list" class="cast_list">
+				<li value="0" title="톱 뉴스" id="news_SA1" class="on"><a href="http://news.naver.com/">톱 뉴스</a></li>
+				<li value="1" title="정치" id="news_S10"><a href="http://news.naver.com/">정치</a></li>
+				<li value="2" title="경제/IT" id="news_S20"><a href="http://news.naver.com/">경제/IT</a></li>
+				<li value="3" title="사회" id="news_S30"><a href="http://news.naver.com/">사회</a></li>
+				<li value="4" title="생활/문화" id="news_S40"><a href="http://news.naver.com/">생활/문화</a></li>
+				<li value="5" title="세계" id="news_S50"><a href="http://news.naver.com/">세계</a></li>
+				<li value="6" title="스포츠/연예" id="news_S60"><a href="http://news.naver.com/">스포츠/연예</a></li>
+			</ul>
+
+                        <div id="newscast_msg_bln" class="msg_bln msg_bln_news1 hide">
+                            <div class="lt"><div class="rt"><div class="lb"><div class="rb">
+                                구독 중인 <strong>뉴스</strong>가<br />
+                                없습니다.<br />
+				<p><a id="msg_news_set" href="#" onclick="clickcr(this,'ncl*m.setlayer','','',event);">MY 뉴스 설정</a></p>
+                            </div></div></div></div>
+                            <div class="arw"></div>
+                        </div>
+			
+                        <div id="news_page_ctr" class="page_ctr">
+                            <div id="news_p_list" class="p_list"><a href="#" class="pre_p" onclick="return false;"><img src="http://static.naver.com/w9/btn_pre_p11.gif" alt="이전 뉴스캐스트 목록" title="이전 목록" width="18" height="18" /></a><a href="#" class="next_p" onclick="return false;"><img src="http://static.naver.com/w9/btn_next_p11.gif" alt="다음 뉴스캐스트 목록" title="다음 목록" width="18" height="18" /></a></div>
+                            <div class="p_cast"><a href="#" class="pre" onclick="return false;"><img src="http://static.naver.com/w9/btn_pre11.gif" alt="이전 뉴스캐스트" title="이전 캐스트" width="17" height="18" /></a><a href="#" class="stop" onclick="return false;"><img src="http://static.naver.com/w9/btn_stop11.gif" alt="뉴스캐스트 자동넘김 멈춤" title="자동넘김 멈춤" width="16" height="18" /></a><a href="#" class="next" onclick="return false;"><img src="http://static.naver.com/w9/btn_next11.gif" alt="다음 뉴스캐스트" title="다음 캐스트" width="17" height="18" /></a></div>
+                        </div>
+                    </div>
+				</div>
+				<div id="news_setlayer" class="setbox hide"></div>
+			</div>
+			<div id="news_help" class="cast hide">
+				<div class="cast_help">
+				<dl>
+				<dt class="blind"><a href="#news_help_h" id="news_help_h" name="news_help_h">뉴스캐스트 도움말</a></dt>
+				<dd class="close"><a href="#news_help_a" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_close6.gif" alt="닫기" width="10" height="9" /></a></dd>
+				<dd>
+					<p>뉴스캐스트는 해당 언론사가 직접 편집한<br />뉴스를 주제 및 언론사별로<br />선택하여 볼 수 있습니다.</p>
+					<p><a href="http://inside.naver.com/newnaver_3" onclick="clickcr(this,'ncl.inform','','',event);">새로워진 뉴스캐스트 안내</a></p>
+				</dd>
+				</dl>
+				<div class="shadow"></div>
+				</div>
+			</div>
+
+			<!--NONE-->
+			<!--NONE-->
+		 <div id="open_cast" class="cast">
+                <div class="cast_title">
+                    <h2><a href="http://opencast.naver.com" id="open_h" name="open_h"><img src="http://wstatic.naver.com/w9/h_open_cast_v4.gif" alt="오픈캐스트" width="56" height="14" /></a></h2>
+                    <p class="help"><a href="#open_help_h" id="open_help_a" name="open_help_a"><img src="http://wstatic.naver.com/w9/btn_help_v2.gif" alt="오픈캐스트 도움말" width="14" height="14" /></a></p>
+                </div>
+
+                <div class="cast_cont">
+                    <div class="cast_flash">
+                        <h3><a id="best_no_title" href="http://opencast.naver.com/home/bestNo.nhn">베스트 No.</a></h3>
+                        <p id="opencast_best_no">
+<a href="http://opencast.naver.com/YZ705/30">거장 마틴 스콜세지의 작품세계 1탄</a>
+
+</p>
+                    </div>
+
+                    
+<div class="cast_article">
+	<h3 class="blind"><a href="#open_atc_h" id="open_atc_h" name="open_atc_h">생활의 발견</a></h3>
+	<p class="blind"><a href="#open_cate_h">다른 카테고리 선택하기</a></p>
+
+	<p id="open_atc_thumb" class="atc_p 101|1176723">
+		<a href="http://today.kitchen.naver.com/today.nhn?sectionCode=KITCHEN_SAT&amp;sectionId=968" target="_blank" title="싱그러운 향, 오이">
+			<span><img src="http://thumb.opencast.naver.net/opencast01/n/a/naver_story/20100402/10451867041999.jpg?type=f10060" alt="싱그러운 향, 오이" width="100" height="60" /></span>
+			싱그러운 향, 오이
+		</a>
+	</p>
+	<ul id="open_atc_list" class="atc1">
+		<li class="102|1177208"><a href="http://blog.naver.com/vakivaki/60089569613" target="_blank">5일 완성, 콩나물을 우유팩에서 싱싱하게 기르는 방법</a></li>
+		<li class="103|1140081"><a href="http://blog.naver.com/teddyjieun/90083419612" target="_blank">티셔츠에 멋스럽게 다리는 슬림하게 - '레깅스' 코디</a></li>
+		<li class="104|1173669"><a href="http://news.naver.com/main/hotissue/read.nhn?mid=hot&amp;sid1=103&amp;gid=311586&amp;cid=307170&amp;iid=166627&amp;oid=020&amp;aid=0002125650&amp;ptype=011" target="_blank">쇼핑의 천국 '홍콩'.. 2010년엔 축제로 볼거리도 한가득</a></li>
+		<li class="105|1131207"><a href="http://blog.naver.com/cofks37/40101888390" target="_blank">고양이가 잘 놀아요, 집에서 쉽게 만드는 터널 장난감</a></li>
+	</ul>
+	<div class="alert alert_o1" id="open_alert_7" style="display:none;">
+		<h3>발행된 캐스트가 없습니다.</h3>
+		<p>캐스트가 발행되면 My캐스트에서 확인하실 수 있습니다.</p>
+	</div>
+
+	<div class="alert alert_o1" id="open_alert_2" style="display:none;">
+		<h3>이 캐스트는 현재 노출 제한 상태입니다.</h3>
+		<p>노출제한 상태가 해제되면 My캐스트에서 확인하실 수 있습니다.</p>
+	</div>
+
+	<div class="alert alert_o1" id="open_alert_4" style="display:none;">
+		<h3>이 캐스트는 현재 폐쇄 진행중 입니다.</h3>
+		<p>폐쇄 절차가 완료되면 구독 중인 캐스트 목록에서 자동 삭제됩니다.</p>
+	</div>
+	
+	<div class="alert alert_o1" id="open_alert_5" style="display:none;">
+		<h3>이 캐스트는 현재 폐쇄 진행중 입니다.</h3>
+		<p>폐쇄 절차가 완료되면 운영 중인 캐스트 목록에서 자동 삭제됩니다.</p>
+	</div>	
+
+	<div class="alert alert_o1" id="open_alert_1" style="display:none;">
+		<h3>이 캐스트는 현재 일부 노출 제한 상태입니다.</h3>
+		<p>캐스트홈에서 자세한 사항을 확인하세요.</p>
+		<p class="link"><a href="#">캐스트홈 가기</a></p>
+	</div>
+	
+	<div class="alert alert_o2" id="open_alert_9" style="display:none;">
+		<h3>일시적인 장애로 캐스트 목록을 가져올 수 없습니다.</h3>
+		<p>잠시 후에 다시 시도해주세요.</p>
+	</div>
+	
+	<div class="alert alert_o2_2" id="open_alert_8" style="display:none;">
+		<h3>My캐스트 서버 점검중입니다.<br />서버 점검 시간 : 12:00~03:00</h3>
+		<p>My캐스트 서버 점검으로 일시적으로 My캐스트 목록을 가져올 수 없습니다.<br />잠시 후에 다시 시도해 주세요.</p>
+		<p class="link"><a href="http://opencast.naver.com/manage/subscription.nhn">구독 중인 캐스트 목록 보기</a></p>
+	</div>
+	<div id="open_atc_page" class="page"><span id="open_atc_num" class="num"><em>1</em> / <span>2</span></span> <a href="#" class="pre" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_pre.gif" title="이전" alt="이전 오픈캐스트 페이지" width="13" height="14" /></a> <a href="#" class="next" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_next.gif" title="다음" alt="다음 오픈캐스트 페이지" width="13" height="14" /></a></div>
+</div>
+
+<div class="cast_action">
+	<p class="go_cast">
+		<span id="open_channel" class="channel hide">LF638</span>
+		<span id="open_seq" class="no">No.503</span>	 
+		<strong><a id="open_title" href="http://opencast.naver.com/LF638" title="생활의 발견">생활의 발견</a></strong>
+	</p>
+	<p class="get_cast" id="open_get_cast">
+		<a href="http://opencast.naver.com/LF638" id="btn_casthome"><img src="http://wstatic.naver.com/www/btn_casthome.gif" alt="캐스트홈 가기" width="77" height="20" /></a>
+		<a href="http://opencast.naver.com/LF638?action=subscribe" class="btn" id="open_subscribe_cast"><span class="blind">생활의 발견</span> <img src="http://wstatic.naver.com/w9/btn_get_v2.gif" alt="구독" width="44" height="20" /></a>
+	</p>
+</div>
+
+
+                    <div class="cast_select">
+                        <h3 class="blind"><a href="#open_cate_h" id="open_cate_h" class="open_cate_h">오픈캐스트 카테고리</a></h3>
+                        <ul id="cast_cate2" class="cast_cate2">
+                        <li class="li1"><a id="recomm_tab" href="#open_cate_h2" class="on"><strong>추천</strong></a></li>
+                        <li class="li2"><a id="mycast_tab" href="#open_cate_h2">My캐스트</a></li>
+                        </ul>
+                        <h4 class="blind"><a href="#open_cate_h" id="open_cate_h2" name="open_cate_h2">추천</a></h4>
+
+                        <ul id="open_list" class="cast_list">
+                         
+<li id="LF638" value="0" class="on"><a href="http://opencast.naver.com/LF638" title="생활의 발견" >생활의 발견</a></li>
+
+                        
+<li id="YU982" value="1"><a href="http://opencast.naver.com/YU982" title="요리천사의 행복밥상">요리천사의 행복밥상</a></li>
+
+<li id="HR009" value="2"><a href="http://opencast.naver.com/HR009" title="통방구리의 달콤한 세상">통방구리의 달콤한 세상</a></li>
+
+<li id="AA488" value="3"><a href="http://opencast.naver.com/AA488" title="iPhone Art의 아이폰 아이팟터치 추천정보">iPhone Art의 아이폰 아이팟터치 추천정보</a></li>
+
+<li id="RE980" value="4"><a href="http://opencast.naver.com/RE980" title="레뷰의 인기리뷰 - 요리/맛집">레뷰의 인기리뷰 - 요리/맛집</a></li>
+
+
+                        </ul>
+
+                        <div id="open_page_ctr" class="page_ctr">
+                            <div id="open_p_list" class="p_list" >
+                                <a href="#" class="pre_p" onclick="return false;"><img src="http://static.naver.com/w9/btn_pre_p11.gif" alt="이전 오픈캐스트 목록" title="이전 목록" width="18" height="18" /></a>
+                                <a href="#" class="next_p" onclick="return false;"><img src="http://static.naver.com/w9/btn_next_p11.gif" alt="다음 오픈캐스트 목록" title="다음 목록" width="18" height="18" /></a>
+                            </div>
+                            <div class="p_cast">
+                                <a href="#" class="pre" onclick="return false;"><img src="http://static.naver.com/w9/btn_pre11.gif" alt="이전 오픈캐스트" title="이전 캐스트" width="17" height="18" /></a>
+                                <a href="#" class="next" onclick="return false;"><img src="http://static.naver.com/w9/btn_next11.gif" alt="다음 오픈캐스트" title="다음 캐스트" width="17" height="18" /></a>
+                            </div>
+                        </div>
+
+                        <div id="opencast_msg_bln" class="msg_bln hide">
+                            <div class="lt"><div class="rt"><div class="lb"><div id="opencast_msg_txt" class="rb">
+                                <em class="em2">로그인</em>을 해주세요.
+                            </div></div></div></div>
+                            <div class="arw"></div>
+                        </div>
+                    </div>
+
+                    <ul id="cast_link" class="cast_link">
+                    <li id="cast_link_opencast" class="f"><em><a href="http://opencast.naver.com/home/main.nhn?categorySeq=0">전체</a></em></li>
+                     
+<li><a href="http://opencast.naver.com/home/main.nhn?categorySeq=7" onclick="clickcr(this,'occ_def.travel','','',event);">여행</a></li>
+<li><a href="http://opencast.naver.com/home/main.nhn?categorySeq=6" onclick="clickcr(this,'occ_def.book','','',event);">문화/책</a></li>
+ 
+
+                    </ul>
+
+                </div>
+	        </div>
+   			<div id="open_cast_help" class="cast hide">
+                        <div class="cast_help">
+                                <dl>
+                                <dt class="blind"><a href="#open_help_h" id="open_help_h" name="open_help_h">오픈캐스트 도움말</a></dt>
+                                <dd class="close"><a href="#open_help_a" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_close6.gif" alt="닫기" width="10" height="9" /></a></dd>
+                                <dd>
+                                        <p>오픈캐스트는 인터넷 상의 유용한<br />정보들을 캐스터의 관점으로 모아<br />공유하는 서비스 입니다.</p>
+                                        <p><a href="http://inside.naver.com/opencast2_tutorial1">오픈캐스트 이용안내</a></p>
+                                </dd>
+                                </dl>
+                                <div class="shadow"></div>
+                        </div>
+            </div>
+
+<div id="theme_cast" class="cast2"> 
+	<div class="cast_title2"> 
+		<h2><a><img src="http://wstatic.naver.com/w9/h_theme2.gif" width="52" height="12" alt="테마캐스트" title="테마캐스트" /></a></h2> 
+		<ul id="theme_category">
+	<li id="sports"><a href="#">스포츠</a></li>
+	<li id="economy"><a href="#">경제</a></li>
+	<li id="movie"><a href="#">영화</a></li>
+	<li id="music"><a href="#">뮤직</a></li>
+	<li id="fun"><a href="#">웹툰/게임</a></li>
+</ul>
+
+	</div> 
+	<h3 id="tc_category_name" class="blind"></h3> 
+	<div class="theme_cast_article"> 
+		<p id="thcast_prev" class="btn btnp"><a href="#"><img src="http://wstatic.naver.com/w9/btn_pre10.gif" width="17" height="22" alt="이전" title="이전" /></a></p> 
+		<div id="theme_cast_contents">	
+			<script type="text/javascript">var th_first = "sports";</script>
+<div class="tc_photo tc_photo2 ">
+<a href="http://news.naver.com/sports/index.nhn?category=worldfootball" onclick="clickcr(this, 'vcr.image','78024A01_00000000A4F3', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0403/nmms_224633734.jpg" width="120" height="89" alt="해외축구 중계" title="해외축구 중계"/>
+<strong>맨유, 첼시에 1:2 패배</strong>
+<span class="cont">선발 박지성 71분 활약<br />드로그바 후반 결승골</span>
+</a>
+</div>
+<div class="tc_photo tc_photo2 rt2">
+<a href="http://news.naver.com/sports/index.nhn?category=worldbaseball" onclick="clickcr(this, 'vcr.image','78024A01_00000000A4F4', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0403/nmms_204650200.jpg" width="120" height="89" alt="일본 야구 결과" title="일본 야구 결과"/>
+<strong>김태균 이틀연속 홈런</strong>
+<span class="cont">오릭스전 4안타 2타점<br />시즌타율 0.300로 상승</span>
+</a>
+</div>
+<ul class="tc_txt rt basic2">
+<li><strong><a href="http://news.naver.com/sports/index.nhn?category=baseball" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4FB', '', event)" >'카도쿠라 역투' SK, 두산 전승 행진 저지</a>
+</strong></li>
+<li><a href="http://news.naver.com/sports/index.nhn?category=worldfootball&amp;ctg=news&amp;mod=read&amp;office_id=216&amp;article_id=0000035046" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4F5', '', event)" >볼턴 감독 &quot;이청용, 절대 뺄 수 없는 선수&quot;</a>
+</li>
+<li><a href="http://news.naver.com/sports/index.nhn?category=kbo&amp;ctg=video&amp;mod=hot_clip" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4F6', '', event)" >[영상] 이종욱 홈 돌진…박경완과 정면 충돌</a>
+</li>
+<li><strong><a href="http://news.naver.com/sports/index.nhn?category=basketball" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4F9', '', event)" >'김효범 3점 폭발' 모비스, 챔피언전 2연승</a>
+</strong></li>
+<li><a href="http://news.naver.com/sports/index.nhn?category=k_league&amp;ctg=news&amp;mod=read&amp;office_id=109&amp;article_id=0002094507&amp;date=20100403&amp;page=1" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4F7', '', event)" >'루시오 2골' 경남, 포항 3:1 제압…2위 점프</a>
+</li>
+<li><a href="http://news.naver.com/sports/index.nhn?category=e_sports&amp;ctg=news&amp;mod=read&amp;office_id=117&amp;article_id=0002066977&amp;date=20100403&amp;page=1" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4FA', '', event)" >'이영호 MVP' KT, 위너스리그 첫 정상 등극</a>
+</li>
+<li><a href="http://news.naver.com/sports/new/worldcup2010/today.nhn?day=best&amp;id=1002661" onclick="clickcr(this, 'vcr.text','78024A01_00000000A4F8', '', event)" >호나우두 vs 펠레 '브라질 최고의 공격수는?'</a>
+</li>
+</ul>
+
+		</div>
+		<p id="thcast_next" class="btn btnn"><a href="#"><img src="http://wstatic.naver.com/w9/btn_next10.gif" width="17" height="22" alt="다음" title="다음" /></a></p> 
+	</div> 
+</div> 
+			
+<div id="today_cast" class="cast2"> 
+	<div class="cast_title2"> 
+		<h2><a href="http://navercast.naver.com/" onclick="clickcr(this,'ncc.title','','',event);"><img src="http://wstatic.naver.com/w9/h_naver_cast_v5.gif" width="61" height="12" alt="네이버캐스트" title="네이버캐스트" /></a></h2> 
+		<ul id="tc_category">
+<li id="all"><a href="#"><strong>종합</strong></a></li>
+<li id="science"><a href="#">과학</a></li>
+<li id="society"><a href="#">철학/문학</a></li>
+<li id="culture"><a href="#">여행/지리</a></li>
+<li id="art"><a href="#">음악/미술</a></li>
+<li id="life"><a href="#">생활</a></li>
+<li id="people"><a href="#">인물</a></li>
+<li id="photobook"><a href="#">포토/책</a></li>
+</ul>
+
+		<p class="more"><a href="http://navercast.naver.com/" onclick="clickcr(this,'ncc.more','','',event);">더보기</a></p> 
+	</div> 
+	
+	<h3 class="blind">전체</h3> 
+	<div class="today_cast_article"> 
+		<p id="tocast_prev" class="btn btnp"><a href="#"><img src="http://wstatic.naver.com/w9/btn_pre10.gif" width="17" height="22" alt="이전" title="이전" /></a></p> 
+		<div id="today_cast_contents">
+		
+<script type="text/javascript"> nc_fidx = 2; </script>
+<ul id="naver_story_list" class="atc2">
+<li class="f">
+<h4><a href="http://navercast.naver.com/peoplehistory/list" onclick="clickcr(this, 'ncc*A.title','', '', event)" >인물과 역사</a></h4>
+<p>
+<a href="http://navercast.naver.com/peoplehistory/wisdom/2126" onclick="clickcr(this, 'ncc*A.content','7801A601_00000000A06D', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0331/nmms_145624668.jpg" alt="존 흄" title="존 흄" width="119" height="64" />
+<strong>
+<em class="type1">존 흄<br /></em>
+</strong>
+<span class="stit type5">우리 시대의 멘토<br /></span>
+<span class="cont">
+<em class="type9">&quot;평화를 이루려면,<br /></em>
+<em class="type9">피 대신 땀을&quot;<br /></em>
+</span>
+</a>
+</p>
+</li>
+<li >
+<h4><a href="http://book.naver.com/todaybook/todaybook_lst.nhn" onclick="clickcr(this, 'ncc*A.title','', '', event)" >오늘의 책</a></h4>
+<p>
+<a href="http://book.naver.com/bookdb/today_book.nhn?bid=123466" onclick="clickcr(this, 'ncc*A.content','7800E101_000000009FB6', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0330/nmms_21254854.jpg" alt="로베르네 집" title="로베르네 집" width="119" height="64" />
+<strong>
+<em class="type1">로베르네 집<br /></em>
+</strong>
+<span class="stit type5">장은아<br /></span>
+<span class="cont">
+<em class="type9">텅 비어 있는 삶이 있다고?<br /></em>
+<em class="type9">어서 점거하러 가자!<br /></em>
+</span>
+</a>
+</p>
+</li>
+<li >
+<h4><a href="http://navercast.naver.com/photospecial/list" onclick="clickcr(this, 'ncc*A.title','', '', event)" >포토 스페셜</a></h4>
+<p>
+<a href="http://navercast.naver.com/photospecial/lecture/2356" onclick="clickcr(this, 'ncc*A.content','7800F201_00000000A1CF', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0330/nmms_172657905.jpg" alt="높이의 미학, 오름" title="높이의 미학, 오름" width="119" height="64" />
+<strong>
+<em class="type1">높이의 미학, 오름<br /></em>
+</strong>
+<span class="stit type5">사진 강의실<br /></span>
+<span class="cont">
+<em class="type9">김연아도 높이 뛸수록 유리<br /></em>
+<em class="type9">꿈·희망·도전…위로 더 위로<br /></em>
+</span>
+</a>
+</p>
+</li>
+<li >
+<h4><a href="http://dna.naver.com" onclick="clickcr(this, 'ncc*A.title','', '', event)" >옛날신문</a></h4>
+<p>
+<a href="http://navercast.naver.com/dna/history/2281" onclick="clickcr(this, 'ncc*A.content','7800E901_000000009F23', '', event)" >
+<img src="http://static.naver.com/www/u/2010/0326/nmms_183456532.jpg" alt="프로야구, 플레이 볼!" title="프로야구, 플레이 볼!" width="119" height="64" />
+<strong>
+<em class="type1">프로야구, 플레이 볼!<br /></em>
+</strong>
+<span class="stit type5">한국에도 프로야구 상륙<br /></span>
+<span class="cont">
+<em class="type9">아빠는 치어리더에 들썩<br /></em>
+<em class="type9">아들은 야구잠바에 덩실<br /></em>
+</span>
+</a>
+</p>
+</li>
+</ul>
+	
+		</div>
+		<p id="tocast_next" class="btn btnn"><a href="#"><img src="http://wstatic.naver.com/w9/btn_next10.gif" width="17" height="22" alt="다음" title="다음" /></a></p> 
+	</div> 
+</div> 
+
+		<div id="svcmore" class="svcmore hide"></div>
+		</div>
+		<div id="column_right">
+		
+		<div id="com_cast" class="com_cast">
+			<!-- 컴캐스트 사용자정보 -->
+	<div id="ccuser" class="ccuser">
+
+		<h2 class="blind"><a href="#com_cast_h" id="com_cast_h" name="com_cast_h">커뮤니케이션 캐스트</a></h2>
+		
+		<p class="user"><a href="https://nid.naver.com/user/help.nhn?todo=changeMain" onclick="clickcr(this,'log_gin.idname','','',event);" class="lkbtn"><strong><span id="usr_val">불꽃담배</span></strong> 님</a></p>
+		<p id="lg_link_msg" class="myinfo">
+			<a href="https://nid.naver.com/user/help.nhn?todo=changeMain" class="lk_info">내정보관리</a> 
+			<a href="http://nid.naver.com/nidlogin.logout?returl=http://www.naver.com" class="btn_logout" onclick="clickcr(this,'log_gin.logout','','',event);">로그아웃</a>
+		</p>
+		
+		<div class="gosvc">
+			<a href="http://mail.naver.com/" class="lk_mail" onclick="clickcr(this,'log_gin.mail','','',event);">메일
+<strong>6680</strong></a> <span class="hr">|</span>
+			<a href="http://mail.naver.com/note/" class="lk_note" onclick="clickcr(this,'log_gin.note','','',event);">쪽지
+<strong>86</strong></a> <span class="hr">|</span>
+			<span class="mypg"><a id="lnkMyPage" href="#" target="_blank">&nbsp;</a></span>
+			<span class="mypg2"><a id="btnMyPage" href="#ccset" class="lk_ccset" title="My페이지 서비스 목록 더보기">더보기</a></span></div>
+
+		<div class="ccmn_tab">
+			<div class="w">
+				<ul id="cc_menu" style="margin-left:0px;"> 
+				<li class="mn1"><em><a href="#">내소식<span></span></a><span></span></em></li> 
+				<li class="mn2"><a href="#">블로그<span></span></a></li>
+				<li class="mn3"><a href="#">카페<span></span></a></li>
+				<li class="mn7"><a href="#">미투데이<span></span></a></li>
+				<li class="mn6"><a href="#">지식iN<span></span></a></li>
+				<li class="mn5"><a href="#">캘린더<span></span></a></li>
+				<li class="mn4"><a href="#">해피빈<span></span></a></li>
+				<li class="mn8"><a href="#">순서설정<span></span></a></li>
+				</ul>
+			</div>
+			<div class="page2"><a href="#menuPrev" onclick="return false;" id="menuPrev" class="pre">이전<span></span></a> <a href="#menuNext" onclick="return false;" id="menuNext" class="next">다음<span></span></a></div>
+		</div>
+		
+	</div>
+	<!-- //컴캐스트 사용자정보 -->
+	<div id="cc_mypage" class="cc_mypage hide"></div>
+	
+
+<script type="text/javascript">
+//<![CDATA[
+	var userId = 'being20c'
+	var userName = '김영곤';
+	var happybeanCnt = '0';
+	var groupIdCode = '0';
+//]]>
+</script>
+<iframe id="tlogin" src="about:blank" title="login" width="0" height="0" marginheight="0" marginwidth="0" scrolling="no" frameborder="0" style="display:none"></iframe>
+
+				<div id="cclist" class="cclist hide"></div>
+				<div id="ccconfig"></div>
+			<div id="ccnotice" class="ccnotice hide">
+			<div class="head">
+				<p><a id="ccnotice_show" href="#myall" onclick="return false;"><strong id="digit" class="digit1">0</strong><img src="http://wstatic.naver.com/w9/txt_notilayer_new.gif" alt="개의 새로운 소식이 도착했습니다" width="153" height="18" /></a></p>
+				<p class="close"><a id="ccnotice_close" href="#account" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_close7.gif" alt="닫기" width="16" height="16" /></a></p>
+			</div>
+			<div class="cont">
+				<p><img src="http://wstatic.naver.com/w9/txt_notilayer_v2.gif" alt="블로그, 카페 등 여러 서비스의 내 소식을 모아 볼 수 있으며, 향후 여러 사이트들로 확대될 예정입니다. 네이버 이용자들에게 알림 서비스를 제공하고 싶은 사이트들의 제휴 신청을 기다리고 있습니다." width="234" height="60" /></p>
+				<p class="btn"><a id="ccnotice_inside" href="http://inside.naver.com/newnaver_8"><img src="http://wstatic.naver.com/w9/btn_notilayer.gif" alt="커뮤니케이션 캐스트 안내 및 제휴 문의" width="163" height="20" /></a></p>
+				<p class="beta">BETA</p>
+			</div>
+			</div>
+			<div id="loading" class="hide"><div id="comm_loading"></div></div>
+		</div>
+		
+		<!--NONE-->
+		<div id="ie55" style="display:none;"></div>
+		<div id="ad_branding_hide"></div>
+		<div id="time_square">
+		<h2 class="blind"><a href="#time_h" id="time_h" name="time_h">타임스퀘어</a></h2>
+		<div class="tsq">
+			<p class="tsq_date">
+	2010.04.03
+	<span id="tsq_date" class="ns">
+		<span class="n2"></span>
+		<span class="n0"></span>
+		<span class="n1"></span>
+		<span class="n0"></span>
+		<span class="nd"></span>
+		<span class="n0"></span>
+		<span class="n4"></span>
+		<span class="nd"></span>
+		<span class="n0"></span>
+		<span class="n3"></span>
+		<span class="nd"></span>
+		<span class="wk sat"></span>
+	</span>
+</p>
+
+			<div id="ws_tsq" class="hslice">
+				<div class="entry-title">네이버 타임스퀘어</div>
+				<div class="entry-content">
+					
+<ul id="tsq_list" class="tsq_list 1"><li><span class="title"><a href="http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;ptype=469617&amp;cid=466441&amp;iid=177106&amp;sid1=100&amp;gid=467439&amp;nh=20100403221649#469617" onclick="clickcr(this, 'squ.theme','78005501_00000000A3EC', '', event)" >이슈</a></span>
+<a href="http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;ptype=469617&amp;cid=466441&amp;iid=177106&amp;sid1=100&amp;gid=467439&amp;nh=20100403221649#469617" onclick="clickcr(this, 'squ.text','78005501_00000000A3EB', '', event)" ><strong>천안함 실종자 가족 &quot;수색중단 요청&quot;</strong></a>
+</li><li><span class="title"><a href="http://weather.naver.com/" onclick="clickcr(this, 'squ.theme','78005501_00000000A3EE', '', event)" >날씨</a></span>
+<a href="http://weather.naver.com" onclick="clickcr(this, 'squ.text','78005501_00000000A3ED', '', event)" >큰 일교차 유의를</a>
+|
+<a href="http://weather.naver.com/rgn/cityWetrCity.nhn?cityRgnCd=CT002001" onclick="clickcr(this, 'squ.text','78005501_00000000A3F2', '', event)" >백령도</a>
+|
+<a href="http://search.naver.com/search.naver?where=nexearch&amp;query=%C1%D6%B8%BB+%B3%AF%BE%BE&amp;sm=top_tsi" onclick="clickcr(this, 'squ.text','78005501_00000000A3F3', '', event)" >주말 날씨</a>
+</li><li><span class="title"><a href="http://traffic.map.naver.com/" onclick="clickcr(this, 'squ.theme','78005501_00000000A3F0', '', event)" >교통</a></span>
+<a href="http://map.naver.com/?level=8&amp;lat=37.4823727&amp;lng=126.9360897&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64" onclick="clickcr(this, 'squ.text','78005501_00000000A3EF', '', event)" >실시간 상황, 수도권</a>
+|
+<a href="http://map.naver.com/?level=8&amp;lat=36.2767459&amp;lng=127.4237516&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64" onclick="clickcr(this, 'squ.text','78005501_00000000A3F4', '', event)" >충청</a>
+|
+<a href="http://map.naver.com/?level=8&amp;lat=35.1012949&amp;lng=128.1523609&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64" onclick="clickcr(this, 'squ.text','78005501_00000000A3F5', '', event)" >남해안</a>
+</li></ul><div id="tsq_page" class="page"><a class="pre" id="tsq_page_prev" href="#" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_pre9.gif" title="이전" alt="이전 타임스퀘어 페이지" width="13" height="14" /></a> <a class="next" id="tsq_page_next" href="#" onclick="return false;"><img src="http://wstatic.naver.com/w9/btn_next9.gif" title="다음" alt="다음 타임스퀘어 페이지" width="13" height="14" /></a></div>
+
+					<div id="tsq_finan" class="finan">
+					
+<dl class="finan_news"><dt><a href="http://land.naver.com" onclick="clickcr(this, 'squ.theme','7801A201_000000009D92', '', event)" >부동산</a></dt> <dd>
+<a href="http://land.naver.com/news/news.nhn?m=list&amp;mode=hotnews" onclick="clickcr(this, 'squ.text','7801A201_000000009D91', '', event)" >과천 주공 9곳 재건축 계획 승인</a></dd></dl>
+
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="tsq_menu">
+				<div id="areaInputDIV" style="display:none">
+					<input type="text" value="" id="areaInput" onkeydown="tsq.onKeyDownEnter(event);" class="input_nation" title="국가번호"/>
+				</div>
+			    <div id="loaderDIV" style="display:none"></div>
+			    <div id="naviDIV"></div>
+			</div>
+		</div>
+
+		<div id="ad_branding">
+			<iframe id="f280150" name="f280150" src="http://nv2.ad.naver.com/adshow?unit=002N" title="광고" width="280" height="150" marginheight="0" marginwidth="0" scrolling="no" frameborder="0">광고 : <a href="http://nv2.ad.naver.com/adshow?unit=002N">http://nv2.ad.naver.com/adshow?unit=002N</a></iframe>
+		</div>
+<iframe src="http://castbox.shopping.naver.com/" id="shop_cast" name="shop_cast" class="shop_cast" title="쇼핑캐스트" width="280" height="396" marginheight="0" marginwidth="0" scrolling="no" frameborder="0">쇼핑캐스트 : <a href="http://castbox.shopping.naver.com/">http://castbox.shopping.naver.com/</a></iframe>
+			<div id="marketing_v2"> 
+				<h2 class="blind"><a href="#marketing_h" id="marketing_h" name="marketing_h">마케팅 센터</a></h2> 
+				
+<ul>
+<li><a href="http://diary.naver.com/150083657392" onclick="clickcr(this, 'mkt.title','78011601_00000000A46D', '', event)" target="_blank"><img src="http://static.naver.com/www/u/2010/0402/nmms_203134447.jpg" alt="애드포스트, 네이버 블로그 전체확대" width="280" height="66" /></a></li>
+<li><a href="http://me2day.net/me2/channel/baseball2010" onclick="clickcr(this, 'mkt.leftbanner','78011601_00000000A46E', '', event)" target="_blank"><img src="http://static.naver.com/www/u/2010/0402/nmms_20326389.jpg" alt="프로야구 응원은 미투가 제맛" width="280" height="66" /></a></li>
+</ul>
+
+			</div> 
+		</div>
+	</div>
+	<hr />
+	<div id="footer">
+		<dl class="notice">
+		<dt><a href="http://nboard.naver.com/nboard/list.php?board_id=nvnews" id="ntc.title"><img src="http://wstatic.naver.com/w9/h_notice.gif" alt="공지사항" width="40" height="13" /></a></dt>
+		
+<dd><a href="http://nboard.naver.com/nboard/read.php?board_id=nvnews&amp;nid=489" onclick="clickcr(this, 'ntc.notice','78011B01_000000007C00', '', event)" >네이버 홈이 더욱 편리해졌습니다</a></dd>
+
+		</dl>
+		<p class="svc_all"><a href="more.html" id="ntc.svcmap"><img src="http://wstatic.naver.com/w9/btn_svc_all.png" alt="서비스 전체보기" width="77" height="13" /></a></p>
+		<dl class="policy">
+		<dt class="blind">네이버 정책 및 약관</dt>
+		<dd class="f"><a href="http://www.nhncorp.com/" target="_blank" id="plc.intronhn">회사소개</a></dd>
+		<dd><a href="http://mktg.naver.com/marketing_center.html" id="plc.adinfo">광고</a></dd>
+		<dd><a href="http://www.nhncorp.com/proposal/guide.nhn" id="plc.contact">제휴제안</a></dd>
+		<dd><a href="http://www.naver.com/rules/service.html" id="plc.service">이용약관</a></dd>
+		<dd><a href="http://www.naver.com/rules/privacy.html" id="plc.privacy"><strong>개인정보취급방침</strong></a></dd>
+		<dd><a href="http://www.naver.com/rules/youthpolicy.html" id="plc.youth">청소년보호정책</a></dd>
+		<dd><a href="http://www.naver.com/rules/spamcheck.html" id="plc.policy">네이버 정책</a></dd>
+		<dd><a href="http://help.naver.com/main.jsp" id="plc.helpcenter">고객센터</a></dd>
+		</dl>
+		<address>&copy; <strong><a href="http://www.nhncorp.com/">NHN Corp.</a></strong></address>
+	</div>
+</div>
+<div id="dim" style="display:none;"></div>
+
+<script type="text/javascript" src="/js/compact/navertop1_20100330.js"></script>
+<script type="text/javascript" src="/js/compact/navertop2_20100325.js"></script>
+<script type="text/javascript" src="/js/compact/navertop3_20100325.js"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+	var quickNews =
+{"M":[
+],
+"N":[
+[
+"실종자 첫 발견..남기훈 상사 시신 수습",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205205"]
+,
+[
+"실종가족 &#34;추가희생안돼..구조중단 요청&#34;",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205280"]
+,
+[
+"대청도 근해서 실종선원 시신 추가발견",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205217"]
+,
+[
+"'UDT 전설 영면'…대전현충원에 안장",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205124"]
+,
+[
+"&#34;단둥 도착한 北열차는 화물열차&#34;",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205045"]
+,
+[
+"로또 1등 '4, 15, 28, 33, 37, 40'",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205277"]
+,
+[
+"김태균, 홈런 포함 4안타 대폭발",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205131"]
+,
+[
+"-프로야구- 김상현 결승포..KIA 3연승",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003205247"]
+,
+[
+"-LPGA- 김송희, 2라운드 단독선두",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003204633"]
+,
+[
+"美 아이패드 매장 '밤샘 대기조' 북적",
+"http://news.naver.com/main/list.nhn?mode=LPOD&mid=sec&sid1=001&sid2=140&oid=001&isYeonhapFlash=Y&aid=0003204756"]
+]}
+
+	var NewsCate_Random = ['032','005','020','021','081','022','023','025','028','038','214','057','055','215','052','009','008','011','277','018','014','015','016','029','031','030','092','079','006','047','002','073','076','241','040','056','117','314','086','044','045','293','109','139','326','327','330','003'];
+
+	var NewsTheme = [
+['SA1','톱 뉴스','http://news.naver.com/main/presscenter/subject.nhn?subject=A1','http://cafe.naver.com/navernewscast'],
+['S10','정치','http://news.naver.com/main/presscenter/subject.nhn?subject=10','http://cafe.naver.com/navernewscast'],
+['S20','경제/IT','http://news.naver.com/main/presscenter/subject.nhn?subject=20','http://cafe.naver.com/navernewscast'],
+['S30','사회','http://news.naver.com/main/presscenter/subject.nhn?subject=30','http://cafe.naver.com/navernewscast'],
+['S40','생활/문화','http://news.naver.com/main/presscenter/subject.nhn?subject=40','http://cafe.naver.com/navernewscast'],
+['S50','세계','http://news.naver.com/main/presscenter/subject.nhn?subject=50','http://cafe.naver.com/navernewscast'],
+['S60','스포츠/연예','http://news.naver.com/main/presscenter/subject.nhn?subject=60','http://cafe.naver.com/navernewscast'],
+['S70','스페셜','http://news.naver.com/main/presscenter/subject.nhn?subject=70','http://cafe.naver.com/navernewscast'],
+['SA2','지역','http://news.naver.com/main/presscenter/subject.nhn?subject=A2','http://cafe.naver.com/navernewscast']
+];
+
+	var NewsSect = {
+"정치":"11",
+"경제":"21",
+"IT":"22",
+"사회":"31",
+"생활":"41",
+"문화":"42",
+"세계":"51",
+"스포츠":"61",
+"연예":"62",
+"스페셜":"71"
+};
+
+	var NewsCate = {
+"종합":[
+['032','경향신문','http://www.khan.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=16&amp;search.boardtype=L'],
+['005','국민일보','http://www.kukinews.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=17&amp;search.boardtype=L'],
+['086','내일신문','http://www.naeil.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=22&amp;search.boardtype=L'],
+['079','노컷뉴스','http://www.cbs.co.kr/nocut/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=49&amp;search.boardtype=L'],
+['327','뉴데일리','http://www.newdaily.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=50&amp;search.boardtype=L'],
+['003','뉴시스','http://www.newsis.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=109&amp;search.boardtype=L'],
+['020','동아일보','http://www.donga.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=23&amp;search.boardtype=L'],
+['029','디지털타임스','http://www.dt.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=19&amp;search.boardtype=L'],
+['009','매일경제','http://www.mk.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=18&amp;search.boardtype=L'],
+['008','머니투데이','http://www.mt.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=21&amp;search.boardtype=L'],
+['021','문화일보','http://www.munhwa.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=24&amp;search.boardtype=L'],
+['006','미디어오늘','http://www.mediatoday.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=51&amp;search.boardtype=L'],
+['293','블로터닷넷','http://www.bloter.net/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=47&amp;search.boardtype=L'],
+['011','서울경제','http://economy.hankooki.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=38&amp;search.boardtype=L'],
+['081','서울신문','http://www.seoul.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=25&amp;search.boardtype=L'],
+['022','세계일보','http://www.segye.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=26&amp;search.boardtype=L'],
+['277','아시아경제','http://www.asiaeconomy.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=39&amp;search.boardtype=L'],
+['031','아이뉴스24','http://www.inews24.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=40&amp;search.boardtype=L'],
+['047','오마이뉴스','http://www.ohmynews.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=52&amp;search.boardtype=L'],
+['018','이데일리','http://www.edaily.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=41&amp;search.boardtype=L'],
+['030','전자신문','http://www.etnews.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=42&amp;search.boardtype=L'],
+['023','조선일보','http://www.chosun.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=27&amp;search.boardtype=L'],
+['025','중앙일보','http://www.joins.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=28&amp;search.boardtype=L'],
+['092','지디넷코리아','http://www.zdnet.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=43&amp;search.boardtype=L'],
+['014','파이낸셜뉴스','http://www.fnnews.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=44&amp;search.boardtype=L'],
+['002','프레시안','http://www.pressian.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=53&amp;search.boardtype=L'],
+['028','한겨레','http://www.hani.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=29&amp;search.boardtype=L'],
+['015','한국경제','http://www.hankyung.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=45&amp;search.boardtype=L'],
+['215','한국경제TV','http://www.wownet.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=36&amp;search.boardtype=L'],
+['038','한국일보','http://www.hankooki.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=30&amp;search.boardtype=L'],
+['016','헤럴드경제','http://www.heraldbiz.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=46&amp;search.boardtype=L'],
+['056','KBS TV','http://www.kbs.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=32&amp;search.boardtype=L'],
+['214','MBC TV','http://www.imbc.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=33&amp;search.boardtype=L'],
+['057','mbn TV','http://www.mbn.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=34&amp;search.boardtype=L'],
+['055','SBS TV','http://www.sbs.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=35&amp;search.boardtype=L'],
+['052','YTN TV','http://www.ytn.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=37&amp;search.boardtype=L']]
+,
+"스포츠/연예":[
+['117','마이데일리','http://www.mydaily.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=55&amp;search.boardtype=L'],
+['314','스포츠동아','http://sports.donga.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=56&amp;search.boardtype=L'],
+['073','스포츠서울','http://www.sportsseoul.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=57&amp;search.boardtype=L'],
+['076','스포츠조선','http://sports.chosun.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=58&amp;search.boardtype=L'],
+['139','스포탈코리아','http://sportalkorea.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=60&amp;search.boardtype=L'],
+['241','일간스포츠','http://isplus.joins.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=59&amp;search.boardtype=L'],
+['109','OSEN','http://osen.mt.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=61&amp;search.boardtype=L']]
+,
+"외신/영자지":[
+['045','로이터','http://www.reuters.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=64&amp;search.boardtype=L'],
+['330','중앙데일리','http://joongangdaily.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=65&amp;search.boardtype=L'],
+['040','코리아타임스','http://www.koreatimes.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=63&amp;search.boardtype=L'],
+['044','코리아헤럴드','http://www.koreaherald.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=66&amp;search.boardtype=L'],
+['326','KBS World','http://world.kbs.co.kr/english/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=67&amp;search.boardtype=L']]
+,
+"지역지":[
+['335','강원도민일보','http://www.kado.net/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=85&amp;search.boardtype=L'],
+['087','강원일보','http://www.kwnews.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=84&amp;search.boardtype=L'],
+['339','경기일보','http://www.kgib.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=79&amp;search.boardtype=L'],
+['333','경남신문','http://www.knnews.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=82&amp;search.boardtype=L'],
+['337','경북일보','http://www.kyongbuk.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=77&amp;search.boardtype=L'],
+['338','경인일보','http://www.kyeongin.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=78&amp;search.boardtype=L'],
+['301','광주드림','http://www.gjdream.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=74&amp;search.boardtype=L'],
+['083','광주일보','http://www.kwangju.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=75&amp;search.boardtype=L'],
+['332','국제신문','http://www.kookje.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=81&amp;search.boardtype=L'],
+['089','대전일보','http://www.daejonilbo.com','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=72&amp;search.boardtype=L'],
+['088','매일신문','http://www.imaeil.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=69&amp;search.boardtype=L'],
+['082','부산일보','http://www.busan.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=70&amp;search.boardtype=L'],
+['336','전북일보','http://www.jjan.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=76&amp;search.boardtype=L'],
+['334','제주의소리','http://www.jejusori.net/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=83&amp;search.boardtype=L'],
+['331','충청투데이','http://cctoday.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=73&amp;search.boardtype=L'],
+['340','OBS','http://www.obsnews.co.kr','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=80&amp;search.boardtype=L']]
+,
+"매거진/전문지":[
+['344','교육방송','http://home.ebs.co.kr/ebsnews/index.html','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=111&amp;search.boardtype=L'],
+['345','디자인정글','http://jungle.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=108&amp;search.boardtype=L'],
+['122','법률신문','http://www.lawtimes.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=87&amp;search.boardtype=L'],
+['329','소년한국일보','http://kids.hankooki.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=96&amp;search.boardtype=L'],
+['308','시사IN','http://www.sisain.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=93&amp;search.boardtype=L'],
+['140','씨네21','http://www.cine21.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=90&amp;search.boardtype=L'],
+['328','에이블뉴스','http://www.ablenews.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=95&amp;search.boardtype=L'],
+['310','여성신문','http://www.womennews.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=94&amp;search.boardtype=L'],
+['123','조세일보','http://www.joseilbo.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=88&amp;search.boardtype=L'],
+['296','코메디닷컴','http://www.kormedi.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=89&amp;search.boardtype=L'],
+['050','한경비즈니스','http://www.kbizweek.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=91&amp;search.boardtype=L'],
+['346','헬스조선','http://health.chosun.com/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=110&amp;search.boardtype=L'],
+['312','10 아시아','http://10.asiae.co.kr/','http://cafe.naver.com/ArticleList.nhn?search.clubid=19404258&amp;search.menuid=92&amp;search.boardtype=L']]
+};
+NewPress = [
+];
+
+	var opencast_url = "http://opencast.naver.com";
+var opencast_navertop_url = "http://navertop.opencast.naver.com";
+
+var opencast_nclick_casts = {
+		"LF638": "naverdiy",
+		"NV033": "naverolympic",
+		"CU399": "naverbook",
+		"ET675": "naverentertain"
+};
+
+var opencast_nclick_articles = {
+		"LF638": "r",
+		"NV033": "w",
+		"CU399": "b",
+		"ET675": "e"
+};
+
+var managed_casts = [
+	{"id":"CU399","title":"감성지수 36.5","casterId":"naver_story","subscriberCount":47772,"subscriptionType":null,"status":"N","volumeSeq":499},
+	{"id":"LF638","title":"생활의 발견","casterId":"naver_story","subscriberCount":59353,"subscriptionType":null,"status":"N","volumeSeq":503}
+];
+
+var opencast_category = [{"id":"AA488","title":"iPhone Art의 아이폰 아이팟터치 추천정보","casterId":"ipodart","subscriberCount":8615,"subscriptionType":null,"status":"N","volumeSeq":244},{"id":"AG700","title":"아다지오-슬프도록 아름다운","casterId":"minix77","subscriberCount":5474,"subscriptionType":null,"status":"N","volumeSeq":138},{"id":"BA845","title":"배짱이의 여행스토리","casterId":"1978mm","subscriberCount":4392,"subscriptionType":null,"status":"N","volumeSeq":157},{"id":"BD527","title":"최신 PC /  IT 기기 정보와 트렌드는?","casterId":"potatotree","subscriberCount":2113,"subscriptionType":null,"status":"N","volumeSeq":226},{"id":"CO131","title":"쉽게 따라할 수 있는 세계 요리","casterId":"rfiennes","subscriberCount":4869,"subscriptionType":null,"status":"N","volumeSeq":52},{"id":"FT050","title":"푸우우의 맛집, 하늘과 구름 여행","casterId":"mike8283","subscriberCount":6197,"subscriptionType":null,"status":"N","volumeSeq":376},{"id":"GD170","title":"pxCAST -  픽셀케스트","casterId":"imgum","subscriberCount":14958,"subscriptionType":null,"status":"N","volumeSeq":475},{"id":"GO217","title":"직장인의 휴가내서 떠나는 여행~ 고고씽!","casterId":"wkwmd81","subscriberCount":24804,"subscriptionType":null,"status":"N","volumeSeq":216},{"id":"HC172","title":"새콤달콤 헬시라이프","casterId":"healthnews","subscriberCount":2897,"subscriptionType":null,"status":"N","volumeSeq":695},{"id":"HK919","title":"경제야 놀자","casterId":"hankyung3","subscriberCount":4990,"subscriptionType":null,"status":"N","volumeSeq":244},{"id":"HR009","title":"통방구리의 달콤한 세상","casterId":"cocodior","subscriberCount":22338,"subscriptionType":null,"status":"N","volumeSeq":154},{"id":"IC839","title":"죽기 전에 꼭 가봐야 할 베스트 여행지","casterId":"ichufs","subscriberCount":13916,"subscriptionType":null,"status":"N","volumeSeq":103},{"id":"IM914","title":"아이디어박물관","casterId":"kakeman1","subscriberCount":15483,"subscriptionType":null,"status":"N","volumeSeq":167},{"id":"JU906","title":"눈과 입이 즐거운 로즈표 요리세상","casterId":"julie7000","subscriberCount":26048,"subscriptionType":null,"status":"N","volumeSeq":156},{"id":"KH466","title":"영어뉴스 따라잡기","casterId":"shinyb1016","subscriberCount":3014,"subscriptionType":null,"status":"N","volumeSeq":102},{"id":"MR954","title":"추천! 데이트코스","casterId":"moricafe","subscriberCount":2241,"subscriptionType":null,"status":"N","volumeSeq":86},{"id":"NA986","title":"상상력놀이터의 디자인이야기","casterId":"hoochoo402","subscriberCount":13628,"subscriptionType":null,"status":"N","volumeSeq":368},{"id":"PT412","title":"비츠로의 사진 미학","casterId":"kth9117","subscriberCount":4687,"subscriptionType":null,"status":"N","volumeSeq":84},{"id":"RE980","title":"레뷰의 인기리뷰 - 요리/맛집","casterId":"romeo74","subscriberCount":4854,"subscriptionType":null,"status":"N","volumeSeq":196},{"id":"SK247","title":"근땡이의 행복한 음식이 있는 부엌","casterId":"kjiong","subscriberCount":3621,"subscriptionType":null,"status":"N","volumeSeq":51},{"id":"SS469","title":"▶ 다이어트 바이블","casterId":"dietbible","subscriberCount":9518,"subscriptionType":null,"status":"N","volumeSeq":383},{"id":"TM123","title":"태터앤미디어가 전하는 오늘의 블로그 뉴스","casterId":"tattermedia","subscriberCount":1724,"subscriptionType":null,"status":"N","volumeSeq":251},{"id":"WI215","title":"영화, 그 최고의 순간을 찾아","casterId":"ktuim","subscriberCount":6863,"subscriptionType":null,"status":"N","volumeSeq":496},{"id":"YU982","title":"요리천사의 행복밥상","casterId":"yummycook","subscriberCount":11538,"subscriptionType":null,"status":"N","volumeSeq":98}];
+
+var opencast_content = {
+	"CU399":{"status":"N","volumeSeq":499,"volumeStatus":"N","casterId":"naver_story","volumeSelfStatus":"N","volumeTitle":null,"volume":{"seq":499,"publishDate":"2010.04.03","pages":[{"layout":"2","halfLayout":1,"articles":[{"articleSeq":1173955,"title":"'장르문학'의 재발견","url":"http://news.naver.com/main/read.nhn?mode=LSD&mid=sec&sid1=102&oid=042&aid=0001943684","thumbnailUrl":"http://thumb.opencast.naver.net/opencast01/n/a/naver_story/20100401/14021471768600.gif?type=f10060","type":"I","rank":101},{"articleSeq":1173800,"title":"봄을 노래하는 여성 보컬, 그들의 노래와 어울리는 책","url":"http://blog.naver.com/huhsy1/102928050","thumbnailUrl":null,"type":"T","rank":102},{"articleSeq":1173766,"title":"처음엔 어색한 사이, '미운 정' 드는 모습이 예쁜 영화들","url":"http://blog.naver.com/vedette123/70083365778","thumbnailUrl":null,"type":"T","rank":103},{"articleSeq":1173934,"title":"'한국대중음악상' 특별상과 영화 TV 음악상에 대한 단상","url":"http://blog.naver.com/windntree/30083480925","thumbnailUrl":null,"type":"T","rank":104},{"articleSeq":1173651,"title":"21세기, 다시 읽는 이상 - 혼종, 경계를 넘나들다","url":"http://news.naver.com/main/hotissue/read.nhn?mid=hot&sid1=103&gid=311533&cid=307092&iid=204818&oid=020&aid=0002126019&ptype=011","thumbnailUrl":null,"type":"T","rank":105}]},{"layout":"2","halfLayout":1,"articles":[{"articleSeq":1167923,"title":"'무도' 1800일 역사","url":"http://blog.naver.com/adplayer/110083682995","thumbnailUrl":"http://thumb.opencast.naver.net/opencast01/n/a/naver_story/20100402/12043272464262.gif?type=f10060","type":"I","rank":106},{"articleSeq":1177988,"title":"이선균, '파스타'는 내게 처음 가는 길이었다","url":"http://news.naver.com/main/read.nhn?mode=LSD&mid=sec&sid1=106&oid=312&aid=0000003593","thumbnailUrl":null,"type":"T","rank":107},{"articleSeq":1176612,"title":"새롭게 시작한 방송 3사 '수목 드라마'에 대한 첫인상","url":"http://blog.naver.com/hoja216/140104203466","thumbnailUrl":null,"type":"T","rank":108},{"articleSeq":1173931,"title":"극적 효과 압권, 영화 '지옥의 묵시록'에 나오는 클래식","url":"http://news.naver.com/main/read.nhn?mode=LSD&mid=sec&sid1=103&oid=042&aid=0001943699","thumbnailUrl":null,"type":"T","rank":109},{"articleSeq":1173781,"title":"올여름에 많이 듣게 될, '월드컵' 하면 떠오르는 노래들","url":"http://blog.naver.com/janggeum22/30081075557","thumbnailUrl":null,"type":"T","rank":110}]}]}},
+	"LF638":{"status":"N","volumeSeq":503,"volumeStatus":"N","casterId":"naver_story","volumeSelfStatus":"N","volumeTitle":null,"volume":{"seq":503,"publishDate":"2010.04.03","pages":[{"layout":"2","halfLayout":1,"articles":[{"articleSeq":1176723,"title":"싱그러운 향, 오이","url":"http://today.kitchen.naver.com/today.nhn?sectionCode=KITCHEN_SAT&sectionId=968","thumbnailUrl":"http://thumb.opencast.naver.net/opencast01/n/a/naver_story/20100402/10451867041999.jpg?type=f10060","type":"I","rank":101},{"articleSeq":1177208,"title":"5일 완성, 콩나물을 우유팩에서 싱싱하게 기르는 방법","url":"http://blog.naver.com/vakivaki/60089569613","thumbnailUrl":null,"type":"T","rank":102},{"articleSeq":1140081,"title":"티셔츠에 멋스럽게 다리는 슬림하게 - '레깅스' 코디","url":"http://blog.naver.com/teddyjieun/90083419612","thumbnailUrl":null,"type":"T","rank":103},{"articleSeq":1173669,"title":"쇼핑의 천국 '홍콩'.. 2010년엔 축제로 볼거리도 한가득","url":"http://news.naver.com/main/hotissue/read.nhn?mid=hot&sid1=103&gid=311586&cid=307170&iid=166627&oid=020&aid=0002125650&ptype=011","thumbnailUrl":null,"type":"T","rank":104},{"articleSeq":1131207,"title":"고양이가 잘 놀아요, 집에서 쉽게 만드는 터널 장난감","url":"http://blog.naver.com/cofks37/40101888390","thumbnailUrl":null,"type":"T","rank":105}]},{"layout":"2","halfLayout":1,"articles":[{"articleSeq":1171209,"title":"동화같은 용복마을","url":"http://blog.naver.com/1989ok/60104439794","thumbnailUrl":"http://thumb.opencast.naver.net/opencast01/n/a/naver_story/20100331/15564961755675.jpg?type=f10060","type":"I","rank":106},{"articleSeq":1175112,"title":"당당한 '외톨이'.. 혼자 놀기, 어디까지 해봤니?","url":"http://news.naver.com/main/magazinec/index.nhn?componentId=468494","thumbnailUrl":null,"type":"T","rank":107},{"articleSeq":1169287,"title":"그림 솜씨 없어도 좋아요 - 대고 그리는 '벽지 포인트'","url":"http://blog.naver.com/song5550/60104557289","thumbnailUrl":null,"type":"T","rank":108},{"articleSeq":1170155,"title":"아무도 모르게 실명하는 녹내장.. 무엇이 문제일까","url":"http://news.naver.com/main/read.nhn?mode=LSD&mid=shm&sid1=103&oid=023&aid=0002137107","thumbnailUrl":null,"type":"T","rank":109},{"articleSeq":1175166,"title":"독일에선 부활절에 토끼 모양 초콜릿을 먹어요","url":"http://blog.naver.com/rene9/30083492815","thumbnailUrl":null,"type":"T","rank":110}]}]}}
+};
+
+var opencast_navertop_maintenance = "";
+	var ts_normal = {"data":[["<li><span class='title'><a href=&quot;http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;sid1=100&amp;gid=467439&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A41C', '', event)&quot; >이슈</a></span> <a href=&quot;http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;sid1=100&amp;gid=467439&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A41B', '', event)&quot; ><strong>천안함 실종자 첫 발견…시신 수습</strong></a></li><li><span class='title'><a href=&quot;http://opencalendar.naver.com/&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A41E', '', event)&quot; >행사</a></span> <a href=&quot;http://opencalendar.naver.com/index.nhn?cidList=0300&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A41D', '', event)&quot; >주말 '공연'</a> | <a href=&quot;http://opencalendar.naver.com/index.nhn?cidList=0201&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A421', '', event)&quot; >'전시회'</a> | <a href=&quot;http://opencalendar.naver.com/index.nhn?cidList=0500&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A422', '', event)&quot; >'스포츠' 일정</a></li><li><span class='title'><a href=&quot;http://news.naver.com/sports&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A420', '', event)&quot; >스포츠</a></span> <a href=&quot;http://news.naver.com/sports/index.nhn?category=worldfootball&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A41F', '', event)&quot; >'박지성 출전' 맨유, 첼시에 1 : 2 패배</a></li>"],["<li><span class='title'><a href=&quot;http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;ptype=469617&amp;cid=466441&amp;iid=177106&amp;sid1=100&amp;gid=467439&amp;nh=20100403221649#469617&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A3EC', '', event)&quot; >이슈</a></span> <a href=&quot;http://news.naver.com/main/hotissue/sectionList.nhn?mid=hot&amp;ptype=469617&amp;cid=466441&amp;iid=177106&amp;sid1=100&amp;gid=467439&amp;nh=20100403221649#469617&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3EB', '', event)&quot; ><strong>천안함 실종자 가족 &quot;수색중단 요청&quot;</strong></a></li><li><span class='title'><a href=&quot;http://weather.naver.com/&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A3EE', '', event)&quot; >날씨</a></span> <a href=&quot;http://weather.naver.com&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3ED', '', event)&quot; >큰 일교차 유의를</a> | <a href=&quot;http://weather.naver.com/rgn/cityWetrCity.nhn?cityRgnCd=CT002001&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3F2', '', event)&quot; >백령도</a> | <a href=&quot;http://search.naver.com/search.naver?where=nexearch&amp;query=%C1%D6%B8%BB+%B3%AF%BE%BE&amp;sm=top_tsi&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3F3', '', event)&quot; >주말 날씨</a></li><li><span class='title'><a href=&quot;http://traffic.map.naver.com/&quot; onclick=&quot;clickcr(this, 'squ.theme','78005501_00000000A3F0', '', event)&quot; >교통</a></span> <a href=&quot;http://map.naver.com/?level=8&amp;lat=37.4823727&amp;lng=126.9360897&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3EF', '', event)&quot; >실시간 상황, 수도권</a> | <a href=&quot;http://map.naver.com/?level=8&amp;lat=36.2767459&amp;lng=127.4237516&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3F4', '', event)&quot; >충청</a> | <a href=&quot;http://map.naver.com/?level=8&amp;lat=35.1012949&amp;lng=128.1523609&amp;traffic=on&amp;menu=location&amp;mapMode=0&amp;enc=b64&quot; onclick=&quot;clickcr(this, 'squ.text','78005501_00000000A3F5', '', event)&quot; >남해안</a></li>"]]}
+
+	var ts_stock = {"data":[["<dl class=&quot;finan_news&quot;><dt><a href=&quot;http://stock.naver.com/&quot; onclick=&quot;clickcr(this, 'squ.theme','78004A01_000000000190', '', event)&quot; >증권</a> </dt> <dd><a href=&quot;http://stock.naver.com/news/&quot; onclick=&quot;clickcr(this, 'squ.text','78004A01_00000000018F', '', event)&quot; >삼성생명 상장 이후 주가 전망은</a></dd></dl>"],["<dl class=&quot;finan_news&quot;><dt><a href=&quot;http://land.naver.com&quot; onclick=&quot;clickcr(this, 'squ.theme','7801A201_000000009D92', '', event)&quot; >부동산</a> </dt> <dd><a href=&quot;http://land.naver.com/news/news.nhn?m=list&amp;mode=hotnews&quot; onclick=&quot;clickcr(this, 'squ.text','7801A201_000000009D91', '', event)&quot; >과천 주공 9곳 재건축 계획 승인</a></dd></dl>"]]}
+
+	var th_category = {"fix":"sports","id":["sports","economy","movie","music","fun"]}
+	var nc_contents = [
+[
+[{"n":"옛날신문","nu":"http://dna.naver.com","g":"7800E901_000000009F23","e":"B","u":"http://navercast.naver.com/dna/history/2281","i":"http://static.naver.com/www/u/2010/0326/nmms_183456532.jpg","a":"프로야구, 플레이 볼!","t1":"프로야구, 플레이 볼!","t12":"","t13":"","t2":"한국에도 프로야구 상륙","t3":"아빠는 치어리더에 들썩","t4":"아들은 야구잠바에 덩실","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 과학","nu":"http://navercast.naver.com/science/list","g":"7800E501_00000000A047","e":"B","u":"http://navercast.naver.com/science/image/2268","i":"http://static.naver.com/www/u/2010/0331/nmms_14139739.jpg","a":"조류","t1":"조류","t12":"","t13":"","t2":"이미지 사이언스","t3":"겉보기에는 고요하지만","t4":"바다 속 흐름은 거칠다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 문학","nu":"http://navercast.naver.com/literature/list","g":"7800EF01_00000000A15A","e":"B","u":"http://navercast.naver.com/literature/genre/2361","i":"http://static.naver.com/www/u/2010/0331/nmms_184055996.jpg","a":"계간 &amp;lt;미스터리&amp;gt; 추천작","t1":"피의 반란","t12":"","t13":"","t2":"계간 &lt;미스터리&gt; 추천작","t3":"증오로 가득한 두 형제,","t4":"그들이 계획한 일은?","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 포토","nu":"http://photo.naver.com/today/","g":"7800E201_000000009EAB","e":"B","u":"http://photo.naver.com/view/2010030808311279506?view=today&amp;sort=recent&amp;param=201004_1","i":"http://static.naver.com/www/u/2010/0330/nmms_115749948.jpg","a":"공존","t1":"공존","t12":"","t13":"","t2":"photo by 황금사과","t3":"공존을 위한 메시지","t4":"사진가의 세심한 배려","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"오늘의 집","nu":"http://navercast.naver.com/home/list","g":"7800F001_00000000A23C","e":"B","u":"http://navercast.naver.com/home/beforeandafter/2367","i":"http://static.naver.com/www/u/2010/0401/nmms_181424534.jpg","a":"공간별 수납 아이디어","t1":"공간별 수납 아이디어","t12":"","t13":"","t2":"비포 앤 애프터","t3":"수납만 잘해도 집이","t4":"한결 더 커 보인다!","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"아름다운 한국","nu":"http://navercast.naver.com/geographic/list","g":"7800E601_00000000A3AB","e":"B","u":"http://navercast.naver.com/geographic/seoulscape/2375","i":"http://static.naver.com/www/u/2010/0402/nmms_17368876.jpg","a":"서대문사거리 화양극장","t1":"서대문사거리 화양극장","t12":"","t13":"","t2":"서울진풍경","t3":"도시 속에","t4":"그 소명을 다하다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 체조","nu":"http://navercast.naver.com/gymnastics/list","g":"7801A401_00000000A1B4","e":"B","u":"http://navercast.naver.com/gymnastics/stretching/2175","i":"http://static.naver.com/www/u/2010/0226/nmms_175057954.jpg","a":"피로회복에 좋은 체조","t1":"피로회복에 좋은 체조","t12":"","t13":"","t2":"몸을 가뿐하게 하는 동작","t3":"명치부근에서 아랫배까지","t4":"손바닥으로 쓸어내리기","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"갤러리 N","nu":"http://photo.naver.com/galleryn/list","g":"7800ED01_000000009D42","e":"B","u":"http://photo.naver.com/galleryn/84","i":"http://static.naver.com/www/u/2010/0329/nmms_104655361.jpg","a":"강수진, 갈라 더 발레","t1":"강수진, 갈라 더 발레","t12":"","t13":"","t2":"발레리나 강수진의 모든 것","t3":"조명이 켜지고, 막이 올라","t4":"우아함으로 찬란히 빛나다!","s1":"type1","s12":"type1","s13":"type1","s2":"type8","s3":"type12","s4":"type12"}],[{"n":"인물과 역사","nu":"http://navercast.naver.com/peoplehistory/list","g":"7801A601_00000000A06D","e":"B","u":"http://navercast.naver.com/peoplehistory/wisdom/2126","i":"http://static.naver.com/www/u/2010/0331/nmms_145624668.jpg","a":"존 흄","t1":"존 흄","t12":"","t13":"","t2":"우리 시대의 멘토","t3":"&quot;평화를 이루려면,","t4":"피 대신 땀을&quot;","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 책","nu":"http://book.naver.com/todaybook/todaybook_lst.nhn","g":"7800E101_000000009FB6","e":"B","u":"http://book.naver.com/bookdb/today_book.nhn?bid=123466","i":"http://static.naver.com/www/u/2010/0330/nmms_21254854.jpg","a":"로베르네 집","t1":"로베르네 집","t12":"","t13":"","t2":"장은아","t3":"텅 비어 있는 삶이 있다고?","t4":"어서 점거하러 가자!","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"포토 스페셜","nu":"http://navercast.naver.com/photospecial/list","g":"7800F201_00000000A1CF","e":"B","u":"http://navercast.naver.com/photospecial/lecture/2356","i":"http://static.naver.com/www/u/2010/0330/nmms_172657905.jpg","a":"높이의 미학, 오름","t1":"높이의 미학, 오름","t12":"","t13":"","t2":"사진 강의실","t3":"김연아도 높이 뛸수록 유리","t4":"꿈·희망·도전…위로 더 위로","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"옛날신문","nu":"http://dna.naver.com","g":"7800E901_000000009F23","e":"B","u":"http://navercast.naver.com/dna/history/2281","i":"http://static.naver.com/www/u/2010/0326/nmms_183456532.jpg","a":"프로야구, 플레이 볼!","t1":"프로야구, 플레이 볼!","t12":"","t13":"","t2":"한국에도 프로야구 상륙","t3":"아빠는 치어리더에 들썩","t4":"아들은 야구잠바에 덩실","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}]
+],
+[{"n":"오늘의 과학","nu":"http://navercast.naver.com/science/list","g":"7800E501_00000000A047","e":"B","u":"http://navercast.naver.com/science/image/2268","i":"http://static.naver.com/www/u/2010/0331/nmms_14139739.jpg","a":"조류","t1":"조류","t12":"","t13":"","t2":"이미지 사이언스","t3":"겉보기에는 고요하지만","t4":"바다 속 흐름은 거칠다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/science/list","g":"7800E501_00000000A046","e":"B","u":"http://navercast.naver.com/science/physics/2362","i":"http://static.naver.com/www/u/2010/0331/nmms_141130338.jpg","a":"케플러의 법칙","t1":"케플러의 법칙","t12":"","t13":"","t2":"물리 산책","t3":"행성의 운동에 대한","t4":"3가지 법칙","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/science/list","g":"7800E501_000000009E9F","e":"B","u":"http://navercast.naver.com/science/biology/2346","i":"http://static.naver.com/www/u/2010/0330/nmms_14356764.jpg","a":"인공수정","t1":"인공수정","t12":"","t13":"","t2":"생물 산책","t3":"아이의 탄생을 돕는","t4":"보조생식술의 한 가지","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/science/list","g":"7800E501_00000000988D","e":"B","u":"http://navercast.naver.com/science/chemistry/2339","i":"http://static.naver.com/www/u/2010/0330/nmms_14212756.jpg","a":"중화반응","t1":"중화반응","t12":"","t13":"","t2":"화학 산책","t3":"산과 염기를 더할 때","t4":"일어나는 반응","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"오늘의 문학","nu":"http://navercast.naver.com/literature/list","g":"7800EF01_00000000A15A","e":"B","u":"http://navercast.naver.com/literature/genre/2361","i":"http://static.naver.com/www/u/2010/0331/nmms_184055996.jpg","a":"계간 &amp;lt;미스터리&amp;gt; 추천작","t1":"피의 반란","t12":"","t13":"","t2":"계간 &lt;미스터리&gt; 추천작","t3":"증오로 가득한 두 형제,","t4":"그들이 계획한 일은?","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/literature/list","g":"7800EF01_000000009DB3","e":"B","u":"http://navercast.naver.com/literature/essay/2344","i":"http://static.naver.com/www/u/2010/0331/nmms_10303178.jpg","a":"진심을 나눌 때 얻는 것","t1":"진심을 나눌 때 얻는 것","t12":"","t13":"","t2":"&lt;행복한동행&gt; 에세이","t3":"사람의 마음을 잡고 싶다면","t4":"정성, 시간, 노력을 주자","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/literature/list","g":"7800EF01_000000009D48","e":"B","u":"http://navercast.naver.com/literature/letter/2275","i":"http://static.naver.com/www/u/2010/0329/nmms_1174560.jpg","a":"아동문학가 정채봉의 편지","t1":"선생님 고맙습니다","t12":"","t13":"","t2":"아동문학가 정채봉의 편지","t3":"선배 문인의 편지에","t4":"황송한 마음으로 쓴 답장","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/literature/list","g":"7800EF01_00000000990E","e":"B","u":"http://navercast.naver.com/literature/poem/2337","i":"http://static.naver.com/www/u/2010/0326/nmms_17122131.jpg","a":"관객놀이","t1":"관객놀이","t12":"","t13":"","t2":"무섭게 달려가는 관객들","t3":"시인 이민하","t4":"&lsqb;음악처럼 스캔들처럼&rsqb;","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"아름다운 한국","nu":"http://navercast.naver.com/geographic/list","g":"7800E601_00000000A3AB","e":"B","u":"http://navercast.naver.com/geographic/seoulscape/2375","i":"http://static.naver.com/www/u/2010/0402/nmms_17368876.jpg","a":"서대문사거리 화양극장","t1":"서대문사거리 화양극장","t12":"","t13":"","t2":"서울진풍경","t3":"도시 속에","t4":"그 소명을 다하다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"아름다운 한국","nu":"http://navercast.naver.com/geographic/list","g":"7800E601_00000000A2EB","e":"B","u":"http://navercast.naver.com/geographic/gilsupsum/2352","i":"http://static.naver.com/www/u/2010/0401/nmms_181011886.jpg","a":"영동고속도로","t1":"영동고속도로","t12":"","t13":"","t2":"길","t3":"33개 교량과 7개 터널이","t4":"대관령을 가로지르다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"지구촌 산책","nu":"http://navercast.naver.com/worldwide/list","g":"7801A701_00000000A16A","e":"B","u":"http://navercast.naver.com/worldwide/mapandthecity/2321","i":"http://static.naver.com/www/u/2010/0331/nmms_1926371.jpg","a":"나이로비","t1":"야생의 문턱, 나이로비","t12":"","t13":"","t2":"한 장의 그림 지도","t3":"아프리카를 꿈꾼 사람들,","t4":"그들이 찾아나선 도시","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"아름다운 한국","nu":"http://navercast.naver.com/geographic/list","g":"7800E601_00000000922A","e":"B","u":"http://navercast.naver.com/geographic/heritage/2286","i":"http://static.naver.com/www/u/2010/0322/nmms_153630875.jpg","a":"불국사","t1":"불국사","t12":"","t13":"","t2":"위대한 문화유산","t3":"제대로 복원되었더라면","t4":"더욱 아름다웠을 사찰","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"오늘의 클래식","nu":"http://navercast.naver.com/classical/list","g":"7800F401_00000000A06A","e":"B","u":"http://navercast.naver.com/classical/classicabc/2363","i":"http://static.naver.com/www/u/2010/0331/nmms_174031213.jpg","a":"일그러진 진주의 아름다움","t1":"바로크 음악이란?","t12":"","t13":"","t2":"클래식 입문 ABC","t3":"오페라의 탄생과","t4":"음악의 아버지 바흐의 죽음","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 미술","nu":"http://navercast.naver.com/art/list","g":"7800F101_000000009F17","e":"B","u":"http://navercast.naver.com/art/theme/2355","i":"http://static.naver.com/www/u/2010/0331/nmms_143528760.jpg","a":"공간표현과 원근법","t1":"공간표현과 원근법","t12":"","t13":"","t2":"테마로 보는 미술","t3":"평면 위의 그림이 실제","t4":"공간처럼 느껴지는 이유","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 클래식","nu":"http://navercast.naver.com/classical/list","g":"7800F401_0000000096B2","e":"B","u":"http://navercast.naver.com/classical/aria/2271","i":"http://static.naver.com/www/u/2010/0325/nmms_102330897.jpg","a":"빌랴의 노래","t1":"빌랴의 노래","t12":"","t13":"","t2":"&lsqb;즐거운 미망인&rsqb; – 무료듣기","t3":"처녀귀신이 젊은 사내를","t4":"유혹해 춤추게 한다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 클래식","nu":"http://navercast.naver.com/classical/list","g":"7800F401_0000000096B1","e":"B","u":"http://navercast.naver.com/classical/masterpiece/2220","i":"http://static.naver.com/www/u/2010/0330/nmms_11037126.jpg","a":"로코코 변주곡","t1":"로코코 주제 변주곡","t12":"","t13":"","t2":"차이콥스키","t3":"18세기 음악으로 떠난","t4":"차이콥스키의 휴식","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"오늘의 집","nu":"http://navercast.naver.com/home/list","g":"7800F001_00000000A23C","e":"B","u":"http://navercast.naver.com/home/beforeandafter/2367","i":"http://static.naver.com/www/u/2010/0401/nmms_181424534.jpg","a":"공간별 수납 아이디어","t1":"공간별 수납 아이디어","t12":"","t13":"","t2":"비포 앤 애프터","t3":"수납만 잘해도 집이","t4":"한결 더 커 보인다!","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"매일의 디자인","nu":"http://navercast.naver.com/design/list","g":"7801A301_000000009F08","e":"B","u":"http://navercast.naver.com/design/designer/2351","i":"http://static.naver.com/www/u/2010/0331/nmms_18611659.jpg","a":"인더스트리얼 퍼실리티","t1":"인더스트리얼 퍼실리티","t12":"","t13":"","t2":"디자이너 열전","t3":"물건보다는 그것이","t4":"놓일 공간이 더 중요하다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 집","nu":"http://navercast.naver.com/home/list","g":"7800F001_000000009EDD","e":"B","u":"http://navercast.naver.com/home/living/2353","i":"http://static.naver.com/www/u/2010/0330/nmms_153051449.jpg","a":"유럽호텔에서 배운다","t1":"유럽호텔에서 배운다","t12":"","t13":"","t2":"살림의 발견","t3":"너무 쉬워 따라하고픈","t4":"가드닝 아이디어","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 체조","nu":"http://navercast.naver.com/gymnastics/list","g":"7801A401_000000009DB1","e":"B","u":"http://navercast.naver.com/gymnastics/stretching/2336","i":"http://static.naver.com/www/u/2010/0329/nmms_155942254.jpg","a":"춘곤증 물리치는 체조","t1":"춘곤증 물리치는 체조","t12":"","t13":"","t2":"겨우내 움츠린 몸 활짝 펴기","t3":"두 손을 목 뒤에 깍지 끼고","t4":"목덜미 주물러주기","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"인물과 역사","nu":"http://navercast.naver.com/peoplehistory/list","g":"7801A601_00000000A06D","e":"B","u":"http://navercast.naver.com/peoplehistory/wisdom/2126","i":"http://static.naver.com/www/u/2010/0331/nmms_145624668.jpg","a":"존 흄","t1":"존 흄","t12":"","t13":"","t2":"우리 시대의 멘토","t3":"&quot;평화를 이루려면,","t4":"피 대신 땀을&quot;","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/peoplehistory/list","g":"7801A601_00000000A00A","e":"B","u":"http://navercast.naver.com/peoplehistory/foreign/2360","i":"http://static.naver.com/www/u/2010/0331/nmms_111724269.jpg","a":"청태조 누르하치","t1":"청태조 누르하치","t12":"","t13":"","t2":"인물세계사","t3":"여진족을 통일하고","t4":"후금을 세운 청나라 시조","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/peoplehistory/list","g":"7801A601_000000009E11","e":"B","u":"http://navercast.naver.com/peoplehistory/koreanhistory/2317","i":"http://static.naver.com/www/u/2010/0331/nmms_143227404.jpg","a":"왕건","t1":"왕건","t12":"","t13":"","t2":"인물한국사","t3":"한반도를 통일한","t4":"고려왕조의 창업주","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"","nu":"http://navercast.naver.com/peoplehistory/list","g":"7801A601_000000009911","e":"B","u":"http://navercast.naver.com/peoplehistory/foreign/2256","i":"http://static.naver.com/www/u/2010/0326/nmms_171717229.jpg","a":"샤 자한","t1":"샤 자한","t12":"","t13":"","t2":"인물세계사","t3":"'타지마할'로 유명한","t4":"인도 무굴제국의 황제","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"}],[{"n":"오늘의 책","nu":"http://book.naver.com/todaybook/todaybook_lst.nhn","g":"7800E101_000000009FB6","e":"B","u":"http://book.naver.com/bookdb/today_book.nhn?bid=123466","i":"http://static.naver.com/www/u/2010/0330/nmms_21254854.jpg","a":"로베르네 집","t1":"로베르네 집","t12":"","t13":"","t2":"장은아","t3":"텅 비어 있는 삶이 있다고?","t4":"어서 점거하러 가자!","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 포토","nu":"http://photo.naver.com/today/","g":"7800E201_000000009EAB","e":"B","u":"http://photo.naver.com/view/2010030808311279506?view=today&amp;sort=recent&amp;param=201004_1","i":"http://static.naver.com/www/u/2010/0330/nmms_115749948.jpg","a":"공존","t1":"공존","t12":"","t13":"","t2":"photo by 황금사과","t3":"공존을 위한 메시지","t4":"사진가의 세심한 배려","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 책","nu":"http://book.naver.com/todaybook/todaybook_lst.nhn","g":"7800E101_000000009FB5","e":"B","u":"http://book.naver.com/bookdb/today_book.nhn?bid=6011349","i":"http://static.naver.com/www/u/2010/0330/nmms_211917718.jpg","a":"요양객","t1":"요양객","t12":"","t13":"","t2":"헤르만 헤세","t3":"방랑과 순례의 예술가, 헤세","t4":"그의 체험 수기를 만나다","s1":"type1","s12":"type1","s13":"type1","s2":"type5","s3":"type9","s4":"type9"},{"n":"오늘의 포토","nu":"http://photo.naver.com/today/","g":"7800E201_000000009EAA","e":"B","u":"http://photo.naver.com/view/2010021200244885369?view=today&amp;sort=recent&amp;param=201004_1","i":"http://static.naver.com/www/u/2010/0330/nmms_115553418.jpg","a":"무엇을 버리고 무엇을 얻을 것인가","t1":"무엇을 버리고...","t12":"","t13":"","t2":"photo by 영채(hwaldo)","t3":"늘 새롭게 해석되어","t4":"재탄생되는 '바다'!","s1":"type4","s12":"type1","s13":"type1","s2":"type8","s3":"type9","s4":"type9"}]
+]
+;
+	var nc_category = {
+"id"  : [
+"all",
+"science",
+"society",
+"culture",
+"art",
+"life",
+"people",
+"photobook"
+]
+}
+
+
+	CommonFn.init();
+	
+	var CommcastEnvStr = 'CommcastEnv = {"onServices" : [{"id" : "all", "newCnt" : 2},{"id" : "blog", "isNew" : "N"},{"id" : "cafe", "isNew" : "Y"},{"id" : "me2day", "isNew" : "N"},{"id" : "kin", "isNew" : "N"},{"id" : "calendar", "isNew" : "N"},{"id" : "happybean", "isNew" : "N"}],"authServices" : []}';
+	if(CommcastEnvStr == "CommcastEnv = {}") { LogError("[COMM] Data Empty"); }
+	try{ CommunicationCast.init(CommcastEnvStr); } catch(e){ LogError("[COMM] Error : " + e.description + "|" + CommcastEnvStr); }
+	
+
+	NewsCast.init();
+	var uri = new String(document.location);
+	var urls = uri.split("?");
+	if(urls[urls.length - 1] == "s") { NewsCast._getHTML(); }
+
+	var tsq = new TimeSquare({ Cont: "tsq_list", Btn: "tsq_page", Prev: "tsq_page_prev", Next: "tsq_page_next" });
+	ServiceMenu.init(CommonFn.BaseURL);
+	RealTimeRank.init();
+	OpenCast.init(isLogin, isMyCast);
+	try{ThemeCast.init("theme_cast_contents",th_first,th_category);} catch(e){LogError("[Theme]" + e.description); }
+	try{NaverCast.init(nc_fidx,nc_category,nc_contents);} catch(e){LogError("[Navercast]" + e.description); }
+
+	lcs_do();
+	
+//]]>
+</script>
+<!--tweb09.ntop-->
+</body>
+</html>
