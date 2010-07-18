@@ -62,7 +62,6 @@ public class LexerImpl implements Lexer{
 		return false;
 	}
 	
-	
 	@Override
 	public Token getNextToken() {
 		this.currentIndex ++;	// Increase Token Index
@@ -73,22 +72,7 @@ public class LexerImpl implements Lexer{
 			ch = this.page.getCurChar();	// get current char
 			
 			if(this.isIgnoredMode){
-				Logging.debug("##### Entered Ignore mode ..");
-				// Processing Script Value 
-				// this.getTokenText(this.latestTag);	// set SCRIPT or STYLE Tag
-				this.isIgnoredMode = false;
-				
-				PPIgnoreTagValue ppIgrTagVal = new PPIgnoreTagValue();
-				ppIgrTagVal.setPageSource(this.page);
-				ppIgrTagVal.setParentTag(this.latestTag);
-				
-				Token igrTkVal = null;
-				try {
-					igrTkVal = ppIgrTagVal.parse();
-				} catch (CommonException e) {
-					e.printStackTrace();
-				}
-				return igrTkVal;
+				return this.getIgnoredTagValue();
 			}
 			
 			if(ch == '<')
@@ -105,7 +89,7 @@ public class LexerImpl implements Lexer{
 				else	// parse Tag
 				{
 					TokenTag tToken = this.parseTag();
-					if(tToken != null){
+					if(tToken != null){	// set latest
 						if(!tToken.isClosedTag()) // Open Tag
 						{
 							this.latestTag = tToken;
@@ -130,24 +114,11 @@ public class LexerImpl implements Lexer{
 			}
 			else //if(Character.isLetterOrDigit(ch))	// text value
 			{
-				//System.out.println("--> Enter Text ..");
 				if(this.latestTag != null){
 					System.out.println("--> Enter Script Check Mode ..");
 					if(this.latestTag.getTagName().equalsIgnoreCase("script")
 							|| this.latestTag.getTagName().equalsIgnoreCase("style")){
-						System.out.println("#####> Enter Script Value Check Mode ..");
-						PPIgnoreTagValue ppIg = new PPIgnoreTagValue();
-						ppIg.setPageSource(this.page);
-						ppIg.setParentTag(this.latestTag);
-						
-						Token token = null;
-						try {
-							token = ppIg.parse();
-						} catch (CommonException e) {
-							e.printStackTrace();
-						}
-						
-						return token;
+						return this.getIgnoredTagValue();
 					}
 					else
 					{
@@ -164,6 +135,25 @@ public class LexerImpl implements Lexer{
 		}
 		
 		return null;
+	}
+	
+	private Token getIgnoredTagValue(){
+		Logging.debug("##### Entered Ignore mode ..");
+		// Processing Script Value 
+		// this.getTokenText(this.latestTag);	// set SCRIPT or STYLE Tag
+		this.isIgnoredMode = false;
+		
+		PPIgnoreTagValue ppIgrTagVal = new PPIgnoreTagValue();
+		ppIgrTagVal.setPageSource(this.page);
+		ppIgrTagVal.setParentTag(this.latestTag);
+		
+		Token igrTkVal = null;
+		try {
+			igrTkVal = ppIgrTagVal.parse();
+		} catch (CommonException e) {
+			e.printStackTrace();
+		}
+		return igrTkVal;
 	}
 	
 	public TokenTag parseTag()
@@ -227,7 +217,7 @@ public class LexerImpl implements Lexer{
 		long loadTime = System.currentTimeMillis();
 		PageSource bufPs = null;
 		try {
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.chosun.com/").toURI(), 3000);
+			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("test\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
