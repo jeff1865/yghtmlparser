@@ -48,18 +48,25 @@ public class LexerImpl implements Lexer{
 	private TokenTag latestTag = null;
 	private boolean isIgnoredMode = false;
 	
+	PPIgnoreTagValue ppIgrTagVal = null;//new PPIgnoreTagValue();
+	PPTag ppTag = null;//new PPTag();
+	PPText ppText = null;//new PPText();
+	PPComment ppComment = null;//new PPComment();
+	
 	public LexerImpl(PageSource pageSource)
 	{
 		this.currentIndex = 0;
 		page = pageSource;
 		this.tpTable = new Hashtable<String, TokenProcPlugin>();
+		this.initProcessor();
 	}
 	
-	private boolean isIgnoreValueTag(TokenTag tag){
-		String tagName = tag.getTagName();
-		if(tagName.equalsIgnoreCase("script") || tagName.equalsIgnoreCase("style"))
-			return true;
-		return false;
+	private void initProcessor(){
+		ppIgrTagVal = new PPIgnoreTagValue();
+		ppTag = new PPTag();
+		ppTag.setPageSource(this.page);
+		ppText = new PPText();
+		ppComment = new PPComment();
 	}
 	
 	@Override
@@ -88,7 +95,8 @@ public class LexerImpl implements Lexer{
 				}
 				else	// parse Tag
 				{
-					TokenTag tToken = this.parseTag();
+					//Logging.print(Logging.DEBUG, "[ENT] Parse TAG .. this PTR" + this.page.getCurrentCursorPosition());
+					TokenTag tToken = this.getTag();
 					if(tToken != null){	// set latest
 						if(!tToken.isClosedTag()) // Open Tag
 						{
@@ -137,13 +145,20 @@ public class LexerImpl implements Lexer{
 		return null;
 	}
 	
+	private boolean isIgnoreValueTag(TokenTag tag){
+		String tagName = tag.getTagName();
+		if(tagName.equalsIgnoreCase("script") || tagName.equalsIgnoreCase("style"))
+			return true;
+		return false;
+	}
+	
 	private Token getIgnoredTagValue(){
 		Logging.debug("##### Entered Ignore mode ..");
 		// Processing Script Value 
 		// this.getTokenText(this.latestTag);	// set SCRIPT or STYLE Tag
 		this.isIgnoredMode = false;
 		
-		PPIgnoreTagValue ppIgrTagVal = new PPIgnoreTagValue();
+		//PPIgnoreTagValue ppIgrTagVal = new PPIgnoreTagValue();
 		ppIgrTagVal.setPageSource(this.page);
 		ppIgrTagVal.setParentTag(this.latestTag);
 		
@@ -156,9 +171,10 @@ public class LexerImpl implements Lexer{
 		return igrTkVal;
 	}
 	
-	public TokenTag parseTag()
+	public TokenTag getTag()
 	{
-		PPTag ppTag = new PPTag();
+		//PPTag ppTag = new PPTag();
+		//ppTag = new PPTag();
 		ppTag.setPageSource(this.page);
 		
 		Token token = null;
@@ -167,17 +183,20 @@ public class LexerImpl implements Lexer{
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
+		
+		//Logging.print(Logging.DEBUG, "[OUT] Page Index :" + this.page.getCurrentCursorPosition());
+		//this.ppTag.setPageSource(null);
 		return (TokenTag)token;
 	}
 	
 	public TokenText getTokenText(TokenTag latestTag){
-		PPText ppt = new PPText();
-		ppt.setPageSource(this.page);
-		ppt.setParentTokenTag(latestTag);
+		//PPText ppt = new PPText();
+		ppText.setPageSource(this.page);
+		ppText.setParentTokenTag(latestTag);
 		
 		TokenText tText = null;
 		try {
-			tText = ppt.parse();
+			tText = ppText.parse();
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
@@ -185,12 +204,12 @@ public class LexerImpl implements Lexer{
 	}
 	
 	private TokenComment getTokenComment(){
-		PPComment ppc = new PPComment();
-		ppc.setPageSource(this.page);
+		//PPComment ppc = new PPComment();
+		ppComment.setPageSource(this.page);
 		
 		Token token = null;
 		try {
-			token = ppc.parse();
+			token = ppComment.parse();
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
@@ -217,8 +236,8 @@ public class LexerImpl implements Lexer{
 		long loadTime = System.currentTimeMillis();
 		PageSource bufPs = null;
 		try {
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
-			//bufPs = ResourceManager.getLoadedPage(new File("test\\naver.html"));
+			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
+			bufPs = ResourceManager.getLoadedPage(new File("test\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

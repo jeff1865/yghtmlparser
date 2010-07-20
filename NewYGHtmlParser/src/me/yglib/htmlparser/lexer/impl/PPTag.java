@@ -1,3 +1,21 @@
+// =============================================================================
+//   YG Html Parser (Rapid Java Html Parser Project)
+//   Copyright 2010 Young-Gon Kim (gonni21c@gmail.com)
+//   http://ygonni.blogspot.com
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// =============================================================================
+
 package me.yglib.htmlparser.lexer.impl;
 
 import me.yglib.htmlparser.CommonException;
@@ -5,6 +23,7 @@ import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.datasource.PageSource;
 import me.yglib.htmlparser.lexer.*;
+import me.yglib.htmlparser.util.Logging;
 
 public class PPTag implements TokenProcPlugin{
 	
@@ -36,6 +55,12 @@ public class PPTag implements TokenProcPlugin{
 		this.page = ps;
 	}
 	
+	public void initValue(){
+		this.cAttr = ETagType.NOT_PARSED;
+		this.str_tagName = "";
+		this.ch = '0';
+	}
+	
 	@Override
 	public String getEntryString() {
 		// TODO Auto-generated method stub
@@ -45,6 +70,9 @@ public class PPTag implements TokenProcPlugin{
 	@SuppressWarnings("unchecked")
 	@Override
 	public TokenTag parse() throws CommonException {
+		
+		this.initValue();
+		
 		this.tkWorking = new TokenTagImpl();
 		this.tkWorking.initValue();
 				
@@ -60,17 +88,20 @@ public class PPTag implements TokenProcPlugin{
 			}
 			else if(this.cAttr == ETagType.TAG_START)
 			{
+				//Logging.print(Logging.DEBUG, "[INT3] enter TagName :" + this.page.getCurrentCursorPosition());
 				ch = page.getNextChar();
 				this.parseTagName();
 			}
 			else if(this.cAttr == ETagType.TAG_END)
 			{
 				this.tkWorking.setTagName(this.str_tagName);
+				//Logging.print(Logging.DEBUG, "[IN1] Page Index :" + this.page.getCurrentCursorPosition());
 				return this.tkWorking;
 			}
 		}while(cAttr != ETagType.TAG_END);
 		
 		this.tkWorking.setTagName(this.str_tagName);
+		//Logging.print(Logging.DEBUG, "[IN2] Page Index :" + this.page.getCurrentCursorPosition());
 		return this.tkWorking;
 	}
 	
