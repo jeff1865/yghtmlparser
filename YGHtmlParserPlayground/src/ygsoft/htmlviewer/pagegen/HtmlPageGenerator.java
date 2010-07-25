@@ -19,9 +19,14 @@
 package ygsoft.htmlviewer.pagegen;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
+import me.yglib.htmlparser.TokenTag;
+import me.yglib.htmlparser.TokenText;
 import me.yglib.htmlparser.datasource.PageSource;
 import me.yglib.htmlparser.datasource.impl.ResourceManager;
 import me.yglib.htmlparser.parser.Node;
@@ -30,30 +35,98 @@ import me.yglib.htmlparser.parser.impl.HtmlDomBuilder;
 public class HtmlPageGenerator {
 	
 	private List<Node> rootNodes = null;
+	private static final String initHtmlText = "<HTML><HEAD>" +
+		"<META http-equiv=Content-Type content=\"text/html; charset=euk-kr\">" +
+		"<script type=\"text/javascript\" language=\"JavaScript\">" +
+		"function layer_toggle(obj) {" +
+        	"if (obj.style.display == 'none') obj.style.display = 'block';" +
+        	"else if (obj.style.display == 'block') obj.style.display = 'none';" +
+		"}" +
+		"</script>" +
+		"<style>" +
+		".more {border:1px dotted #EFEFEF;margin:5px;background:#F9F9F9;}" +
+		".more p {margin:5px;}" +
+		"</style>" +
+		"</HEAD> "+ 
+		"<BODY>";
+	
 	
 	public HtmlPageGenerator(List<Node> rootNodes){
 		this.rootNodes = rootNodes;
 	}
 	
-	public String getFullPage(String initText){
+	public String getHtmlStrPage(){
+		String strRet = initHtmlText;
 		
-		return initText;
+		strRet = this.makeTableTreeText(this.rootNodes, strRet);
+		strRet += "</body></html>";
+		return strRet;
 	}
 	
+	private String makeTableTreeText(List<Node> nodes, String srcText){
+		if(nodes != null){
+			//System.out.println("+++ ADD +++");
+			srcText += "\n<table border=1 cellspacing=0 cellpadding=0 bordercolor=black>";
+			for(Node node : nodes){
+				// write something
+				if(node.getToken() instanceof TokenTag)
+					srcText += "<tr><td>" + ((TokenTag)node.getToken()).getTagName() + "</td>";
+				else  if(node.getToken() instanceof TokenText)
+				{
+					srcText += "<tr><td>" + ((TokenText)node.getToken()).getValueText() + "</td>";
+					System.out.println("+++++++++++++++++++++++++++++++++");
+				}
+				else
+					srcText += "<tr><td bgcolor=grey>N/R</td></tr>";
+				
+				if(node.getChildren() != null){
+					srcText += "<td>";
+					// recursive
+					srcText = this.makeTableTreeText(node.getChildren(), srcText);
+					srcText += "</td>";
+				}
+				srcText += "</tr>";
+			}
+			srcText += "</table>\n";
+		}
+		//System.out.println("1>" + srcText);
+		return srcText;
+	}
+	
+	public static void nodeSearchTestRc(List<Node> nodes){
+		//deg("start Root node size :" + nodes);
+		if(nodes != null)
+		for(Node node : nodes){
+			System.out.println("[NODE]" + node.getToken());
+			nodeSearchTestRc(node.getChildren());
+		}
+	}
 	
 	public void nodeSearchTest(){
-		deg("start Root node size :" + this.rootNodes.size());
+		nodeSearchTestRc(this.rootNodes);
 	}
 	
 	public static void deg(String msg){
 		System.out.println(">" + msg);
+		
+	}
+	
+	public static void StringToFile(String src, File file){
+		try {
+			PrintWriter pw = new PrintWriter(file);
+			pw.write(src);
+			pw.flush();
+			pw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		try {
-			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
-			bufPs = ResourceManager.getLoadedPage(new File("test\\naver.html"));
+			bufPs = ResourceManager.loadStringBufferPage(new URL("http://news.chosun.com/site/data/html_dir/2010/07/25/2010072500043.html?Dep1=news&Dep2=headline1&Dep3=h1_07").toURI(), 3000);
+			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -61,8 +134,15 @@ public class HtmlPageGenerator {
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
 		List<Node> rootNode = domBuilder.build();
 		
+		nodeSearchTestRc(rootNode);
+		
 		HtmlPageGenerator hpg = new HtmlPageGenerator(rootNode);
-		hpg.nodeSearchTest();
+		//hpg.nodeSearchTest();
+		String res = hpg.getHtmlStrPage();
+		StringToFile(res, new File("C:/Users/YoungGon/Desktop/test2.html"));
+		
+		System.out.println("Completed!!");
+		//System.out.println("========= RESULT ==========================\n" + res);
 		
 //		System.out.println("Root Node Size :" + rootNode.size());
 //		Node node = rootNode.get(0);
