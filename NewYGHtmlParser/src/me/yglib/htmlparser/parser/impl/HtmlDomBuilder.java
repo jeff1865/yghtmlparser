@@ -1,3 +1,21 @@
+// =============================================================================
+//   YG Html Parser (Rapid Java Html Parser Project)
+//   Copyright 2010 Young-Gon Kim (gonni21c@gmail.com)
+//   http://ygonni.blogspot.com
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// =============================================================================
+
 package me.yglib.htmlparser.parser.impl;
 
 import java.net.URL;
@@ -73,10 +91,13 @@ public class HtmlDomBuilder {
 				}
 				
 			} else if(tk instanceof TokenText){
+				Logging.debug("+++++++++++++ add Text ++++++++++++");
 				if(stack.peek() == null){ 
 					Logging.debug("Invalid source ..");
 				} else {
-					rNode.addChildNode(stack.peek());
+					Logging.debug("+++++++++++++ <add Text> ++++++++++++");
+					//rNode.addChildNode(stack.peek());
+					((NodeImpl)stack.peek()).addChildNode(rNode);
 				}
 			} else {
 				Logging.debug("Ignored ..");
@@ -84,6 +105,16 @@ public class HtmlDomBuilder {
 		}
 		
 		return rootNodes;
+	}
+	
+	public static void displayNode(List<Node> nodes){
+		if(nodes != null)
+		{
+			for(Node node : nodes){
+				System.out.println("NODE >" + node.getToken());
+				displayNode(node.getChildren());
+			}
+		}
 	}
 	
 	public static void main(String ... v){
@@ -98,13 +129,14 @@ public class HtmlDomBuilder {
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
 		List<Node> rootNode = domBuilder.build();
 		
-		System.out.println("Root Node Size :" + rootNode.size());
-		Node node = rootNode.get(0);
-		System.out.println("FirstNode " + node.toString());
-		List<Node> children = node.getChildren();
-		System.out.println("Children :" + children.size());
-		
-		for(Node nd : children)
-			System.out.println(" -subNode :" + nd.toString());
+		displayNode(rootNode);
+//		System.out.println("Root Node Size :" + rootNode.size());
+//		Node node = rootNode.get(0);
+//		System.out.println("FirstNode " + node.toString());
+//		List<Node> children = node.getChildren();
+//		System.out.println("Children :" + children.size());
+//		
+//		for(Node nd : children)
+//			System.out.println(" -subNode :" + nd.toString());
 	}
 }
