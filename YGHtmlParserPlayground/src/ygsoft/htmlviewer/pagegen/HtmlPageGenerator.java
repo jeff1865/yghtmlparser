@@ -66,14 +66,17 @@ public class HtmlPageGenerator {
 	private String makeTableTreeText(List<Node> nodes, String srcText){
 		if(nodes != null){
 			//System.out.println("+++ ADD +++");
-			srcText += "\n<table border=1 cellspacing=0 cellpadding=0 bordercolor=black>";
+			srcText += "\n<table border=1 cellspacing=0 cellpadding=0 bordercolor=gray>";
 			for(Node node : nodes){
 				// write something
 				if(node.getToken() instanceof TokenTag)
-					srcText += "<tr><td>" + ((TokenTag)node.getToken()).getTagName() + "</td>";
+				{
+					
+					srcText += "<tr><td bgcolor=#f0ffff>" + ((TokenTag)node.getToken()).getTagName() + "</td>";
+				}
 				else  if(node.getToken() instanceof TokenText)
 				{
-					srcText += "<tr><td>" + ((TokenText)node.getToken()).getValueText() + "</td>";
+					srcText += "<tr><td bgcolor=#faffff>" + ((TokenText)node.getToken()).getValueText() + "</td>";
 					System.out.println("+++++++++++++++++++++++++++++++++");
 				}
 				else
@@ -125,7 +128,8 @@ public class HtmlPageGenerator {
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		try {
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://news.chosun.com/site/data/html_dir/2010/07/25/2010072500043.html?Dep1=news&Dep2=headline1&Dep3=h1_07").toURI(), 3000);
+			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.google.com").toURI(), 3000);
+			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://news.chosun.com/site/data/html_dir/2010/07/25/2010072500043.html?Dep1=news&Dep2=headline1&Dep3=h1_07").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
