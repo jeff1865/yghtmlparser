@@ -17,8 +17,9 @@ public class PSstringBuffer implements PageSource{
 		
 	@Override
 	public int getCurrentCursorPosition() {
-		if(this.curPos == 0) return curPos;
-		else return curPos - 1;
+//		if(this.curPos == 0) return curPos;
+//		else return curPos - 1;
+		return curPos;
 	}
 
 

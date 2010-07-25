@@ -61,7 +61,8 @@ public class LexerImpl implements Lexer{
 		this.initProcessor();
 	}
 	
-	private void initProcessor(){
+	private void initProcessor()
+	{
 		ppIgrTagVal = new PPIgnoreTagValue();
 		ppTag = new PPTag();
 		ppTag.setPageSource(this.page);
@@ -70,7 +71,8 @@ public class LexerImpl implements Lexer{
 	}
 	
 	@Override
-	public Token getNextToken() {
+	public Token getNextToken() 
+	{
 		this.currentIndex ++;	// Increase Token Index
 		char ch = 0;
 		
@@ -82,19 +84,23 @@ public class LexerImpl implements Lexer{
 				return this.getIgnoredTagValue();
 			}
 			
+			//System.out.println("CH1:" + ch);	// need to DEL1
 			if(ch == '<')
 			{
 				//Logging.print(Logging.DEBUG, "entry parse tag");
 				char chNext = this.page.getChar(this.page.getCurrentCursorPosition() + 1);
-								
+				//System.out.println("CH2:" + chNext);	// need to DEL2
+				
 				if(chNext == '!')	// PARSE Comment
 				{
-					//Logging.print(Logging.DEBUG, "parse comment..");
+					//System.out.println("++++++++++++++ PARSE IGNORED !");
+					Logging.print(Logging.DEBUG, "parse [!] comment detected ..");
 					TokenComment tComment = this.getTokenComment();
 					return tComment;
 				}
 				else	// parse Tag
 				{
+					//System.out.println("============= TAG first char :" + chNext);
 					//Logging.print(Logging.DEBUG, "[ENT] Parse TAG .. this PTR" + this.page.getCurrentCursorPosition());
 					TokenTag tToken = this.getTag();
 					if(tToken != null){	// set latest
@@ -237,7 +243,7 @@ public class LexerImpl implements Lexer{
 		PageSource bufPs = null;
 		try {
 			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
-			bufPs = ResourceManager.getLoadedPage(new File("test\\naver.html"));
+			bufPs = ResourceManager.getLoadedPage(new File("test\\test1.txt"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
