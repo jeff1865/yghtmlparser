@@ -97,7 +97,8 @@ public class HtmlDomBuilder {
 				} else {
 					Logging.debug("+++++++++++++ <add Text> ++++++++++++");
 					//rNode.addChildNode(stack.peek());
-					((NodeImpl)stack.peek()).addChildNode(rNode);
+					//((NodeImpl)stack.peek()).addChildNode(rNode);
+					rNode.setParentNode(stack.peek());
 				}
 			} else {
 				Logging.debug("Ignored ..");

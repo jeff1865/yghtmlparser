@@ -21,7 +21,7 @@ public class NodeImpl implements Node{
 		((NodeImpl)this.pNode).addChildNode(this);
 	}
 	
-	void addChildNode(Node node){
+	private void addChildNode(Node node){
 		if(this.childrenNodes == null)
 			this.childrenNodes = new ArrayList<Node>();
 		this.childrenNodes.add(node);
