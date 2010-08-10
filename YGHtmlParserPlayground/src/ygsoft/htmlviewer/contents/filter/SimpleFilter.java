@@ -68,8 +68,8 @@ public class SimpleFilter {
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		try {
-			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
-			bufPs = ResourceManager.getLoadedPage(new File("testRes\\test.html"));
+			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.bobaedream.co.kr/board/bulletin/view.php?code=nnews&No=84117&Answer=9&rtn=/board/bulletin/list.php%3Fcode%3Dnnews%26or_gu%3D10%26or_se%3Ddesc%26s_select%3DSubject%26s_key%3D%26s_cate%3D%26s_selday%3D%26maker_no%3D%26model_no%3D%26level_no%3D%26page%3D1").toURI(), 3000);
+			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

@@ -128,8 +128,8 @@ public class HtmlPageGenerator {
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		try {
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://economy.hankooki.com/lpage/stock/201007/e2010072515334992480.htm").toURI(), 3000);
-			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://news.chosun.com/site/data/html_dir/2010/07/25/2010072500043.html?Dep1=news&Dep2=headline1&Dep3=h1_07").toURI(), 3000);
+			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.chosun.com/").toURI(), 3000);
+			bufPs = ResourceManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
