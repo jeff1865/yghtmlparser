@@ -99,10 +99,18 @@ public class IntResManager {
 
 		return retPs;
 	}
-
+	
 	private static boolean isKoreanHtmlData(byte[] rawData) {
 		String entry = "<html";
 		String strData = new String(rawData);
+		
+		// 1. check meta tag
+		//TODO temp code : need to change to get DATA by parse
+		if(strData.indexOf("charset=euc-kr") > 0 || strData.indexOf("EUC-KR") >0 ){
+			System.out.println("KOR DATA DETECTED =======================================");
+			return true;
+		}
+		try{
 		int startInx = strData.indexOf(entry);
 		int endInx = strData.indexOf(">", startInx);
 		Logging.print(Logging.DEBUG, "Filtered >"
@@ -111,7 +119,10 @@ public class IntResManager {
 
 		if (strData.contains("\"ko\"") || strData.contains("\"KO\""))
 			return true;
-
+		}catch(Exception e){
+			Logging.print(Logging.ERROR, e.getMessage());
+			return false;
+		}
 		return false;
 	}
 
@@ -138,7 +149,9 @@ public class IntResManager {
 
 	public static void main(String... v) {
 		try {
-			 PageSource ps = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park").toURI(), 3000);
+			//http://www.bobaedream.co.kr/board/bulletin/view.php?code=nnews&No=84117&Answer=9&rtn=/board/bulletin/list.php%3Fcode%3Dnnews%26or_gu%3D10%26or_se%3Ddesc%26s_select%3DSubject%26s_key%3D%26s_cate%3D%26s_selday%3D%26maker_no%3D%26model_no%3D%26level_no%3D%26page%3D1
+//http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park 
+			PageSource ps = IntResManager.loadStringBufferPage(new URL("http://www.bobaedream.co.kr").toURI(), 3000);
 			 
 			 while(ps.hasNextChar()){
 				 System.out.print(ps.getNextChar());
