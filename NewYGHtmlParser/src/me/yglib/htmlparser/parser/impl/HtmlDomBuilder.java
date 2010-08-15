@@ -54,7 +54,11 @@ public class HtmlDomBuilder {
 			}
 		};
 	}
-		
+	
+	/**
+	 * In the case of like <br>, it would be processed like <br/>
+	 * @return
+	 */
 	public List<Node> build(){
 		List<Node> rootNodes = new ArrayList<Node>();
 		CheckStack stack = new CheckStack();
@@ -63,7 +67,7 @@ public class HtmlDomBuilder {
 		Token tk = null;
 		NodeImpl rNode = null;
 		while(lexer.hasNextToken() && (tk = lexer.getNextToken()) != null){
-			Logging.debug("Node :" + tk);
+			//Logging.debug("Node :" + tk);
 			rNode = new NodeImpl(tk);
 			
 			if(tk instanceof TokenTag){
@@ -71,9 +75,9 @@ public class HtmlDomBuilder {
 				if(this.nFilter != null && !this.nFilter.isNeededNode(tk)) continue;  
 				
 				TokenTag tkTag = (TokenTag)tk;
-				if(tkTag.isClosedTag()){
+				if(tkTag.isClosedTag()){	// pop TagNode
 					stack.checkNode2(rNode);
-				} else {
+				} else {	// push TagNode
 					if(stack.peek() == null){
 						rootNodes.add(rNode);
 					} else {
@@ -91,15 +95,13 @@ public class HtmlDomBuilder {
 				}
 				
 			} else if(tk instanceof TokenText){
-				Logging.debug("+++++++++++++ add Text ++++++++++++");
+				
 				if(stack.peek() == null){ 
-					Logging.debug("Invalid source ..");
+					Logging.print(Logging.ERROR, "Invalid source ..");
 				} else {
-					Logging.debug("+++++++++++++ <add Text> ++++++++++++");
-					//rNode.addChildNode(stack.peek());
-					//((NodeImpl)stack.peek()).addChildNode(rNode);
 					rNode.setParentNode(stack.peek());
 				}
+				
 			} else {
 				Logging.debug("Ignored ..");
 			}
