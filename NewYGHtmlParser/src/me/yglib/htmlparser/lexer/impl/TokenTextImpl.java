@@ -9,11 +9,16 @@ public class TokenTextImpl implements TokenText{
 	private PageSource page = null;
 	private TokenTag parentTokenTag = null;
 	private String valueText = null;
+	private int index = -1;
 	
 	TokenTextImpl(){
 		this.valueText = "aaa";
 	}
-		
+	
+	void setIndex(int idx){
+		this.index = idx;
+	}
+	
 	public Object clone(){
 		Object o = null;
 		try {
@@ -89,8 +94,7 @@ public class TokenTextImpl implements TokenText{
 
 	@Override
 	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.index;
 	}
 	
 }

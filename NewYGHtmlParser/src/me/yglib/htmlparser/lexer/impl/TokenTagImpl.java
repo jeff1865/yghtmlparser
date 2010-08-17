@@ -14,6 +14,7 @@ public class TokenTagImpl implements TokenTag{
 	private boolean isClosed = false, endClosed = false;
 	private PageSource pageSource = null;
 	private int startIndex = -1, endIndex = -1;
+	private int tokenIndex = -1;
 	
 	TokenTagImpl() {
 		//Logging.print(Logging.DEBUG, "[DEBUG] Cannot construct in the other package..");
@@ -137,10 +138,13 @@ public class TokenTagImpl implements TokenTag{
 		System.out.println("Init .. ");
 		new TokenTagImpl();
 	}
-
+	
+	void setIndex(int idx){
+		this.tokenIndex = idx;
+	}
+	
 	@Override
 	public int getIndex() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.tokenIndex;
 	}
 }

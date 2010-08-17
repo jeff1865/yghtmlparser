@@ -8,10 +8,13 @@ public class TokenIgnoreTagValueImpl implements TokenIgnoreTagValue {
 	
 	private String strValue = null;
 	private TokenTag pTag = null;
+	private int index = -1;
 	
 	public TokenIgnoreTagValueImpl(){
 		;
 	}
+	
+	
 	
 	public String toString(){
 		return "[IgnoreTagValue:" + this.pTag.getTagName() + "]" + this.strValue; 
@@ -40,11 +43,15 @@ public class TokenIgnoreTagValueImpl implements TokenIgnoreTagValue {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
+	void setIndex(int idx) {
+		this.index = idx;
+	}
+	
 	@Override
 	public int getIndex() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.index;
 	}
 
 	@Override

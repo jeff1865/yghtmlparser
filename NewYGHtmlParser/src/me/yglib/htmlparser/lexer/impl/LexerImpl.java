@@ -29,6 +29,7 @@ import me.yglib.htmlparser.TokenScriptValue;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
 import me.yglib.htmlparser.datasource.PageSource;
+import me.yglib.htmlparser.datasource.impl.IntResManager;
 import me.yglib.htmlparser.datasource.impl.ResourceManager;
 import me.yglib.htmlparser.lexer.*;
 import me.yglib.htmlparser.util.Logging;
@@ -81,7 +82,9 @@ public class LexerImpl implements Lexer{
 			ch = this.page.getCurChar();	// get current char
 			
 			if(this.isIgnoredMode){
-				return this.getIgnoredTagValue();
+				TokenIgnoreTagValueImpl ignoredTagValue = this.getIgnoredTagValue();
+				ignoredTagValue.setIndex(this.currentIndex);
+				return ignoredTagValue;
 			}
 			
 			//System.out.println("CH1:" + ch);	// need to DEL1
@@ -95,14 +98,15 @@ public class LexerImpl implements Lexer{
 				{
 					//System.out.println("++++++++++++++ PARSE IGNORED !");
 					Logging.print(Logging.DEBUG, "parse [!] comment detected ..");
-					TokenComment tComment = this.getTokenComment();
+					TokenCommentImpl tComment = this.getTokenComment();
+					tComment.setIndex(this.currentIndex);
 					return tComment;
 				}
 				else	// parse Tag
 				{
 					//System.out.println("============= TAG first char :" + chNext);
 					//Logging.print(Logging.DEBUG, "[ENT] Parse TAG .. this PTR" + this.page.getCurrentCursorPosition());
-					TokenTag tToken = this.getTag();
+					TokenTagImpl tToken = this.getTag();
 					if(tToken != null){	// set latest
 						if(!tToken.isClosedTag()) // Open Tag
 						{
@@ -118,6 +122,8 @@ public class LexerImpl implements Lexer{
 								this.latestTag = null;
 						}
 					}
+					
+					tToken.setIndex(this.currentIndex);
 					return tToken;
 				}
 			}
@@ -132,17 +138,21 @@ public class LexerImpl implements Lexer{
 					System.out.println("--> Enter Script Check Mode ..");
 					if(this.latestTag.getTagName().equalsIgnoreCase("script")
 							|| this.latestTag.getTagName().equalsIgnoreCase("style")){
-						return this.getIgnoredTagValue();
+						TokenIgnoreTagValueImpl ignoredTagValue = this.getIgnoredTagValue();
+						ignoredTagValue.setIndex(this.currentIndex);
+						return ignoredTagValue;
 					}
 					else
 					{
-						TokenText tText = this.getTokenText(null);
+						TokenTextImpl tText = this.getTokenText(null);
+						tText.setIndex(this.currentIndex);
 						return tText;
 					}
 				}
 				else 
 				{
-					TokenText tText = this.getTokenText(null);
+					TokenTextImpl tText = this.getTokenText(null);
+					tText.setIndex(this.currentIndex);
 					return tText;
 				}
 			}
@@ -158,7 +168,7 @@ public class LexerImpl implements Lexer{
 		return false;
 	}
 	
-	private Token getIgnoredTagValue(){
+	private TokenIgnoreTagValueImpl getIgnoredTagValue(){
 		Logging.debug("##### Entered Ignore mode ..");
 		// Processing Script Value 
 		// this.getTokenText(this.latestTag);	// set SCRIPT or STYLE Tag
@@ -168,48 +178,44 @@ public class LexerImpl implements Lexer{
 		ppIgrTagVal.setPageSource(this.page);
 		ppIgrTagVal.setParentTag(this.latestTag);
 		
-		Token igrTkVal = null;
+		TokenIgnoreTagValueImpl igrTkVal = null;
 		try {
-			igrTkVal = ppIgrTagVal.parse();
+			igrTkVal = (TokenIgnoreTagValueImpl)ppIgrTagVal.parse();
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
 		return igrTkVal;
 	}
 	
-	public TokenTag getTag()
+	public TokenTagImpl getTag()
 	{
-		//PPTag ppTag = new PPTag();
-		//ppTag = new PPTag();
 		ppTag.setPageSource(this.page);
 		
-		Token token = null;
+		TokenTagImpl token = null;
 		try {
-			token = ppTag.parse();
+			token = (TokenTagImpl)ppTag.parse();
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
 		
-		//Logging.print(Logging.DEBUG, "[OUT] Page Index :" + this.page.getCurrentCursorPosition());
-		//this.ppTag.setPageSource(null);
-		return (TokenTag)token;
+		return (TokenTagImpl)token;
 	}
 	
-	public TokenText getTokenText(TokenTag latestTag){
+	public TokenTextImpl getTokenText(TokenTag latestTag){
 		//PPText ppt = new PPText();
 		ppText.setPageSource(this.page);
 		ppText.setParentTokenTag(latestTag);
 		
-		TokenText tText = null;
+		TokenTextImpl tText = null;
 		try {
-			tText = ppText.parse();
+			tText = (TokenTextImpl)ppText.parse();
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
 		return tText;
 	}
 	
-	private TokenComment getTokenComment(){
+	private TokenCommentImpl getTokenComment(){
 		//PPComment ppc = new PPComment();
 		ppComment.setPageSource(this.page);
 		
@@ -219,7 +225,7 @@ public class LexerImpl implements Lexer{
 		} catch (CommonException e) {
 			e.printStackTrace();
 		}
-		return (TokenComment)token;
+		return (TokenCommentImpl)token;
 	}
 		
 	@Override
@@ -242,8 +248,8 @@ public class LexerImpl implements Lexer{
 		long loadTime = System.currentTimeMillis();
 		PageSource bufPs = null;
 		try {
-			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
-			bufPs = ResourceManager.getLoadedPage(new File("test\\test1.txt"));
+			bufPs = IntResManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
+			//bufPs = ResourceManager.getLoadedPage(new File("test\\test1.txt"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -255,7 +261,7 @@ public class LexerImpl implements Lexer{
 		while(lexer.hasNextToken() && (nt = lexer.getNextToken()) != null){
 			//Token nt = lexer.getNextToken();
 			System.out.println("==== NextToken =============" );
-			System.out.println(nt.toString());
+			System.out.println(">" + nt.getIndex() +":"+ nt.toString());
 			System.out.println("============================" );
 		}
 		
