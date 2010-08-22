@@ -248,7 +248,7 @@ public class LexerImpl implements Lexer{
 		long loadTime = System.currentTimeMillis();
 		PageSource bufPs = null;
 		try {
-			bufPs = IntResManager.loadStringBufferPage(new URL("http://www.nate.com/").toURI(), 3000);
+			bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("test\\test1.txt"));
 		} catch (Exception e) {
 			e.printStackTrace();

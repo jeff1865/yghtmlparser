@@ -6,6 +6,7 @@ import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.datasource.PageSource;
 import me.yglib.htmlparser.datasource.impl.PSstringBuffer;
 import me.yglib.htmlparser.lexer.TokenProcPlugin;
+import me.yglib.htmlparser.util.Logging;
 
 public class PPIgnoreTagValue implements TokenProcPlugin{
 	
@@ -43,16 +44,22 @@ public class PPIgnoreTagValue implements TokenProcPlugin{
 		{
 			if(ch == '<')
 			{
-				if(this.parentTag != null)	// script value에 의한 주석처리
+				if(this.parentTag != null)	// Tag like script, style based processing
 				{
 					String tagName = this.parentTag.getTagName();
 					//if(tagName.equalsIgnoreCase("script"))
+					//TODO need to change
 					if(tagName.equalsIgnoreCase(this.parentTag.getTagName()))
 					{
 						int startIndex = this.page.getCurrentCursorPosition() + 2;
 						String strPreCon = this.page
 								.getSubString(startIndex, startIndex + ("/"+this.parentTag.getTagName()).length());
-						if(strPreCon.indexOf(this.parentTag.getTagName()) > -1 ||
+						//TODO Ignore case but it is not valid for XML document
+//						strPreCon = strPreCon.toLowerCase();
+//						Logging.debug("start : end = " + startIndex + ":" + 
+//								(startIndex + ("/"+this.parentTag.getTagName()).length()) + "-" + strPreCon);
+						
+						if(strPreCon.indexOf(this.parentTag.getTagName().toLowerCase()) > -1 ||
 								strPreCon.indexOf(this.parentTag.getTagName().toUpperCase()) > -1)
 						{
 							retVal.setParentTag(this.parentTag);
