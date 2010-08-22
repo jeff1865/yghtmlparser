@@ -28,6 +28,7 @@ import java.util.*;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
 import me.yglib.htmlparser.datasource.PageSource;
+import me.yglib.htmlparser.datasource.impl.IntResManager;
 import me.yglib.htmlparser.datasource.impl.ResourceManager;
 import me.yglib.htmlparser.parser.Node;
 import me.yglib.htmlparser.parser.impl.HtmlDomBuilder;
@@ -127,9 +128,11 @@ public class HtmlPageGenerator {
 	
 	public static void main(String ... v){
 		PageSource bufPs = null;
+		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
 		try {
-			//bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.chosun.com/").toURI(), 3000);
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park").toURI(), 3000);
+			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
+			//bufPs = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=kin&wr_id=1940283").toURI(), 3000);
+			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
 		} catch (Exception e) {
 			e.printStackTrace();

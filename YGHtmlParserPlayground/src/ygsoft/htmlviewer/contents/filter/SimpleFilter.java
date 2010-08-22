@@ -1,18 +1,44 @@
+// =============================================================================
+//   YG Html Parser (Rapid Java Html Parser Project)
+//   Copyright 2010 Young-Gon Kim (gonni21c@gmail.com)
+//   http://ygonni.blogspot.com
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//       http://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// =============================================================================
+
 package ygsoft.htmlviewer.contents.filter;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
+import me.yglib.htmlparser.TokenText;
 import me.yglib.htmlparser.datasource.PageSource;
-import me.yglib.htmlparser.datasource.impl.ResourceManager;
+import me.yglib.htmlparser.datasource.impl.IntResManager;
 import me.yglib.htmlparser.parser.*;
 import me.yglib.htmlparser.parser.impl.HtmlDomBuilder;
+import me.yglib.htmlparser.util.Logging;
 
-public class SimpleFilter {
+/**
+ * This class only analyze only one page by using defined filter rule
+ * - Long unLiked Text
+ * - Extract Root Wrapper
+ * @author YoungGon (gonni21c@gmail.com)
+ *
+ */
+public class SimpleFilter implements IContentsFilter{
 	
 	private Node rootNode = null;
 	
@@ -20,20 +46,14 @@ public class SimpleFilter {
 		this.rootNode = rootNode;
 	}
 	
-	public List<String> getFilteringRule(){
-		ArrayList<String> lstRule = new ArrayList<String>();
-		
-		return lstRule;
-	}
 	
+	
+	// Check node is hyperlinked or not
 	private static boolean isHyperLinked(Node node){
 		Node parentNode = node;
 		Token token = null;
 		
-//		System.out.println("===> CheckNODE: " + parentNode.getToken() 
-//				+ " --- " + parentNode.getParent());
 		while((parentNode = parentNode.getParent()) != null){
-//			System.out.println(" == NODE NAME >" + parentNode);
 			
 			if((token = parentNode.getToken()) instanceof TokenTag){
 				TokenTag tTag = (TokenTag)token;
@@ -45,31 +65,51 @@ public class SimpleFilter {
 		return false;
 	}
 	
-	public String getFilteredText(String rule){
-		String strFilteredText = "";
-		
-		return strFilteredText;
+	private List<Node> getUnlinkedTextNode(){
+		ArrayList<Node> alRes = new ArrayList<Node>();
+		this.extractUnlinkedTextNode(alRes, rootNode);
+		return alRes;
+	} 
+	
+	/**
+	 * Exam : Return html/body/table/tr/td(2)/[Text]
+	 * @return
+	 */
+	private String getContetntPath(){
+		return null;
 	}
 	
-	public static void displayNode(List<Node> nodes){
-		if(nodes != null)
-		{
-			for(Node node : nodes){
-				if(isHyperLinked(node))
-					System.out.println("Linked NODE >" + node.getToken());
-				else
-					;//System.out.println("NODE >" + node.getToken());
-				
-				displayNode(node.getChildren());
+	private void extractUnlinkedTextNode(List<Node> lstNode, Node rootNode){
+		Token token = rootNode.getToken();
+		if(token instanceof TokenText){
+			if(!isHyperLinked(rootNode)){
+				lstNode.add(rootNode);
+			}
+		}
+		
+		List<Node> lstCh = rootNode.getChildren();
+		if(lstCh != null){
+			for(Node node : lstCh){
+				this.extractUnlinkedTextNode(lstNode, node);
 			}
 		}
 	}
 	
+	@Override
+	public String getFilteredContents() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public static void main(String ... v){
 		PageSource bufPs = null;
+		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
 		try {
-			bufPs = ResourceManager.loadStringBufferPage(new URL("http://www.bobaedream.co.kr/board/bulletin/view.php?code=nnews&No=84117&Answer=9&rtn=/board/bulletin/list.php%3Fcode%3Dnnews%26or_gu%3D10%26or_se%3Ddesc%26s_select%3DSubject%26s_key%3D%26s_cate%3D%26s_selday%3D%26maker_no%3D%26model_no%3D%26level_no%3D%26page%3D1").toURI(), 3000);
+			// Error : http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html
+			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
+			//bufPs = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=kin&wr_id=1940283").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
+			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -77,8 +117,115 @@ public class SimpleFilter {
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
 		List<Node> rootNode = domBuilder.build();
 		
-		displayNode(rootNode);
+		//displayNode(rootNode);
+		System.out.println(" -> Root Node Count :" + rootNode.size());
+		SimpleFilter testFilter = new SimpleFilter(rootNode.get(0));
+		List<Node> lstFilter = testFilter.getUnlinkedTextNode();
 		
-		;
+//		for(Node node : lstFilter){
+//			System.out.println("UnLinked Node:" + node.getToken().getIndex() + ">" + node);
+//		}
+		
+		testFilter.analyzeUnLinedNodes(lstFilter);
+		
+		List<List<Node>> groupedList = getGroupedList(lstFilter);
+		int i = 0;
+		for(List<Node> nodes : groupedList){
+			System.out.println(++i + "-------------------------------------------");
+			for(Node node : nodes){
+				System.out.println(i + ". " + node);
+			}
+			System.out.println("-------------------------------------------");
+		}
+	}
+	
+	// 2nd Filter
+	private static List<List<Node>> getGroupedList(List<Node> filteredNodes){
+		Logging.debug("---------> Start 2nd Filtering..");
+		
+		ArrayList<List<Node>> lstNodes = new ArrayList<List<Node>>();
+		
+		Node rNode = null, tNode = null;	// rt, temp
+		int rDepth = -1, tDepth = -1;
+		for(int i=0;i<filteredNodes.size();i++){
+			rNode = filteredNodes.get(i);
+			rDepth = getDepth(getRulePath(rNode));
+			
+			ArrayList<Node> lstRnode = new ArrayList<Node>();
+			lstRnode.add(rNode);
+			
+			for(int j=i+1;j<filteredNodes.size();j++){
+				tNode = filteredNodes.get(j);
+				tDepth = getDepth(getRulePath(tNode));
+				
+				if(rDepth == tDepth){
+					lstRnode.add(tNode);
+					i++;
+				}
+				else {
+					break;
+				}
+			}
+			
+			lstNodes.add(lstRnode);
+		}
+		
+		return lstNodes;
+	}
+	
+	public static int getDepth(String rule){
+		String[] split = rule.split("/");
+		return split.length;
+	}
+	
+	public void analyzeUnLinedNodes(List<Node> nodes){
+		Logging.debug("-------------- start Analysis ---------------");
+		
+		for(Node node : nodes){
+			System.out.println("UnLinked Node:" + node.getToken().getIndex() + ">" + node +
+					"\n " + getRulePath(node));
+		}
+	}
+	
+	public static String getRulePath(Node node){
+		Node rNode = node, pNode = node;
+		String strRet = "";
+		while((rNode.getParent()) != null){
+			pNode = rNode.getParent();
+			
+			List<Node> lstChrs = pNode.getChildren();
+			int nodeIndex = lstChrs.indexOf(rNode);
+			
+			strRet = ((TokenTag)(pNode.getToken())).getTagName() + "[" + nodeIndex + "]/" + strRet;
+			
+			rNode = rNode.getParent();
+		}
+		
+		return strRet;
+	}
+	
+	public String getFilteredText(String rule){
+		String strFilteredText = "";
+		
+		return strFilteredText;
+	}
+	
+	public static Node getNode(Node rootNode, String getRule){
+		return null;
+	}
+	
+	//Filter Hyper Link Text
+	public static void displayNode(List<Node> nodes){
+		if(nodes != null)
+		{
+			for(Node node : nodes){
+				if(isHyperLinked(node))
+					System.out.println("Linked NODE:"+node.getToken().getIndex()+">" + node.getToken());
+				else
+					;//System.out.println("NODE >" + node.getToken());
+				
+				displayNode(node.getChildren());
+			}
+		}
 	}
 }
