@@ -22,6 +22,7 @@ public class SiteAnalyzedFilter {
 		return strRet;
 	}
 	
+	// (Rule) ---> (Node)
 	public static Node getNode(Node rootNode, String getRule){
 		return null;
 	}

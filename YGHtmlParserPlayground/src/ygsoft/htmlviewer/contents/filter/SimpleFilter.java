@@ -104,6 +104,7 @@ public class SimpleFilter implements IContentsFilter{
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
+		url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082215175501055";
 		try {
 			// Error : http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html
 			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
@@ -120,15 +121,127 @@ public class SimpleFilter implements IContentsFilter{
 		//displayNode(rootNode);
 		System.out.println(" -> Root Node Count :" + rootNode.size());
 		SimpleFilter testFilter = new SimpleFilter(rootNode.get(0));
+		// 1. Filter - Unlinked Node
 		List<Node> lstFilter = testFilter.getUnlinkedTextNode();
 		
 //		for(Node node : lstFilter){
 //			System.out.println("UnLinked Node:" + node.getToken().getIndex() + ">" + node);
 //		}
 		
-		testFilter.analyzeUnLinedNodes(lstFilter);
+//		testFilter.analyzeUnLinedNodes(lstFilter);	//1st Filter
 		
-		List<List<Node>> groupedList = getGroupedList(lstFilter);
+		// Depth Filter
+//		List<NodeRange> lstGroupByDepth = getGroupByDepth(lstFilter);
+//		
+//		System.out.println("Filtered Group :" + lstGroupByDepth.size());
+//		for(NodeRange nodeRange : lstGroupByDepth){
+//			System.out.println("S>" + nodeRange.startNode + "\nE>" + nodeRange.endNode);
+//		}
+		
+		
+		// Conjuction Filter
+		
+		// 2 . Filter - 인접그룹 필터
+		List<List<Node>> groupedList = getAdjacentDepthGroupedList(lstFilter);	//2nd Filter
+		//showGroupNode(groupedList);
+		
+		List<NodeGroup> lstNodeGrp = convertNodeGroup(groupedList);
+		int i = 0;
+		for(NodeGroup ng : lstNodeGrp){
+			System.out.println("-------("+i++ + ")-----------------");
+			System.out.println(ng);
+		}
+		
+		// 3. Filter - 동일 레벨, Depth 분석
+		regroupNode(lstNodeGrp);
+		
+		i = 0;
+		for(NodeGroup ng : lstNodeGrp){
+			System.out.println("------->("+i++ + ")-----------------");
+			System.out.println(ng);
+		}
+		
+		// 4. Counter
+		getExtRules(lstNodeGrp);
+		
+		//System.out.println("--> Is Same Logic :" + isSameLogic("/a[0]/br[2]", "/a[0]/br[3]"));
+	}
+	
+//TODO count sentences, count chars, group by depth
+	public static List<String> getExtRules(List<NodeGroup> lstNodeGrp){
+		Counter<String> counter = new Counter<String>();
+		
+		// 1. Maximum pointed rule
+		for(NodeGroup ng : lstNodeGrp){
+			
+			List<String> groups = ng.getGroups();
+			for(String idGrp : groups){
+				counter.addKey(idGrp);
+			}
+		}
+		
+		counter.printResult();
+		//TODO 문장수 분석기, Tree병합기 -> 최종 Tree 후보군 추출
+		
+		// 본문 영역과 비본문 영역(덧글)추출기능
+		
+		
+		
+		
+		
+		
+		return null;
+	}
+	
+	public static void regroupNode(List<NodeGroup> lstNodeGrp){
+		Logging.debug("Filter ReGroup ..");
+		String strGrpID = "grp";
+		
+		NodeGroup ngCur = null, ngRear = null;
+		Node ndCur = null, ndRear = null;
+		
+		for(int i=0;i<lstNodeGrp.size();i++){
+			//strGrpID = "grp_" + i;
+			ngCur = lstNodeGrp.get(i);
+			ndCur = ngCur.getNodes().get(0);
+			
+			strGrpID = SimpleFilter.getRulePath(ndCur);
+			ngCur.setLogicGroup(strGrpID);
+			
+			for(int j=i+1;j<lstNodeGrp.size();j++){
+				ngRear = lstNodeGrp.get(j);
+				ndRear = ngRear.getNodes().get(0);
+				// is depth same?
+				if(getDepth(getRulePath(ndCur)) == getDepth(getRulePath(ndRear))){
+					// is path same logic?
+					if(isSameLogic(getRulePath(ndCur), getRulePath(ndRear))){
+						//ngRear.setGroup(strGrpID);
+						ngRear.setLogicGroup(strGrpID);
+					}
+				}
+			}
+			
+		}
+	}
+	
+	private static List<NodeGroup> convertNodeGroup(List<List<Node>> groupedList){
+		ArrayList<NodeGroup> lstGrp = new ArrayList<NodeGroup>();
+		
+		NodeGroup ng = null;
+		for(List<Node> lstNode : groupedList){
+			ng = new NodeGroup();
+			for(Node node : lstNode){
+				ng.addNode(node);
+			}
+			lstGrp.add(ng);
+		}
+		
+		return lstGrp;
+	}
+	
+	
+	
+	public static void showGroupNode(List<List<Node>> groupedList){
 		int i = 0;
 		for(List<Node> nodes : groupedList){
 			System.out.println(++i + "-------------------------------------------");
@@ -139,23 +252,80 @@ public class SimpleFilter implements IContentsFilter{
 		}
 	}
 	
-	// 2nd Filter
-	private static List<List<Node>> getGroupedList(List<Node> filteredNodes){
+	// Grouping same depth
+	private static List<NodeRange> getGroupByDepth(List<Node> fNodes){
+		ArrayList<NodeRange> lstNodes = new ArrayList<NodeRange>();
+		
+		NodeRange nodeRange = null;
+		Node rNode = null, tNode = null;
+		for(int i=0;i<fNodes.size();i++){
+			rNode = fNodes.get(i);
+			int rNodeDepth = getDepth(getRulePath(rNode));
+			
+			nodeRange = new NodeRange();
+			nodeRange.startNode = rNode;
+			int tempI = i;
+			
+			for(int j=i+1;j<fNodes.size();j++){
+				tNode = fNodes.get(j);
+				//1. check depth
+				if(rNodeDepth == getDepth(getRulePath(tNode))){
+					System.out.println("yy" + rNode);
+					//2. check branch(logical root)
+					if(isSameLogic(getRulePath(rNode), getRulePath(tNode))){
+						System.out.println("xxxxx" + rNode);
+						nodeRange.endNode = tNode;
+						tempI = j + 1;
+					}
+				}
+			}
+			
+			lstNodes.add(nodeRange);
+			i = tempI;
+		}
+		
+		return lstNodes;
+	}
+	
+	public static boolean isSameLogic(String strRuleA, String strRuleB){
+		//String strRuleA = getRulePath(nodeA), strRuleB = getRulePath(nodeB);
+		String[] sRuleA = strRuleA.split("/");
+		String[] sRuleB = strRuleB.split("/");
+		
+		String strTempA = null, strTempB = null;
+		for(int i=0;i<sRuleA.length;i++){
+			strTempA = sRuleA[i];
+			if(i<sRuleB.length){
+				strTempB = sRuleB[i];
+				if(strTempA.indexOf("[") > 0 && strTempB.indexOf("[") > 0){
+					strTempA = strTempA.substring(0, strTempA.indexOf("["));
+					strTempB = strTempB.substring(0, strTempB.indexOf("["));
+					
+					if(!strTempA.equals(strTempB)) return false; 
+				} 
+			}
+		}
+		
+		return true;
+	}
+	
+	// 2nd Filter : check depth of adjacent NODE
+	private static List<List<Node>> getAdjacentDepthGroupedList(List<Node> filteredUnlinkedNodes){
 		Logging.debug("---------> Start 2nd Filtering..");
 		
 		ArrayList<List<Node>> lstNodes = new ArrayList<List<Node>>();
 		
 		Node rNode = null, tNode = null;	// rt, temp
 		int rDepth = -1, tDepth = -1;
-		for(int i=0;i<filteredNodes.size();i++){
-			rNode = filteredNodes.get(i);
+		for(int i=0;i<filteredUnlinkedNodes.size();i++){
+			rNode = filteredUnlinkedNodes.get(i);
 			rDepth = getDepth(getRulePath(rNode));
 			
 			ArrayList<Node> lstRnode = new ArrayList<Node>();
 			lstRnode.add(rNode);
 			
-			for(int j=i+1;j<filteredNodes.size();j++){
-				tNode = filteredNodes.get(j);
+			for(int j=i+1;j<filteredUnlinkedNodes.size();j++){
+				tNode = filteredUnlinkedNodes.get(j);
 				tDepth = getDepth(getRulePath(tNode));
 				
 				if(rDepth == tDepth){
@@ -227,5 +397,14 @@ public class SimpleFilter implements IContentsFilter{
 				displayNode(node.getChildren());
 			}
 		}
+	}
+}
+
+class NodeRange{
+	public Node startNode = null, endNode = null;
+	public NodeRange(){}
+	public NodeRange(Node sNode, Node eNode){
+		startNode = sNode;
+		endNode = eNode;
 	}
 }

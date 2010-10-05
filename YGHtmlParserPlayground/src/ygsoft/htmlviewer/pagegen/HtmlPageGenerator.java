@@ -129,6 +129,7 @@ public class HtmlPageGenerator {
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
+		url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082215175501055";
 		try {
 			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
 			//bufPs = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=kin&wr_id=1940283").toURI(), 3000);
