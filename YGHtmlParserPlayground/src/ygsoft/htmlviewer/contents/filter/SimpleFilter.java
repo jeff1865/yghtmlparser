@@ -22,6 +22,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import ygsoft.htmlviewer.contents.filter.path.PathRule;
+import ygsoft.htmlviewer.contents.filter.path.PathRuleElement;
+
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
@@ -41,6 +44,7 @@ import me.yglib.htmlparser.util.Logging;
 public class SimpleFilter implements IContentsFilter{
 	
 	private Node rootNode = null;
+	private static int minChar = 20, minSent = 4;
 	
 	public SimpleFilter(Node rootNode){
 		this.rootNode = rootNode;
@@ -92,6 +96,7 @@ public class SimpleFilter implements IContentsFilter{
 			for(Node node : lstCh){
 				this.extractUnlinkedTextNode(lstNode, node);
 			}
+			// Error : http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html
 		}
 	}
 	
@@ -105,8 +110,10 @@ public class SimpleFilter implements IContentsFilter{
 		PageSource bufPs = null;
 		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
 		url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082215175501055";
+		//url = "http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park&wr_id=4094745";
+		//url = "http://www.bobaedream.co.kr/board/bulletin/view.php?code=battle&No=230085";	// not stable
+		url = "http://www.etnews.co.kr/news/detail.html?id=201012050031&mc=m_012_00001";
 		try {
-			// Error : http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html
 			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
 			//bufPs = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=kin&wr_id=1940283").toURI(), 3000);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
@@ -123,10 +130,10 @@ public class SimpleFilter implements IContentsFilter{
 		SimpleFilter testFilter = new SimpleFilter(rootNode.get(0));
 		// 1. Filter - Unlinked Node
 		List<Node> lstFilter = testFilter.getUnlinkedTextNode();
-		
-//		for(Node node : lstFilter){
-//			System.out.println("UnLinked Node:" + node.getToken().getIndex() + ">" + node);
-//		}
+				
+		for(Node node : lstFilter){
+			System.out.println("UnLinked Node:" + node.getToken().getIndex() + ">" + node);
+		}
 		
 //		testFilter.analyzeUnLinedNodes(lstFilter);	//1st Filter
 		
@@ -142,37 +149,108 @@ public class SimpleFilter implements IContentsFilter{
 		// Conjuction Filter
 		
 		// 2 . Filter - 인접그룹 필터
+		System.out.println("==============================2rd===============================");
 		List<List<Node>> groupedList = getAdjacentDepthGroupedList(lstFilter);	//2nd Filter
-		//showGroupNode(groupedList);
+		showGroupNode(groupedList);
 		
+		
+		System.out.println("----------------- 3rd -----------------");
+		
+		// 3. 인접노드 그룹화
 		List<NodeGroup> lstNodeGrp = convertNodeGroup(groupedList);
 		int i = 0;
 		for(NodeGroup ng : lstNodeGrp){
-			System.out.println("-------("+i++ + ")-----------------");
+			System.out.println("3rd-----------("+i++ + ")-----------------");
 			System.out.println(ng);
 		}
 		
-		// 3. Filter - 동일 레벨, Depth 분석
+		// 4. Filter - 동일 레벨, Depth 분석
 		regroupNode(lstNodeGrp);
 		
 		i = 0;
 		for(NodeGroup ng : lstNodeGrp){
-			System.out.println("------->("+i++ + ")-----------------");
+			System.out.println("4rd-----------("+i++ + ")-----------------");
 			System.out.println(ng);
 		}
 		
 		// 4. Counter
-		getExtRules(lstNodeGrp);
+		List<NodeGroup> extRules = getExtRules(lstNodeGrp);
+		i = 0;
+		for(NodeGroup ng : extRules){
+			System.out.println("5rd-----------("+i++ + ")-----------------");
+			System.out.println(ng);
+		}
+		
+		List<NodeRange> finalRes = getNodeRangeList(extRules);
+		System.out.println("Result count : " + finalRes.size());
+		for(NodeRange nr : finalRes)
+			System.out.println("-->" + nr);
+		
 		
 		//System.out.println("--> Is Same Logic :" + isSameLogic("/a[0]/br[2]", "/a[0]/br[3]"));
+//		String strRule = "html[10]/body[7]/div[0]/div[0]/div[2]/div[2]/div[11]/div[0]/ul[0]/li[0]/span[0]/";
+//		Node node = getNode(rootNode.get(0), strRule, 1);
+//		
+//		System.out.println("ORI:" + strRule);
+//		System.out.println("Converted:" + getRulePath(node));
+//		
+//		System.out.println("-------------------[FILTERED TEXT]---------------------");
+//		String ft = getTextOnly(node);
+//		System.out.println(ft);
+	}
+	
+	private static List<NodeRange> getNodeRangeList(List<NodeGroup> lstGroup){
+		int shortChar = 17, shortSent = 1;
+		List<NodeRange> lstNodeRange = new ArrayList<NodeRange>();
+		
+		int cntNode = 0;
+		for(NodeGroup ng : lstGroup){
+			cntNode = ng.getCountContainValidCont();
+			if(cntNode > 0 && ng.getCharCount()/cntNode > shortChar 
+					&& ng.getSentCount()/cntNode >= shortSent){
+				List<Node> nodes = ng.getNodes();
+				lstNodeRange.add(new NodeRange(nodes.get(0), nodes.get(nodes.size()-1)));
+			}
+		}
+		
+		return lstNodeRange;
+	}
+	
+	
+	// 첫단의 값과 끝단의 값 차이 / 전체노드수 분포도
+	private boolean isRegularPatterned(NodeGroup nodeGroup){
+		
+		
+		return false;
+	}
+		
+	private static String getTextOnly(Node node){
+		String retStr = "";
+		Token token = node.getToken();
+		if(token instanceof TokenText){
+			retStr = ((TokenText) token).getValueText();
+		}
+		
+		List<Node> children = node.getChildren();
+		if(children != null)
+			for(Node nc : children){
+				retStr += getTextOnly(nc);
+			}
+		
+		return retStr;
 	}
 	
 //TODO count sentences, count chars, group by depth
-	public static List<String> getExtRules(List<NodeGroup> lstNodeGrp){
-		Counter<String> counter = new Counter<String>();
+	public static List<NodeGroup> getExtRules(List<NodeGroup> lstNodeGrp){
+		List<String> lstRules = new ArrayList<String>();
 		
+		Counter<String> counter = new Counter<String>();
+		int totalChar = 0;
+		int totalSent = 0;
 		// 1. Maximum pointed rule
 		for(NodeGroup ng : lstNodeGrp){
+			totalChar += ng.getCharCount();
+			totalChar += ng.getSentCount();
 			
 			List<String> groups = ng.getGroups();
 			for(String idGrp : groups){
@@ -183,6 +261,43 @@ public class SimpleFilter implements IContentsFilter{
 		counter.printResult();
 		//TODO 문장수 분석기, Tree병합기 -> 최종 Tree 후보군 추출
 		
+		// grouping the same depth and logic
+		ArrayList<NodeGroup> resGroup = new ArrayList<NodeGroup>();
+		
+		for(int i = 0;i<lstNodeGrp.size()-1;i++){
+			NodeGroup ngFront = lstNodeGrp.get(i);
+			if(ngFront.isCleaned()) continue;
+			ngFront.setCleaned(true);
+			
+			if(ngFront.getCharCount() > 10 
+					&& ngFront.getSentCount() > 2 
+					//){
+					|| counter.getCountVal(ngFront.getGroups().get(0)) > 1){
+				NodeGroup reGrp = new NodeGroup();
+				reGrp.setLogicGroup(ngFront.getGroups().get(0));
+				for(Node node : ngFront.getNodes())
+					reGrp.addNode(node);
+				
+				for(int j=i+1;j<lstNodeGrp.size();j++){
+					NodeGroup ngRear = lstNodeGrp.get(j);
+					if(!ngRear.isCleaned() &&
+							ngFront.getGroups().get(0).equals(ngRear.getGroups().get(0))){
+						ngRear.setCleaned(true);
+						for(Node node : ngRear.getNodes())
+							reGrp.addNode(node);
+					}
+				}
+				
+				resGroup.add(reGrp);
+			}
+		}
+		
+		
+		
+		
+		//Node node 
+		
+		
 		// 본문 영역과 비본문 영역(덧글)추출기능
 		
 		
@@ -190,9 +305,10 @@ public class SimpleFilter implements IContentsFilter{
 		
 		
 		
-		return null;
+		return resGroup;
 	}
 	
+	// set Logic group
 	public static void regroupNode(List<NodeGroup> lstNodeGrp){
 		Logging.debug("Filter ReGroup ..");
 		String strGrpID = "grp";
@@ -328,7 +444,9 @@ public class SimpleFilter implements IContentsFilter{
 				tNode = filteredUnlinkedNodes.get(j);
 				tDepth = getDepth(getRulePath(tNode));
 				
-				if(rDepth == tDepth){
+				//isSameLogic(getRulePath(rNode), getRulePath(tNode))
+				//if(rDepth == tDepth){
+				if(rDepth == tDepth && isSameLogic(getRulePath(rNode), getRulePath(tNode))){
 					lstRnode.add(tNode);
 					i++;
 				}
@@ -374,16 +492,30 @@ public class SimpleFilter implements IContentsFilter{
 		return strRet;
 	}
 	
-	public String getFilteredText(String rule){
-		String strFilteredText = "";
+	public static Node getNode(Node rootNode, String pathRule, int cutEnd) {
+		PathRule rulePath = new PathRule(pathRule);
+		List<PathRuleElement> paeLst = rulePath.getPathRule();
 		
-		return strFilteredText;
+		Node tempNode = rootNode;
+		String tagName = null;
+		for(PathRuleElement pre : paeLst){
+			if( paeLst.indexOf(pre) == (paeLst.size() - cutEnd)) break;
+			tagName = pre.getStrTagName();
+			if(tempNode.getToken() instanceof TokenTag){
+				TokenTag tTag = (TokenTag) tempNode.getToken();
+				if(! tTag.getTagName().equalsIgnoreCase(tagName)){
+					//System.out.println("tTag:tagName=" tTa );
+					return null;
+				}
+			}
+			tempNode = tempNode.getChildren().get(pre.getIndex());
+		}
+		
+		return tempNode;
 	}
 	
-	public static Node getNode(Node rootNode, String getRule){
-		return null;
-	}
 	
+		
 	//Filter Hyper Link Text
 	public static void displayNode(List<Node> nodes){
 		if(nodes != null)
@@ -406,5 +538,9 @@ class NodeRange{
 	public NodeRange(Node sNode, Node eNode){
 		startNode = sNode;
 		endNode = eNode;
+	}
+	public String toString(){
+		return this.startNode +"("+ this.startNode.getToken().getIndex() + ")" 
+		+ "-->" + this.endNode +"("+ this.endNode.getToken().getIndex() + ")";
 	}
 }

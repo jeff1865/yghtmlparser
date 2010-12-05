@@ -12,8 +12,17 @@ import me.yglib.htmlparser.parser.Node;
 public class NodeGroup {
 	
 	private ArrayList<Node> lstNodes = null;
+	private boolean cleaned = false;
 	private ArrayList<String> lstGrp = null; 
 	
+	public boolean isCleaned() {
+		return cleaned;
+	}
+
+	public void setCleaned(boolean cleaned) {
+		this.cleaned = cleaned;
+	}
+
 	public NodeGroup(){
 		this.lstNodes = new ArrayList<Node>();
 	}
@@ -76,8 +85,23 @@ public class NodeGroup {
 			Token token = node.getToken();//count text
 			if(token instanceof TokenText){
 				TokenText tt = (TokenText)token;
-				if(tt.getValueText() != null)
+				if(tt.getValueText() != null && tt.getValueText().contains(" "))
 					sum += SentenceAnalyzer.getSeparatedSentence(tt.getValueText()).size();
+			}
+		}
+		
+		return sum;
+	}
+	
+	public int getCountContainValidCont(){
+		int sum = 0;
+		
+		for(Node node : this.lstNodes){
+			Token token = node.getToken();//count text
+			if(token instanceof TokenText){
+				TokenText tt = (TokenText)token;
+				if(tt.getValueText().contains(" "))
+					sum ++;
 			}
 		}
 		
@@ -98,7 +122,7 @@ public class NodeGroup {
 			+ this.getSentCount() + "\n";
 		
 		for(Node node : this.lstNodes){
-			strRet += node.getToken().toString();
+			strRet += node.getToken().getIndex() + "__" + node.getToken().toString() + "\n";
 		}
 		return strRet;
 	}

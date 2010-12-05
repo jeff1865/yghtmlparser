@@ -25,6 +25,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.*;
 
+import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
 import me.yglib.htmlparser.datasource.PageSource;
@@ -64,6 +65,22 @@ public class HtmlPageGenerator {
 		return strRet;
 	}
 	
+	private static boolean isHyperLinked(Node node){
+		Node parentNode = node;
+		Token token = null;
+		
+		while((parentNode = parentNode.getParent()) != null){
+			
+			if((token = parentNode.getToken()) instanceof TokenTag){
+				TokenTag tTag = (TokenTag)token;
+				//System.out.println(" == TAG NAME >" + tTag.getTagName());
+				if(tTag.getTagName().equalsIgnoreCase("a"))
+					return true;
+			}
+		}
+		return false;
+	}
+	
 	private String makeTableTreeText(List<Node> nodes, String srcText){
 		if(nodes != null){
 			//System.out.println("+++ ADD +++");
@@ -73,11 +90,15 @@ public class HtmlPageGenerator {
 				if(node.getToken() instanceof TokenTag)
 				{
 					
-					srcText += "<tr><td bgcolor=#f0ffff>" + ((TokenTag)node.getToken()).getTagName() + "</td>";
+					srcText += "<tr><td bgcolor=#f0ffff><a title=" +getRulePath(node) + ">"  
+					+ ((TokenTag)node.getToken()).getTagName() + "</a></td>";
 				}
 				else  if(node.getToken() instanceof TokenText)
 				{
-					srcText += "<tr><td bgcolor=#faffff>" + ((TokenText)node.getToken()).getValueText() + "</td>";
+					String text = ((TokenText)node.getToken()).getValueText();
+					if(!isHyperLinked(node)) text = "<font color=red>" + text + "</font>";
+					
+					srcText += "<tr><td bgcolor=#faffff>" + text + "</td>";
 					System.out.println("+++++++++++++++++++++++++++++++++");
 				}
 				else
@@ -95,6 +116,23 @@ public class HtmlPageGenerator {
 		}
 		//System.out.println("1>" + srcText);
 		return srcText;
+	}
+	
+	public static String getRulePath(Node node){
+		Node rNode = node, pNode = node;
+		String strRet = "";
+		while((rNode.getParent()) != null){
+			pNode = rNode.getParent();
+			
+			List<Node> lstChrs = pNode.getChildren();
+			int nodeIndex = lstChrs.indexOf(rNode);
+			
+			strRet = ((TokenTag)(pNode.getToken())).getTagName() + "[" + nodeIndex + "]/" + strRet;
+			
+			rNode = rNode.getParent();
+		}
+		
+		return strRet;
 	}
 	
 	public static void nodeSearchTestRc(List<Node> nodes){
@@ -129,12 +167,11 @@ public class HtmlPageGenerator {
 	public static void main(String ... v){
 		PageSource bufPs = null;
 		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
-		url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082215175501055";
+		url = "http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park&wr_id=4094745";
+		url = "http://www.bobaedream.co.kr/board/bulletin/view.php?code=battle&No=230085";
 		try {
-			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
-			//bufPs = IntResManager.loadStringBufferPage(new URL("http://clien.career.co.kr/cs2/bbs/board.php?bo_table=kin&wr_id=1940283").toURI(), 3000);
 			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000);
-			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\naver.html"));
+			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\test.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -145,9 +182,8 @@ public class HtmlPageGenerator {
 		nodeSearchTestRc(rootNode);
 		
 		HtmlPageGenerator hpg = new HtmlPageGenerator(rootNode);
-		//hpg.nodeSearchTest();
 		String res = hpg.getHtmlStrPage();
-		StringToFile(res, new File("C:/Users/YoungGon/Desktop/test2.html"));
+		StringToFile(res, new File("d:/test_dom.html"));
 		
 		System.out.println("Completed!!");
 		//System.out.println("========= RESULT ==========================\n" + res);
