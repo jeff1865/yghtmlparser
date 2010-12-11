@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenText;
+import me.yglib.htmlparser.ex.node.NodePathUtil;
 import me.yglib.htmlparser.parser.Node;
 
 public class NodeGroup {
@@ -12,7 +13,16 @@ public class NodeGroup {
 	private ArrayList<Node> lstNodes = null;
 	private boolean cleaned = false;
 	private ArrayList<String> lstGrp = null; 
+	private boolean duplicated = false;
 	
+	public boolean isDuplicated() {
+		return duplicated;
+	}
+
+	public void setDuplicated(boolean duplicated) {
+		this.duplicated = duplicated;
+	}
+
 	public boolean isCleaned() {
 		return cleaned;
 	}
@@ -20,13 +30,17 @@ public class NodeGroup {
 	public void setCleaned(boolean cleaned) {
 		this.cleaned = cleaned;
 	}
-
+	
 	public NodeGroup(){
 		this.lstNodes = new ArrayList<Node>();
 	}
 
 	public void addNode(Node node){
 		this.lstNodes.add(node);
+	}
+	
+	public void addNodes(List<Node> nodes){
+		this.lstNodes.addAll(nodes);
 	}
 	
 	public List<Node> getNodes(){
@@ -46,9 +60,9 @@ public class NodeGroup {
 		}
 		
 		for(String strGrp : this.lstGrp){
-			if(SimpleFilter.getDepth(strGrp) == SimpleFilter.getDepth(grpID_rulePath)){
+			if(NodePathUtil.getDepth(strGrp) == NodePathUtil.getDepth(grpID_rulePath)){
 				// is path same logic?
-				if(SimpleFilter.isSameLogic(strGrp, grpID_rulePath)){
+				if(NodePathUtil.isSameLogic(strGrp, grpID_rulePath)){
 					return;
 				}
 			}
@@ -117,7 +131,8 @@ public class NodeGroup {
 		}
 		
 		strRet += "==> CharCount :" + this.getCharCount() + ", SentCount :" 
-			+ this.getSentCount() + "\n";
+			+ this.getSentCount() +", Valid SentCount :" + this.getCountContainValidCont() + 
+			"/" + this.getNodes().size() +"\n";
 		
 		for(Node node : this.lstNodes){
 			strRet += node.getToken().getIndex() + "__" + node.getToken().toString() + "\n";

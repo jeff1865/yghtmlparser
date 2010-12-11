@@ -10,7 +10,7 @@ public class SentenceAnalyzer {
 		String[] split = paragraph.split("\n|\\D\\.\\D|\r");
 		for(String s : split){
 			s = s.trim();
-			if(s.length() > 1){
+			if(s.length() > 0){	//changed from 1 to 0
 				lstSent.add(s);
 			}
 		}
