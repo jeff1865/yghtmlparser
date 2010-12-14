@@ -105,6 +105,8 @@ public class FilterUtil {
 	} 
 		
 	private static void extractUnlinkedTextNode(List<Node> lstNode, Node rootNode){
+		//if(rootNode == null) return ;
+		
 		Token token = rootNode.getToken();
 		if(token instanceof TokenText){
 			if(!NodePathUtil.isHyperLinked(rootNode)){

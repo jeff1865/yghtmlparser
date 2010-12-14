@@ -47,13 +47,6 @@ public class NodeGroup {
 		return this.lstNodes;
 	}
 	
-	public void setGroup0(String grpID){
-		if(this.lstGrp == null){
-			this.lstGrp = new ArrayList<String>();
-		}
-		this.lstGrp.add(grpID);
-	}
-	
 	public void setLogicGroup(String grpID_rulePath){
 		if(this.lstGrp == null){
 			this.lstGrp = new ArrayList<String>();
@@ -82,7 +75,9 @@ public class NodeGroup {
 			Token token = node.getToken();//count text
 			if(token instanceof TokenText){
 				TokenText tt = (TokenText)token;
-				sum += tt.getValueText().length();
+				String value = tt.getValueText();
+				if(SentenceAnalyzer.containsLetter(value))
+				sum += SentenceAnalyzer.convertHtmlToGenText(value).trim().length();
 			}
 		}
 		
@@ -97,8 +92,11 @@ public class NodeGroup {
 			Token token = node.getToken();//count text
 			if(token instanceof TokenText){
 				TokenText tt = (TokenText)token;
-				if(tt.getValueText() != null && tt.getValueText().contains(" "))
-					sum += SentenceAnalyzer.getSeparatedSentence(tt.getValueText()).size();
+				String value = tt.getValueText();
+				//if(tt.getValueText() != null && tt.getValueText().contains(" "))
+				if(value != null && value.contains(" ") && SentenceAnalyzer.containsLetter(value))
+					sum += SentenceAnalyzer.getSeparatedSentence(
+							SentenceAnalyzer.convertHtmlToGenText(tt.getValueText())).size();
 			}
 		}
 		
@@ -112,7 +110,9 @@ public class NodeGroup {
 			Token token = node.getToken();//count text
 			if(token instanceof TokenText){
 				TokenText tt = (TokenText)token;
-				if(tt.getValueText().contains(" "))
+				String value = tt.getValueText();
+				//if(tt.getValueText().contains(" "))
+				if(value.contains(" ") && SentenceAnalyzer.containsLetter(value))
 					sum ++;
 			}
 		}
