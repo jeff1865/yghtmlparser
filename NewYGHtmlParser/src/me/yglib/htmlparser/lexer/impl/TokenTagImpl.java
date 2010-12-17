@@ -114,7 +114,22 @@ public class TokenTagImpl implements TokenTag{
 	
 	@Override
 	public String toHtml() {
-		return this.rawHtml.toString();
+		//return this.rawHtml.toString();
+		
+		// impl temporary
+		String strRet = "<";
+		if(this.isClosed) strRet += "/";
+		strRet += this.tagName;
+		
+		if(this.attrs != null && this.attrs.size() > 0){
+			for(TagAttribute attr : this.attrs){
+				strRet += " " + attr.getAttrName() + "=\"" + attr.getAttrValue() + "\"";
+			}
+		}
+		
+		if(this.endClosed) strRet += "/";
+		
+		return strRet + ">";
 	}
 	
 	void setToHtml(String rawHtml){

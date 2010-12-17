@@ -135,7 +135,7 @@ public class LexerImpl implements Lexer{
 			else //if(Character.isLetterOrDigit(ch))	// text value
 			{
 				if(this.latestTag != null){
-					System.out.println("--> Enter Script Check Mode ..");
+					//System.out.println("--> Enter Script Check Mode ..");
 					if(this.latestTag.getTagName().equalsIgnoreCase("script")
 							|| this.latestTag.getTagName().equalsIgnoreCase("style")){
 						TokenIgnoreTagValueImpl ignoredTagValue = this.getIgnoredTagValue();
@@ -169,7 +169,7 @@ public class LexerImpl implements Lexer{
 	}
 	
 	private TokenIgnoreTagValueImpl getIgnoredTagValue(){
-		Logging.debug("##### Entered Ignore mode ..");
+		//Logging.debug("##### Entered Ignore mode ..");
 		// Processing Script Value 
 		// this.getTokenText(this.latestTag);	// set SCRIPT or STYLE Tag
 		this.isIgnoredMode = false;
@@ -248,8 +248,8 @@ public class LexerImpl implements Lexer{
 		long loadTime = System.currentTimeMillis();
 		PageSource bufPs = null;
 		try {
-			bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
-			//bufPs = ResourceManager.getLoadedPage(new File("test\\test1.txt"));
+			//bufPs = IntResManager.loadStringBufferPage(new URL("http://art.chosun.com/site/data/html_dir/2010/04/19/2010041900721.html").toURI(), 3000);
+			bufPs = ResourceManager.getLoadedPage(new File("test\\test.html"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -259,10 +259,7 @@ public class LexerImpl implements Lexer{
 		Lexer lexer = new LexerImpl(bufPs);
 		Token nt = null;
 		while(lexer.hasNextToken() && (nt = lexer.getNextToken()) != null){
-			//Token nt = lexer.getNextToken();
-			System.out.println("==== NextToken =============" );
 			System.out.println(">" + nt.getIndex() +":"+ nt.toString());
-			System.out.println("============================" );
 		}
 		
 		System.out.println("Page Load Time :" + loadTime);

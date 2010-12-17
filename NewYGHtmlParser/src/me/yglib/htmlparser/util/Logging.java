@@ -11,6 +11,7 @@ public class Logging {
 	
 	public static void print(int level, String msg)
 	{
+		if(level < 0x10) return;
 		long ct = System.currentTimeMillis();
 		System.out.println("[LOG:" + (ct - latestTime) + "] " + msg);
 		latestTime = ct;
