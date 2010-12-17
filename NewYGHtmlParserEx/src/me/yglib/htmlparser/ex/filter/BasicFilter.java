@@ -73,8 +73,8 @@ public class BasicFilter implements IContentsFilter{
 		List<NodeGroup> lstNodeGrp = FilterUtil.convertNodeGroup(groupedList);
 		int i = 0;
 		for(NodeGroup ng : lstNodeGrp){
-			System.out.println("3rd F-----------("+i++ + ")-----------------");
-			System.out.println(ng);
+			if(showDebug) System.out.println("3rd F-----------("+i++ + ")-----------------");
+			if(showDebug) System.out.println(ng);
 		}
 		
 		// 4. Filter - 동일 레벨, Depth 분석
@@ -82,16 +82,16 @@ public class BasicFilter implements IContentsFilter{
 		
 		i = 0;
 		for(NodeGroup ng : lstNodeGrp){
-			System.out.println("4th F-----------("+i++ + ")-----------------");
-			System.out.println(ng);
+			if(showDebug) System.out.println("4th F-----------("+i++ + ")-----------------");
+			if(showDebug) System.out.println(ng);
 		}
 		
 		// 4. Counter
 		List<NodeGroup> extRules = getExtRules(lstNodeGrp);
 		i = 0;
 		for(NodeGroup ng : extRules){
-			System.out.println("5th F-----------("+i++ + ")-----------------");
-			System.out.println(ng);
+			if(showDebug) System.out.println("5th F-----------("+i++ + ")-----------------");
+			if(showDebug) System.out.println(ng);
 		}
 		
 		return extRules;
@@ -183,29 +183,12 @@ public class BasicFilter implements IContentsFilter{
 				resGroup.add(reGrp);
 			}
 		}
-		
-		
-		
-		
-		//Node node 
-		
-		
+				
 		// 본문 영역과 비본문 영역(덧글)추출기능
-		
-		
-		
-		
-		
 		
 		return resGroup;
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 	public static void showGroupNode(List<List<Node>> groupedList){
 		int i = 0;
 		for(List<Node> nodes : groupedList){
