@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import me.yglib.htmlparser.CommonException;
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
@@ -59,54 +60,57 @@ public class HtmlDomBuilder {
 	 * In the case of like <br>, it would be processed like <br/>
 	 * @return
 	 */
-	public List<Node> build(){
+	public List<Node> build() throws CommonException {
 		List<Node> rootNodes = new ArrayList<Node>();
-		CheckStack stack = new CheckStack();
-		
-		Lexer lexer = new LexerImpl(this.ps);
-		Token tk = null;
-		NodeImpl rNode = null;
-		while(lexer.hasNextToken() && (tk = lexer.getNextToken()) != null){
-			//Logging.debug("Node :" + tk);
-			rNode = new NodeImpl(tk);
+		try{
+			CheckStack stack = new CheckStack();
 			
-			if(tk instanceof TokenTag){
-				// check filtered node
-				if(this.nFilter != null && !this.nFilter.isNeededNode(tk)) continue;  
+			Lexer lexer = new LexerImpl(this.ps);
+			Token tk = null;
+			NodeImpl rNode = null;
+			while(lexer.hasNextToken() && (tk = lexer.getNextToken()) != null){
+				//Logging.debug("Node :" + tk);
+				rNode = new NodeImpl(tk);
 				
-				TokenTag tkTag = (TokenTag)tk;
-				if(tkTag.isClosedTag()){	// pop TagNode
-					stack.checkNode2(rNode);
-				} else {	// push TagNode
-					if(stack.peek() == null){
-						rootNodes.add(rNode);
-					} else {
-						Node pNode = stack.peek();
-						rNode.setParentNode(pNode);
-					}
+				if(tk instanceof TokenTag){
+					// check filtered node
+					if(this.nFilter != null && !this.nFilter.isNeededNode(tk)) continue;  
 					
-					if(!tkTag.isClosedTag()){
-						if(this.nFilter != null){
-							if(nFilter.isNeededNode(tk)) stack.push(rNode);
+					TokenTag tkTag = (TokenTag)tk;
+					if(tkTag.isClosedTag()){	// pop TagNode
+						stack.checkNode2(rNode);
+					} else {	// push TagNode
+						if(stack.peek() == null){
+							rootNodes.add(rNode);
 						} else {
-							stack.push(rNode);
+							Node pNode = stack.peek();
+							rNode.setParentNode(pNode);
+						}
+						
+						if(!tkTag.isClosedTag()){
+							if(this.nFilter != null){
+								if(nFilter.isNeededNode(tk)) stack.push(rNode);
+							} else {
+								stack.push(rNode);
+							}
 						}
 					}
-				}
-				
-			} else if(tk instanceof TokenText){
-				
-				if(stack.peek() == null){ 
-					Logging.print(Logging.ERROR, "Invalid source ..");
+					
+				} else if(tk instanceof TokenText){
+					
+					if(stack.peek() == null){ 
+						Logging.print(Logging.ERROR, "Invalid source ..");
+					} else {
+						rNode.setParentNode(stack.peek());
+					}
+					
 				} else {
-					rNode.setParentNode(stack.peek());
+					Logging.debug("Ignored ..");
 				}
-				
-			} else {
-				Logging.debug("Ignored ..");
 			}
+		} catch(Exception e){
+			throw new CommonException("Cannot build DOM tree, " + e.getMessage());
 		}
-		
 		return rootNodes;
 	}
 	
@@ -130,7 +134,13 @@ public class HtmlDomBuilder {
 		} 
 		
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
-		List<Node> rootNode = domBuilder.build();
+		List<Node> rootNode = null;
+		try {
+			rootNode = domBuilder.build();
+		} catch (CommonException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		displayNode(rootNode);
 //		System.out.println("Root Node Size :" + rootNode.size());
