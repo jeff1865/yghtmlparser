@@ -105,7 +105,10 @@ public class FilterUtil {
 	} 
 		
 	private static void extractUnlinkedTextNode(List<Node> lstNode, Node rootNode){
-		//if(rootNode == null) return ;
+		if(rootNode == null){
+			System.out.println("+++++++++++ Invalid State :" + rootNode);
+			return ;
+		}
 		
 		Token token = rootNode.getToken();
 		if(token instanceof TokenText){

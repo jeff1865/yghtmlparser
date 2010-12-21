@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.yglib.htmlparser.CommonException;
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
@@ -69,7 +70,13 @@ public class ExHtmlNode implements Node {
 		} 
 		
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
-		List<Node> rootNode = domBuilder.build();
+		List<Node> rootNode = null;
+		try {
+			rootNode = domBuilder.build();
+		} catch (CommonException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		ExHtmlNode exNode = new ExHtmlNode(rootNode.get(0));
 		System.out.println(">" + exNode.getElementValue("title"));

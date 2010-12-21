@@ -24,6 +24,7 @@ import java.util.List;
 
 import me.yglib.htmlparser.ex.node.*;
 
+import me.yglib.htmlparser.CommonException;
 import me.yglib.htmlparser.Token;
 import me.yglib.htmlparser.TokenTag;
 import me.yglib.htmlparser.TokenText;
@@ -112,7 +113,13 @@ public class BasicFilter implements IContentsFilter{
 		} 
 		
 		HtmlDomBuilder domBuilder = new HtmlDomBuilder(bufPs);
-		List<Node> rootNode = domBuilder.build();
+		List<Node> rootNode = null;
+		try {
+			rootNode = domBuilder.build();
+		} catch (CommonException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//displayNode(rootNode);
 		System.out.println(" -> Root Node Count :" + rootNode.size());
