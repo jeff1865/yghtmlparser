@@ -41,6 +41,71 @@ public class IntResManager {
 		;
 	}
 
+	public static PageSource loadStringBufferPage(URI uri, int timeout, Map<String, String> pros) {
+		PageSource retPs = null;
+
+		StringBuffer sb = new StringBuffer(defaultStringBufferSize);
+		HttpURLConnection conn = null;
+
+		try {
+			conn = (HttpURLConnection) uri.toURL().openConnection();
+			Iterator<String> keys = pros.keySet().iterator();
+			while(keys.hasNext()) {
+				String key = keys.next();
+				conn.setRequestProperty(key, pros.get(key));
+			}
+			
+			conn.setConnectTimeout(timeout);
+			conn.setInstanceFollowRedirects(true);
+			String ct = conn.getContentType(), charset = "utf-8";
+			String contentType = conn.getContentType();
+
+			if (!(contentType != null && contentType.startsWith("text/html")))
+				throw new IOException("Invalid URL (NOT text data) :" + uri);
+
+			if (ct.indexOf("charset=") > 0) // HTTP header contains CHARSET
+											// attribute
+			{
+				Logging.print(Logging.DEBUG, ">>> Charset Detected !!");
+				charset = ct.substring("charset=".length()
+						+ ct.indexOf("charset="));
+
+				InputStreamReader isr = new InputStreamReader(conn
+						.getInputStream(), charset);
+				BufferedReader br = new BufferedReader(isr);
+				String line = null;
+
+				while ((line = br.readLine()) != null) {
+					sb.append(line + "\r\n"); // convert LocalString
+				}
+
+				br.close();
+
+				retPs = new PSstringBuffer(sb);
+			} else { // In case charInfo doesn't exist
+				InputStream is = conn.getInputStream();
+				byte[] data = getDataFromStream(is);
+
+				String strConv = null;
+				if (isKoreanHtmlData(data)) {
+					strConv = new String(data, "euc-kr");
+				} else {
+					strConv = new String(data, defaultCharSet);
+				}
+				
+				retPs = new PSstringBuffer(new StringBuffer(strConv));
+			}
+		} catch (IOException e) {
+			Logging.print(Logging.ERROR, "Error in getting data..");
+		} finally {
+			if (conn != null)
+				conn.disconnect();
+			Logging.print(Logging.DEBUG, "Http Connection was closed ..");
+		}
+
+		return retPs;
+	}
+	
 	public static PageSource loadStringBufferPage(URI uri, int timeout) {
 		PageSource retPs = null;
 
