@@ -1,6 +1,7 @@
 package me.yglib.htmlparser.ex.wrapper;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import me.yglib.htmlparser.CommonException;
 import me.yglib.htmlparser.datasource.PageSource;
 import me.yglib.htmlparser.datasource.RawSourceWrapper;
 import me.yglib.htmlparser.datasource.impl.IntResManager;
+import me.yglib.htmlparser.ex.node.NodePathUtil;
 import me.yglib.htmlparser.parser.Node;
 import me.yglib.htmlparser.parser.impl.HtmlDomBuilder;
 
@@ -26,7 +28,7 @@ public class ProtoypeWrapper {
 			Map<String,String> pros = new HashMap<String, String>();
 			pros.put("User-Agent", 
 					"Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
-			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000, pros);
+			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000, pros); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -50,6 +52,28 @@ public class ProtoypeWrapper {
 		
 		//displayNode(rootNode);
 		System.out.println(" -> Root Node Count :" + rootNode.size());
+		
+		displayNode(rootNode);
+		
+		String pathRule = "html[1]/body[3]/div[0]/div[2]/section[0]/div[0]/";
+		
+		Node targetNode = NodePathUtil.getNode(rootNode.get(0), pathRule, 1);
+			
+		ArrayList<Node> lNode = new ArrayList<Node>(); 
+		lNode.add(targetNode);
+		System.out.println("-------------------------------------------");
+		displayNode(lNode);
+		
+	}
+	
+	public static void displayNode(List<Node> nodes){
+		if(nodes != null)
+		{
+			for(Node node : nodes){
+				System.out.println("NODE >" + node.getToken() + " ---->" + NodePathUtil.getRulePath(node));
+				displayNode(node.getChildren());
+			}
+		}
 	}
 	
 }
