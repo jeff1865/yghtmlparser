@@ -99,7 +99,7 @@ public class HtmlPageGenerator {
 					String text = ((TokenText)node.getToken()).getValueText();
 					if(!isHyperLinked(node)) text = "<font color=red>" + text + "</font>";
 					
-					srcText += "<tr><td bgcolor=#faffff>" + text + "</td>";
+					srcText += "<tr><td bgcolor=#faffff><a title="+getRulePath(node)+">" + text + "</a></td>";
 					System.out.println("+++++++++++++++++++++++++++++++++");
 				}
 				else
@@ -170,8 +170,14 @@ public class HtmlPageGenerator {
 		String url = "http://www.asiae.co.kr/news/view.htm?idxno=2010082112172067284";
 		url = "http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park&wr_id=4094745";
 		url = "http://www.bobaedream.co.kr/board/bulletin/view.php?code=battle&No=230085";
+		url = "http://m.dcinside.com/list.php?id=car_new";
+		
 		try {
-			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000);
+			Map<String,String> pros = new HashMap<String, String>();
+			pros.put("User-Agent", 
+					"Mozilla/5.0 (Linux; Android 4.1.1; Nexus 7 Build/JRO03D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166  Safari/535.19");
+			
+			bufPs = IntResManager.loadStringBufferPage(new URL(url).toURI(), 3000, pros);
 			//bufPs = ResourceManager.getLoadedPage(new File("testRes\\test.html"));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -7,6 +7,8 @@ public class BbsTitleDo {
 	private int replyCount;
 	private String anchor_url;
 	
+	public BbsTitleDo() {}
+	
 	public BbsTitleDo(String title, String dateTime, String author, int replyCount) {
 		this.title = title;
 		this.dateTime = dateTime;

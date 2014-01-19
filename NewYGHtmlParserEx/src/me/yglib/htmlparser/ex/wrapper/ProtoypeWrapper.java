@@ -50,12 +50,13 @@ public class ProtoypeWrapper {
 			e.printStackTrace();
 		}
 		
-		//displayNode(rootNode);
+		displayNode(rootNode);
 		System.out.println(" -> Root Node Count :" + rootNode.size());
 		
 		displayNode(rootNode);
 		
 		String pathRule = "html[1]/body[3]/div[0]/div[2]/section[0]/div[0]/";
+		pathRule = "html[1]/body[10]/footer[0]/footer[0]/div[1]/div[0]/ul[0]/li[0]/a[0]/";
 		
 		Node targetNode = NodePathUtil.getNode(rootNode.get(0), pathRule, 1);
 			
