@@ -171,6 +171,7 @@ public class HtmlPageGenerator {
 		url = "http://clien.career.co.kr/cs2/bbs/board.php?bo_table=park&wr_id=4094745";
 		url = "http://www.bobaedream.co.kr/board/bulletin/view.php?code=battle&No=230085";
 		url = "http://m.dcinside.com/list.php?id=car_new";
+		url = "http://m.dcinside.com/view.php?id=car_new&no=2655964&page=1";
 		
 		try {
 			Map<String,String> pros = new HashMap<String, String>();
@@ -196,7 +197,7 @@ public class HtmlPageGenerator {
 		
 		HtmlPageGenerator hpg = new HtmlPageGenerator(rootNode);
 		String res = hpg.getHtmlStrPage();
-		StringToFile(res, new File("d:/test_dom.html"));
+		StringToFile(res, new File("d:/test_dom_con.html"));
 		
 		System.out.println("Completed!!");
 		//System.out.println("========= RESULT ==========================\n" + res);

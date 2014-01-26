@@ -12,5 +12,21 @@ public class DcBbsTitleDo extends BbsTitleDo {
 			int replyCount) {
 		super(title, dateTime, author, replyCount);
 	}
-
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("title:");
+		sb.append(this.getTitle());
+		sb.append("\t");
+		sb.append("count:");
+		sb.append(this.getCount()); 
+		sb.append("\t");
+		sb.append("author:");
+		sb.append(this.getAuthor());
+		sb.append("\t");
+		sb.append("datetime:");
+		sb.append(this.getDateTime());
+		
+		return sb.toString();
+	}
 }

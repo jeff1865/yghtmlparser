@@ -4,6 +4,7 @@ public class BbsTitleDo {
 	private String title;
 	private String dateTime;
 	private String author;
+	private String count;
 	private int replyCount;
 	private String anchor_url;
 	
@@ -39,6 +40,14 @@ public class BbsTitleDo {
 	}
 	public void setReplyCount(int replyCount) {
 		this.replyCount = replyCount;
+	}
+
+	public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
 	}
 	
 	

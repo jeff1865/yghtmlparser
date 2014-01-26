@@ -30,7 +30,8 @@ public class TokenTextImpl implements TokenText{
 	}
 	
 	public String toString(){
-		return "[Text]" + this.valueText;
+		//return "[Text]" + this.valueText;
+		return this.valueText;
 	}
 	
 	@Override
