@@ -27,8 +27,11 @@ public class PathRule {
 			String strTag = text.substring(0, text.indexOf("["));
 			String strNum = text.substring(text.indexOf("[")+1, text.indexOf("]"));
 			//Logging.debug("--->" + text + ":" + a + ":" + b);
-			
-			this.al_pathRule.add(new PathRuleElement(strTag, Integer.parseInt(strNum)));
+			if(!strNum.equals("*")) {
+				this.al_pathRule.add(new PathRuleElement(strTag, Integer.parseInt(strNum)));
+			} else {
+				this.al_pathRule.add(new PathRuleElement(strTag, -1));
+			}
 		}
 	}
 	

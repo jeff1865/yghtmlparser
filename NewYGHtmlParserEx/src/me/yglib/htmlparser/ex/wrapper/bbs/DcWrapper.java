@@ -159,7 +159,7 @@ public class DcWrapper {
 //			System.out.println("TitleDO :" + titleDo);
 //		}
 		
-		String contUrl = "http://m.dcinside.com/view.php?id=car_new&no=2655964&page=1";
+		String contUrl = "http://m.dcinside.com/view.php?id=car_new&no=2658826&page=1";
 		wrapper.getContext(contUrl);
 		
 	}
