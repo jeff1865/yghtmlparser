@@ -48,6 +48,9 @@ public class NodeXpath {
 			tagName = pre.getStrTagName();
 			
 			if(tempNode.getToken() instanceof TokenTag) {
+				TokenTag tTag = (TokenTag) tempNode.getToken();
+				Node pnode = tempNode.getParent();
+				;
 				;
 			}
 			
