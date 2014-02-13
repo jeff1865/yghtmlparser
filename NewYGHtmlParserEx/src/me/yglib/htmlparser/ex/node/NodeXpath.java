@@ -39,22 +39,34 @@ public class NodeXpath {
 	
 	public List<Node> getMatchedNode(Node rootNode, String xPath) {
 		PathRule rulePath = new PathRule(xPath);
-		List<PathRuleElement> lstPath = rulePath.getPathRule();
+		List<PathRuleElement> lstXPath = rulePath.getPathRule();
 		
 		Node tempNode = rootNode;
 		String tagName = null;
-		for(PathRuleElement pre : lstPath) {
+		for(PathRuleElement xpth : lstXPath) {
 			//System.out.println("--->>>" + elem.toString());
-			tagName = pre.getStrTagName();
+			tagName = xpth.getStrTagName();
 			
 			if(tempNode.getToken() instanceof TokenTag) {
 				TokenTag tTag = (TokenTag) tempNode.getToken();
 				Node pnode = tempNode.getParent();
-				;
-				;
+				
+				if(pnode == null) {	// in case of root node
+					;	// process root node 
+				} else {	// all children of root node
+					int xpthIdx = xpth.getIndex();
+					if(xpthIdx == -1) {
+						;	// process all node
+					} else {
+						;	// process the node
+					}
+				}
+				
+				System.out.println("--->" + pnode);
 			}
 			
-			tempNode = tempNode.getChildren().get(pre.getIndex());
+			if(xpth.getIndex() != -1)
+				tempNode = tempNode.getChildren().get(xpth.getIndex());
 		}
 		
 		return null;
@@ -111,11 +123,12 @@ public class NodeXpath {
 		String xPathRule = "html[1]/body[5]/div[0]/div[3]/section[*]/div[0]/div[*]";
 		
 		List<Node> lstMatchedNode = xPath.getMatchedNode(rootNode, xPathRule);
-		if(lstMatchedNode != null) {
-			for(Node node : lstMatchedNode)	{
-				;
-			}	
-		}
+		
+//		if(lstMatchedNode != null) {
+//			for(Node node : lstMatchedNode)	{
+//				;
+//			}	
+//		}
 	}
 	
 }
